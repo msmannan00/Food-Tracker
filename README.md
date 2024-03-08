@@ -18,3 +18,5 @@ To run the Food Tracker Health App built on Unity3D, follow these steps:
 3. Set Up Environment: Ensure you have the necessary dependencies and environment set up to run Unity3D projects.
 4. Build and Run: Build the project for your desired platform (e.g., Windows, macOS, Android, iOS) and run the generated executable or package on your device.
 5. Usage: Follow the on-screen instructions to navigate the app, log meals, explore recipes, and practice mindful eating.
+
+License: This project is privately licensed. Contact the owner for licensing inquiries and usage permissions.

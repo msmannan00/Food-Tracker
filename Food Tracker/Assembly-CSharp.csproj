@@ -211,6 +211,8 @@
     <Compile Include="Assets\AppleAuth\Interfaces\IAppleIDCredential.cs" />
     <Compile Include="Assets\AppleAuth\Native\AppleError.cs" />
     <Compile Include="Assets\AppleAuth\Extensions\PersonNameExtensions.cs" />
+    <Compile Include="Assets\newscripts\PlayFabManager.cs" />
+    <Compile Include="Assets\newscripts\GmailManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Libs\Helper\TextMesh Pro\Shaders\TMPro.cginc" />

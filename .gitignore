@@ -1,7 +1,6 @@
 # This .gitignore file should be placed at the root of your Unity project directory
 
 # Unity generated files
-ProjectSettings/
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -65,5 +64,3 @@ Desktop.ini
 
 # Crashlytics generated file
 crashlytics-build.properties
-ProjectSettings/
-

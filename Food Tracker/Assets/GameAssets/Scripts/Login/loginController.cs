@@ -45,16 +45,14 @@ public class loginController : MonoBehaviour
     {
         Action<string, string> callbackSuccess = (string result1, string result2) =>
         {
-            Debug.Log("yes");
-            loader.SetActive(false);
+            GlobalAnimator.Instance.FadeOut(loader);
         };
         Action<PlayFabError> callbackFailure = (error) =>
         {
-            Debug.Log(error);
-            loader.SetActive(false);
+            GlobalAnimator.Instance.FadeOut(loader);
         };
 
-        loader.SetActive(true);
+        GlobalAnimator.Instance.FadeIn(loader);
         playFabManager.OnTryLogin(this.LoginEmailField.text, this.LoginPasswordField.text, callbackSuccess, callbackFailure);
     }
 
@@ -78,15 +76,15 @@ public class loginController : MonoBehaviour
     {
         Action callbackSuccess = () =>
         {
-            loader.SetActive(false);
+            GlobalAnimator.Instance.FadeOut(loader);
         };
 
         Action<PlayFabError> callbackFailure = (error) =>
         {
-            loader.SetActive(false);
+            GlobalAnimator.Instance.FadeOut(loader);
         };
 
-        loader.SetActive(true);
+        GlobalAnimator.Instance.FadeIn(loader);
         playFabManager.OnTryRegisterNewAccount(this.RegisterEmailField.text, this.RegisterPasswordwordField.text, callbackSuccess, callbackFailure);
     }
 
@@ -105,24 +103,18 @@ public class loginController : MonoBehaviour
     {
         Action callbackSuccess = () =>
         {
-            loader.SetActive(false);
+            GlobalAnimator.Instance.FadeOut(loader);
         };
 
         Action<PlayFabError> callbackFailure = (error) =>
         {
-            loader.SetActive(false);
+            GlobalAnimator.Instance.FadeOut(loader);
         };
-        loader.SetActive(true);
+        GlobalAnimator.Instance.FadeIn(loader);
         playFabManager.InitiatePasswordRecovery(LoginEmailField.text, callbackSuccess, callbackFailure);
     }
 
   
-    public void closeResetPassword()
-    {
-        ForgotUI.SetActive(false);
-        LoginUI.SetActive(true);
-    }
-
     public void OnSignGmail()
     {
         //gmailManager.OnSignGmail();
@@ -137,13 +129,11 @@ public class loginController : MonoBehaviour
 
     public void onOpenSignup()
     {
-        signupInstance.SetActive(true);
-        loginInstance.SetActive(false);
+        GlobalAnimator.Instance.ApplyParallax(loginInstance, signupInstance);
     }
     public void onOpenLogin()
     {
-        loginInstance.SetActive(true);
-        signupInstance.SetActive(false);
+        GlobalAnimator.Instance.ApplyParallax(signupInstance, loginInstance);
     }
 
 }

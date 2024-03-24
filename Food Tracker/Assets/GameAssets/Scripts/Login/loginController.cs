@@ -90,12 +90,12 @@ public class loginController : MonoBehaviour
    
 
 
-    public void Loginpanel()
+    public void onOpenLogin()
     {
         RegisterUI.SetActive(false);
         LoginUI.SetActive(true);
     } 
-    public void Signpanel()
+    public void onOpenSignup()
     {
         LoginUI.SetActive(false);
         RegisterUI.SetActive(true);

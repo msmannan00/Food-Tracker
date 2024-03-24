@@ -3,7 +3,7 @@ using UnityEngine;
 public class GlobalAnimator
 {
     private static GlobalAnimator instance;
-    public float fadeDuration = 0.3f;
+    public float fadeDuration = 0.2f;
 
     private GlobalAnimator() { }
 
@@ -69,9 +69,8 @@ public class GlobalAnimator
             });
 
         LeanTween.moveLocalX(obj, startX + 150, fadeDuration)
-            .setEase(LeanTweenType.linear);
+            .setEase(LeanTweenType.easeOutQuad); // Use easeOutQuad for smoother acceleration and deceleration
     }
-
 
 
     public void FadeOutTranslate(GameObject obj)

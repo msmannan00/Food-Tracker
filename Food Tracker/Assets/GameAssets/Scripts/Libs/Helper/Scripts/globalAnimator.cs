@@ -53,15 +53,26 @@ public class GlobalAnimator
             canvasGroup = obj.AddComponent<CanvasGroup>();
         }
 
-        canvasGroup.alpha = 0; 
+        canvasGroup.alpha = 0;
         obj.SetActive(true);
 
-        LeanTween.alphaCanvas(canvasGroup, 1, fadeDuration).setDelay(0.14f);
+        float startX = obj.transform.localPosition.x - 150; // Start from left side
+        obj.transform.localPosition = new Vector3(startX, obj.transform.localPosition.y, obj.transform.localPosition.z);
 
-        float startY = obj.transform.localPosition.y - 150;
-        obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, startY, obj.transform.localPosition.z);
-        LeanTween.moveLocalY(obj, obj.transform.localPosition.y + 150, fadeDuration);
+        LeanTween.alphaCanvas(canvasGroup, 1, fadeDuration)
+            .setDelay(0.14f)
+            .setEase(LeanTweenType.linear)
+            .setOnComplete(() =>
+            {
+                canvasGroup.alpha = 1;
+                obj.transform.localPosition = new Vector3(startX + 150, obj.transform.localPosition.y, obj.transform.localPosition.z);
+            });
+
+        LeanTween.moveLocalX(obj, startX + 150, fadeDuration)
+            .setEase(LeanTweenType.linear);
     }
+
+
 
     public void FadeOutTranslate(GameObject obj)
     {
@@ -76,7 +87,7 @@ public class GlobalAnimator
             obj.SetActive(false);
         });
 
-        LeanTween.moveLocalY(obj, obj.transform.localPosition.y - 150, fadeDuration);
+        LeanTween.moveLocalX(obj, obj.transform.localPosition.x - 150, fadeDuration); // Move towards left
     }
 
 

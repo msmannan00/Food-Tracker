@@ -12,10 +12,10 @@ public class RotateAnimation : MonoBehaviour
 
     private void Rotate()
     {
-        float rotationAngle = 360f;
-        float rotationTime = rotationAngle / rotationSpeed;
+        float rotationAngle = -360f;
+        float rotationTime = Mathf.Abs(rotationAngle) / rotationSpeed;
 
-        LeanTween.rotateAroundLocal(imageTransform.gameObject, Vector3.forward, rotationAngle, rotationTime*3)
+        LeanTween.rotateAroundLocal(imageTransform.gameObject, Vector3.forward, rotationAngle, rotationTime * 3)
             .setOnComplete(Rotate);
     }
 }

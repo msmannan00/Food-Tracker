@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using System;
+using PlayFab;
 
 public class loginController : MonoBehaviour
 {
@@ -11,12 +13,16 @@ public class loginController : MonoBehaviour
             instance = this;
         }
     }
+    [Header("Controller")]
+    public GameObject signupInstance;
+    public GameObject loginInstance;
     [Header("Managers")]
     public googleManager gmailManager;
     public playfabManager playFabManager;
     [Header("Utilities")]
     public GameObject UIBlocker;
     public GameObject RegisterUI;
+    public GameObject loader;
     public GameObject LoginUI;
     public GameObject ForgotUI;
     public GameObject OnSignupGmail;
@@ -31,11 +37,23 @@ public class loginController : MonoBehaviour
    
     public TMP_InputField RegisterEmailField;
     public TMP_InputField RegisterPasswordwordField;
-    public TMP_InputField ForgotEmailField;
+
 
     public void OnTryLogin()
     {
-       // playFabManager.OnTryLogin();
+        Action<string, string> callbackSuccess = (string result1, string result2) =>
+        {
+            Debug.Log("yes");
+            GlobalAnimator.Instance.FadeOut(loader);
+        };
+        Action<PlayFabError> callbackFailure = (error) =>
+        {
+            Debug.Log(error);
+            GlobalAnimator.Instance.FadeOut(loader);
+        };
+
+        GlobalAnimator.Instance.FadeIn(loader);
+        playFabManager.OnTryLogin(this.LoginEmailField.text, this.LoginPasswordField.text, callbackSuccess, callbackFailure);
     }
 
     public void OnPrivacyPolicy()
@@ -56,7 +74,18 @@ public class loginController : MonoBehaviour
 
     public void OnTryRegisterNewAccount()
     {
-       // playFabManager.OnTryRegisterNewAccount();
+        Action callbackSuccess = () =>
+        {
+            GlobalAnimator.Instance.FadeOut(loader);
+        };
+
+        Action<PlayFabError> callbackFailure = (error) =>
+        {
+            GlobalAnimator.Instance.FadeOut(loader);
+        };
+
+        GlobalAnimator.Instance.FadeIn(loader);
+        playFabManager.OnTryRegisterNewAccount(this.RegisterEmailField.text, this.RegisterPasswordwordField.text, callbackSuccess, callbackFailure);
     }
 
     public void showForgotUI()
@@ -72,7 +101,17 @@ public class loginController : MonoBehaviour
 
     public void onForgotPassword()
     {
-       // playFabManager.onForgotPassword();
+        Action callbackSuccess = () =>
+        {
+            GlobalAnimator.Instance.FadeOut(loader);
+        };
+
+        Action<PlayFabError> callbackFailure = (error) =>
+        {
+            GlobalAnimator.Instance.FadeOut(loader);
+        };
+        GlobalAnimator.Instance.FadeIn(loader);
+        playFabManager.InitiatePasswordRecovery(LoginEmailField.text, callbackSuccess, callbackFailure);
     }
 
   
@@ -108,6 +147,15 @@ public class loginController : MonoBehaviour
         LoginUI.SetActive(false);
     }
 
- 
+    public void onOpenSignup()
+    {
+        GlobalAnimator.Instance.FadeInTranslate(signupInstance);
+        loginInstance.SetActive(false);
+    }
+    public void onOpenLogin()
+    {
+        GlobalAnimator.Instance.FadeInTranslate(loginInstance);
+        signupInstance.SetActive(false);
+    }
 
 }

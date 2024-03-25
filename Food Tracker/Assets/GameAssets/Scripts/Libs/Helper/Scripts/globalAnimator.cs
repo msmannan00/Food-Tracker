@@ -71,10 +71,15 @@ public class GlobalAnimator
         float distanceFactor = 1.5f;
         obj2.transform.position = new Vector3(Screen.width * distanceFactor, obj2.transform.position.y, obj2.transform.position.z);
         obj2.SetActive(true);
-        canvasGroup2.alpha = 0.3f; 
+        canvasGroup2.alpha = 0.3f;
         obj2.transform.SetAsLastSibling();
 
         DOTween.Sequence()
+            .OnStart(() =>
+            {
+                canvasGroup1.interactable = false;
+                canvasGroup2.interactable = false;
+            })
             .Append(overlayBlocker.GetComponent<Image>().DOFade(0.7f, 0.4f).SetEase(Ease.Linear))
             .Join(obj2.transform.DOMoveX(Screen.width / 2f, 0.4f).SetEase(Ease.OutQuad))
             .Join(canvasGroup2.DOFade(1f, 0.2f).SetEase(Ease.Linear))
@@ -82,7 +87,7 @@ public class GlobalAnimator
             {
                 obj1.SetActive(false);
                 GameObject.Destroy(overlayBlocker);
+                canvasGroup2.interactable = true;
             });
     }
-
 }

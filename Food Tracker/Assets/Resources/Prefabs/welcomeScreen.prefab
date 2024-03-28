@@ -752,9 +752,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WelcomeManager, Assembly-CSharp
-        m_MethodName: onOpenLogin
+      - m_Target: {fileID: 697418216629453777}
+        m_TargetAssemblyTypeName: WelcomeController, Assembly-CSharp
+        m_MethodName: OnLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

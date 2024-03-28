@@ -4,33 +4,17 @@ using UnityEngine;
 
 public class StateManager : GenericSingletonClass<StateManager>
 {
-    public void OpenStaticScreen(GameObject currentPage, string newPage, string contentTag, Dictionary<string, object> data)
+    public void OpenStaticScreen(GameObject currentPage, string newPage, Dictionary<string, object> data)
     {
         var prefabPath = "Prefabs/" + newPage;
         var prefabResource = Resources.Load<GameObject>(prefabPath);
-        if (prefabResource == null)
-        {
-            Debug.LogError($"Prefab not found at path: {prefabPath}");
-            return;
-        }
-
         var prefab = Instantiate(prefabResource);
-        var container = GameObject.FindGameObjectWithTag(contentTag);
-        if (container == null)
-        {
-            Debug.LogError($"Container with tag '{contentTag}' not found.");
-            return;
-        }
+        var container = GameObject.FindGameObjectWithTag(newPage);
 
         prefab.transform.SetParent(container.transform, false);
-        var welcomeController = prefab.GetComponent<WelcomeController>();
-        if (welcomeController == null)
-        {
-            Debug.LogError("WelcomeController component not found on the prefab.");
-            return;
-        }
+        var mController = prefab.GetComponent<PageController>();
+        mController.onInit(data);
 
-        welcomeController.onInit(data);
         if (currentPage != null)
         {
             Action callbackSuccess = () =>

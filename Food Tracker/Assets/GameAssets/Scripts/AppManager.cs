@@ -7,7 +7,7 @@ public class AppManager : MonoBehaviour
         Application.targetFrameRate = 60;
         if (!PlayerPrefs.HasKey("WelcomeScreensShown_v3"))
         {
-            StateManager.Instance.OpenStaticScreen(null, "welcomeScreen", "welcomeScreen", null);
+            StateManager.Instance.OpenStaticScreen(null, "welcomeScreen", null);
         }
         else
         {

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI; // Import for the Image component
 
-public class WelcomeController : MonoBehaviour
+public class WelcomeController : MonoBehaviour, PageController
 {
     private int mPageNumber = 0;
     public GameObject mPage;
@@ -38,10 +38,31 @@ public class WelcomeController : MonoBehaviour
 
     public void getStarted()
     {
-        Dictionary<string, object> mData = new Dictionary<string, object>
+        if (mPageNumber == 2)
         {
-            { WelcomeKeys.sPageNumber, mPageNumber + 1 }
-        };
-        StateManager.Instance.OpenStaticScreen(gameObject, "welcomeScreen", "welcomeScreen", mData);
+            Dictionary<string, object> mData = new Dictionary<string, object>
+            {
+                { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
+            };
+            StateManager.Instance.OpenStaticScreen(gameObject, "authScreen", mData);
+        }
+        else
+        {
+            Dictionary<string, object> mData = new Dictionary<string, object>
+            {
+                { WelcomeKeys.sPageNumber, mPageNumber + 1 }
+            };
+            StateManager.Instance.OpenStaticScreen(gameObject, "welcomeScreen", mData);
+        }
     }
+
+    public void OnLogin()
+    {
+        Dictionary<string, object> mData = new Dictionary<string, object>
+            {
+                { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
+            };
+        StateManager.Instance.OpenStaticScreen(gameObject, "authScreen", mData);
+    }
+
 }

@@ -16,7 +16,6 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
         }
 
         mAppObject.SetActive(true);
-        mCanvasGroup.alpha = 0;
         mCanvasGroup.DOFade(1, mFadeDuration);
     }
 
@@ -36,28 +35,36 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
 
     public void FadeInLoader()
     {
-        GameObject overlayBlockerInstance = Resources.Load<GameObject>("overlayBlocker");
+        GameObject overlayBlockerInstance = Resources.Load<GameObject>("Prefabs/UIBlocker");
         if (overlayBlockerInstance != null)
         {
             GameObject instance = UnityEngine.Object.Instantiate(overlayBlockerInstance);
             CanvasGroup canvasGroup = instance.GetComponent<CanvasGroup>();
             canvasGroup.alpha = 0f;
-            canvasGroup.DOFade(1f, 0.5f);
+            canvasGroup.DOFade(0.6f, 0.35f);
         }
     }
 
     public void FadeOutLoader()
     {
-        GameObject overlayBlockerInstance = Resources.Load<GameObject>("overlayBlocker");
+        GameObject overlayBlockerInstance = GameObject.FindWithTag("UIBlocker");
         if (overlayBlockerInstance != null)
         {
             CanvasGroup canvasGroup = overlayBlockerInstance.GetComponent<CanvasGroup>();
-            canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+            if (canvasGroup != null)
             {
-                UnityEngine.Object.Destroy(overlayBlockerInstance);
-            });
+                canvasGroup.DOFade(0f, 0.2f).OnComplete(() =>
+                {
+                    Destroy(overlayBlockerInstance);
+                });
+            }
+            else
+            {
+                Destroy(overlayBlockerInstance);
+            }
         }
     }
+
     public void ApplyParallax(GameObject currentPage, GameObject targetPage, Action callbackSuccess)
     {
         var currentCanvas = currentPage.GetComponent<CanvasGroup>();

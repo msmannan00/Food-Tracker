@@ -4,38 +4,36 @@ using UnityEngine.UI;
 
 public class GlobalRawAnimator : MonoBehaviour
 {
-    public void addButtonOutline(Image buttonImage)
+    public void addButtonOutline(Image pButtonImage)
     {
-        Outline outline = buttonImage.gameObject.AddComponent<Outline>();
-        outline.effectColor = new Color(9 / 255f, 126 / 255f, 57 / 255f, 0f);
-        outline.effectDistance = new Vector2(0, 0);
+        Outline mOutline = pButtonImage.gameObject.AddComponent<Outline>();
+        mOutline.effectColor = new Color(9 / 255f, 126 / 255f, 57 / 255f, 0f);
+        mOutline.effectDistance = new Vector2(0, 0);
 
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(outline.DOColor(new Color(9 / 255f, 126 / 255f, 57 / 255f, 1f), 0.25f));
-        sequence.Join(DOVirtual.Float(0, 0f, 0.25f, value => outline.effectDistance = new Vector2(0, value)));
-        sequence.Append(DOVirtual.Float(0f, 0, 0.25f, value => outline.effectDistance = new Vector2(0, value)));
+        Sequence mSequence = DOTween.Sequence();
+        mSequence.Append(mOutline.DOColor(new Color(9 / 255f, 126 / 255f, 57 / 255f, 1f), 0.25f));
+        mSequence.Join(DOVirtual.Float(0, 0f, 0.25f, value => mOutline.effectDistance = new Vector2(0, value)));
+        mSequence.Append(DOVirtual.Float(0f, 0, 0.25f, value => mOutline.effectDistance = new Vector2(0, value)));
     }
 
-    public void removeButtonOutline(Image buttonImage)
+    public void removeButtonOutline(Image pButtonImage)
     {
-        Outline[] outlines = buttonImage.GetComponents<Outline>();
-        if (outlines.Length > 0)
+        Outline[] mOutlines = pButtonImage.GetComponents<Outline>();
+        if (mOutlines.Length > 0)
         {
-            Outline outlineToRemove = outlines[outlines.Length - 1];
-
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(outlineToRemove.DOColor(new Color(outlineToRemove.effectColor.r, outlineToRemove.effectColor.g, outlineToRemove.effectColor.b, 0f), 0.25f));
-            sequence.Join(DOVirtual.Float(outlineToRemove.effectDistance.y, 0, 0.25f, value => outlineToRemove.effectDistance = new Vector2(0, value)));
-            sequence.OnComplete(() => Destroy(outlineToRemove));
+            Outline mOutlineToRemove = mOutlines[mOutlines.Length - 1];
+            Sequence mSequence = DOTween.Sequence();
+            mSequence.Append(mOutlineToRemove.DOColor(new Color(mOutlineToRemove.effectColor.r, mOutlineToRemove.effectColor.g, mOutlineToRemove.effectColor.b, 0f), 0.25f));
+            mSequence.Join(DOVirtual.Float(mOutlineToRemove.effectDistance.y, 0, 0.25f, value => mOutlineToRemove.effectDistance = new Vector2(0, value)));
+            mSequence.OnComplete(() => Destroy(mOutlineToRemove));
         }
     }
 
-    public void WobbleObject(GameObject gameObject)
+    public void WobbleObject(GameObject pAppObject)
     {
-        float wobbleDuration = 0.45f;
-        Vector3 wobbleStrength = new Vector3(1.05f, 1.05f, 1f);
-
-        gameObject.transform.DOComplete();
-        gameObject.transform.DOPunchScale(Vector3.one - wobbleStrength, wobbleDuration, 1, 0);
+        float mWobbleDuration = 0.45f;
+        Vector3 mWobbleStrength = new Vector3(1.05f, 1.05f, 1f);
+        pAppObject.transform.DOComplete();
+        pAppObject.transform.DOPunchScale(Vector3.one - mWobbleStrength, mWobbleDuration, 1, 0);
     }
 }

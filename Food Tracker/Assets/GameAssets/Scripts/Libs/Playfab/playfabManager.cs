@@ -2,8 +2,6 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
 using System;
-using System.Collections.Generic;
-using EasyUI.Popup;
 
 #if !UNITY_IOS
 using GooglePlayGames;
@@ -16,13 +14,13 @@ using UnityEngine.iOS;
 #else
 #endif
 
-public class playfabManager : GenericSingletonClass<playfabManager>
+public class PlayfabManager : MonoBehaviour
 {
 
-    public void saveuser(string username, string password)
+    public void OnSaveuser(string pUsername, string pPassword)
     {
-        PlayerPrefs.SetString("username", username);
-        PlayerPrefs.SetString("password", password);
+        PlayerPrefs.SetString("username", pUsername);
+        PlayerPrefs.SetString("password", pPassword);
         PlayerPrefs.Save();
     }
 
@@ -30,41 +28,41 @@ public class playfabManager : GenericSingletonClass<playfabManager>
 
     public void OnServerInitialized()
     {
-	#if !UNITY_IOS
-	        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-        	.AddOauthScope("profile")
-        	.RequestServerAuthCode(false)
-	        .Build();
+#if !UNITY_IOS
+        PlayGamesClientConfiguration mConfig = new PlayGamesClientConfiguration.Builder()
+        .AddOauthScope("profile")
+        .RequestServerAuthCode(false)
+        .Build();
 
-            PlayGamesPlatform.InitializeInstance(config);
-        	PlayGamesPlatform.DebugLogEnabled = false;
-	        PlayGamesPlatform.Activate();
+        PlayGamesPlatform.InitializeInstance(mConfig);
+        PlayGamesPlatform.DebugLogEnabled = false;
+        PlayGamesPlatform.Activate();
 
 #else
 #endif
     }
 
-    public void OnTryLogin(string email, string password, Action<string, string> callbackSuccess, Action<PlayFabError> callbackFailure)
+    public void OnTryLogin(string pEmail, string pPassword, Action<string, string> pCallbackSuccess, Action<PlayFabError> pCallbackFailure)
     {
-        LoginWithEmailAddressRequest req = new LoginWithEmailAddressRequest
+        LoginWithEmailAddressRequest mRequest = new LoginWithEmailAddressRequest
         {
-            Email = email,
-            Password = password
+            Email = pEmail,
+            Password = pPassword
         };
 
-        PlayFabClientAPI.LoginWithEmailAddress(req,
+        PlayFabClientAPI.LoginWithEmailAddress(mRequest,
         res =>
         {
-            saveuser(email, password);
-            callbackSuccess(email, res.PlayFabId);
+            OnSaveuser(pEmail, pPassword);
+            pCallbackSuccess(pEmail, res.PlayFabId);
         },
         err =>
         {
-            callbackFailure(err);
+            pCallbackFailure(err);
         });
     }
 
-    public void OnLogout(string username, string playfabID, Action callbackSuccess, Action<PlayFabError> callbackFailure)
+    public void OnLogout()
     {
         PlayerPrefs.DeleteKey("username");
         PlayerPrefs.DeleteKey("password");
@@ -73,43 +71,39 @@ public class playfabManager : GenericSingletonClass<playfabManager>
     public void OnLogoutForced()
     {
         PlayFabClientAPI.ForgetAllCredentials();
-
         PlayerPrefs.DeleteKey("username");
         PlayerPrefs.DeleteKey("password");
     }
 
 #if !UNITY_IOS
-    public void OnSignGmail(Action callbackSuccess, Action<PlayFabError> callbackFailure, Action<string, string> callbackSuccessPlayfab, Action<PlayFabError> callbackFailurePlayfab)
+    public void OnSignGmail(Action pCallbackSuccess, Action<PlayFabError> pCallbackFailure, Action<string, string> pCallbackSuccessPlayfab, Action<PlayFabError> pCallbackFailurePlayfab)
     {
 
-        Social.localUser.Authenticate((bool success) => {
-            if (success)
+        Social.localUser.Authenticate((bool pSuccess) => {
+            if (pSuccess)
             {
-                var serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+                var mServerAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
                 PlayFabClientAPI.LoginWithGoogleAccount(new LoginWithGoogleAccountRequest()
                 {
                     TitleId = "BF51B",
-                    ServerAuthCode = serverAuthCode,
+                    ServerAuthCode = mServerAuthCode,
                     CreateAccount = true
                 },
                 res =>
                 {
-                    saveuser("raza@gmail.com", "123456789");
-                    callbackSuccess();
+                    OnSaveuser("raza@gmail.com", "123456789");
+                    pCallbackSuccess();
                 },
                 err =>
                 {
-                    Popup.Show("playfab login ", "LoggedIn", "Dismiss");
-
-                   OnTryLogin(PlayerPrefs.GetString("username"),
-                PlayerPrefs.GetString("password"), callbackSuccessPlayfab, callbackFailurePlayfab);
-                    callbackSuccess();
+                    OnTryLogin(PlayerPrefs.GetString("username"),
+                 PlayerPrefs.GetString("password"), pCallbackSuccessPlayfab, pCallbackFailurePlayfab);
+                    pCallbackSuccess();
                 });
             }
             else
             {
-                Popup.Show("Gmail not Connected", "check your email address", "Dismiss");
-                callbackFailure(null);
+                pCallbackFailure(null);
             }
         });
     }
@@ -117,8 +111,8 @@ public class playfabManager : GenericSingletonClass<playfabManager>
 #endif
 
 
-    #if UNITY_IOS
-            public void OnSignIOS(Action callbackSuccess, Action<PlayFabError> callbackFailure, Action<string, string> callbackSuccessPlayfab, Action<PlayFabError> callbackFailurePlayfab)
+#if UNITY_IOS
+    public void OnSignIOS(Action pCallbackSuccess, Action<PlayFabError> pCallbackFailure, Action<string, string> pCallbackSuccessPlayfab, Action<PlayFabError> pCallbackFailurePlayfab)
         {
             Device.RequestStoreReview();
             if (Device.systemVersion.StartsWith("10"))
@@ -127,73 +121,73 @@ public class playfabManager : GenericSingletonClass<playfabManager>
                 {
                     if (success)
                     {
-                        OnTryLogin("player@gmail.com", "killprg1", callbackSuccessPlayfab, callbackFailurePlayfab);
-                        callbackSuccess();
+                        OnTryLogin("player@gmail.com", "killprg1", pCallbackSuccessPlayfab, pCallbackFailurePlayfab);
+                        pCallbackSuccess();
                     }
                     else
                     {
-                        callbackFailure(null);
+                        pCallbackFailure(null);
                     }
                 });
             }
             else
             {
-                callbackFailure(null);
+                pCallbackFailure(null);
             }
         }
 
         public static class NativeAPI
         {
-            public delegate void SignInCallback(bool success);
+            public delegate void SignInCallback(bool pSuccess);
 
-            public static void Authorize(SignInCallback callback)
+            public static void Authorize(SignInCallback pCallback)
             {
-                bool success = true; // Replace with your sign-in logic
-                callback?.Invoke(success);
+                bool mSuccess = true;
+                pCallback?.Invoke(mSuccess);
             }
         }
-    #else
-    #endif
+#else
+#endif
 
-    public void OnTryRegisterNewAccount(string email, string password, Action callbackSuccess, Action<PlayFabError> callbackFailure)
+    public void OnTryRegisterNewAccount(string pEmail, string pPassword, Action pCallbackSuccess, Action<PlayFabError> pCallbackFailure)
     {
-        RegisterPlayFabUserRequest req = new RegisterPlayFabUserRequest
+        RegisterPlayFabUserRequest mReqest = new RegisterPlayFabUserRequest
         {
-            Email = email,
-            Password = password,
+            Email = pEmail,
+            Password = pPassword,
             RequireBothUsernameAndEmail = false
         };
 
-        PlayFabClientAPI.RegisterPlayFabUser(req,
+        PlayFabClientAPI.RegisterPlayFabUser(mReqest,
         res =>
         {
-            saveuser(email, password);
-            callbackSuccess();
+            OnSaveuser(pEmail, pPassword);
+            pCallbackSuccess();
         },
         err =>
         {
-            callbackFailure(err);
+            pCallbackFailure(err);
         });
     }
 
-    public void InitiatePasswordRecovery(string email, Action callbackSuccess, Action<PlayFabError> callbackFailure)
+    public void InitiatePasswordRecovery(string pEmail, Action pCallbackSuccess, Action<PlayFabError> pCallbackFailure)
     {
-        SendAccountRecoveryEmailRequest request = new SendAccountRecoveryEmailRequest
+        SendAccountRecoveryEmailRequest mRequest = new SendAccountRecoveryEmailRequest
         {
-            Email = email,
+            Email = pEmail,
             TitleId = "BF51B"
         };
 
-        PlayFabClientAPI.SendAccountRecoveryEmail(request,
+        PlayFabClientAPI.SendAccountRecoveryEmail(mRequest,
         result =>
         {
             Debug.Log("Password reset email sent successfully.");
-            callbackSuccess();
+            pCallbackSuccess();
         },
         error =>
         {
             Debug.LogError("Password reset failed: " + error.ErrorMessage);
-            callbackFailure(error);
+            pCallbackFailure(error);
         });
     }
 

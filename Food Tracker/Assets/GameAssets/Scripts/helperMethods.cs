@@ -1,32 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class helperMethods
+public class HelperMethods : GenericSingletonClass<HelperMethods>
 {
-    private static helperMethods instance;
-
-    private helperMethods()
+    public void ShuffleList<T>(List<T> pList)
     {
-    }
+        System.Random mRandom = new System.Random();
 
-    public void ShuffleList<T>(List<T> list)
-    {
-        System.Random random = new System.Random();
-
-        for (int i = 0; i < list.Count; i++)
+        for (int i = 0; i < pList.Count; i++)
         {
-            int randomIndex = random.Next(i, list.Count);
-            T temp = list[i];
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
+            int mRandomIndex = mRandom.Next(i, pList.Count);
+            T temp = pList[i];
+            pList[i] = pList[mRandomIndex];
+            pList[mRandomIndex] = temp;
         }
     }
 
-    public Color GetColorFromString(string colorName)
+    public Color GetColorFromString(string pColorName)
     {
-        switch (colorName)
+        switch (pColorName)
         {
             case "red":
                 return Color.red;
@@ -41,72 +34,63 @@ public class helperMethods
         }
     }
 
-    public void RestartScene(string scene)
+    public void RestartScene(string pScene)
     {
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(pScene);
     }
 
-    public List<List<string>> GeneratePermutations(List<string> colors, int length, int count)
+    public List<List<string>> GeneratePermutations(List<string> pColors, int pLength, int pCount)
     {
-        List<List<string>> permutations = new List<List<string>>();
+        List<List<string>> mPermutations = new List<List<string>>();
 
-        void GeneratePermutationsRecursive(List<string> currentPermutation)
+        void GeneratePermutationsRecursive(List<string> mCurrentPermutation)
         {
-            if (currentPermutation.Count == length)
+            if (mCurrentPermutation.Count == pLength)
             {
-                if (!AreAllColorsSame(currentPermutation)) // Check if all colors in the current permutation are not the same
+                if (!AreAllColorsSame(mCurrentPermutation))
                 {
-                    permutations.Add(new List<string>(currentPermutation));
+                    mPermutations.Add(new List<string>(mCurrentPermutation));
                 }
                 return;
             }
 
-            foreach (string color in colors)
+            foreach (string mColor in pColors)
             {
-                if (currentPermutation.Count > 0 && currentPermutation[currentPermutation.Count - 1] == color)
+                if (mCurrentPermutation.Count > 0 && mCurrentPermutation[mCurrentPermutation.Count - 1] == mColor)
                 {
-                    continue; // Skip the current color if it is the same as the previous one
+                    continue;
                 }
 
-                currentPermutation.Add(color);
-                GeneratePermutationsRecursive(currentPermutation);
-                currentPermutation.RemoveAt(currentPermutation.Count - 1);
+                mCurrentPermutation.Add(mColor);
+                GeneratePermutationsRecursive(mCurrentPermutation);
+                mCurrentPermutation.RemoveAt(mCurrentPermutation.Count - 1);
             }
         }
 
         GeneratePermutationsRecursive(new List<string>());
-        ShuffleList(permutations);
+        ShuffleList(mPermutations);
 
-        if (permutations.Count > count)
+        if (mPermutations.Count > pCount)
         {
-            return permutations.GetRange(0, count);
+            return mPermutations.GetRange(0, pCount);
         }
         else
         {
-            return permutations;
+            return mPermutations;
         }
     }
 
-    private bool AreAllColorsSame(List<string> colors)
+    private bool AreAllColorsSame(List<string> pColors)
     {
-        string firstColor = colors[0];
-        for (int i = 1; i < colors.Count; i++)
+        string mFirstColor = pColors[0];
+        for (int mCounter = 1; mCounter < pColors.Count; mCounter++)
         {
-            if (colors[i] != firstColor)
+            if (pColors[mCounter] != mFirstColor)
             {
                 return false;
             }
         }
         return true;
-    }
-
-    public static helperMethods GetInstance()
-    {
-        if (instance == null)
-        {
-            instance = new helperMethods();
-        }
-        return instance;
     }
 
 }

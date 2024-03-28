@@ -3,10 +3,9 @@ using DG.Tweening;
 
 public class RotateAnimation : MonoBehaviour
 {
-    public RectTransform imageTransform;
-    public float rotationSpeed = 0f; // Halved rotation speed
-
-    private bool isActive = true;
+    public RectTransform mImageTransform;
+    public float mRotationSpeed = 0f;
+    private bool mIsActive = true;
 
     private void Start()
     {
@@ -15,27 +14,27 @@ public class RotateAnimation : MonoBehaviour
 
     private void Rotate()
     {
-        if (!isActive)
+        if (!mIsActive)
         {
             return;
         }
 
-        float rotationAngle = -360f;
-        float rotationTime = Mathf.Abs(rotationAngle) / rotationSpeed;
+        float mRotationAngle = -360f;
+        float mRotationTime = Mathf.Abs(mRotationAngle) / mRotationSpeed;
 
-        imageTransform.DORotate(new Vector3(0, 0, rotationAngle), rotationTime * 3, RotateMode.FastBeyond360)
+        mImageTransform.DORotate(new Vector3(0, 0, mRotationAngle), mRotationTime * 3, RotateMode.FastBeyond360)
             .SetEase(Ease.Linear)
             .OnComplete(Rotate);
     }
 
     private void OnDisable()
     {
-        isActive = false;
+        mIsActive = false;
     }
 
     private void OnEnable()
     {
-        isActive = true;
+        mIsActive = true;
         Rotate();
     }
 }

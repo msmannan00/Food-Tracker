@@ -3,30 +3,30 @@ using System.Collections;
 
 public class GenericSingletonClass<T> : MonoBehaviour where T : Component
 {
-    private static T instance;
+    private static T mInstance;
     public static T Instance
     {
         get
         {
-            if (instance == null)
+            if (mInstance == null)
             {
-                instance = FindObjectOfType<T>();
-                if (instance == null)
+                mInstance = FindObjectOfType<T>();
+                if (mInstance == null)
                 {
                     GameObject obj = new GameObject();
                     obj.name = typeof(T).Name;
-                    instance = obj.AddComponent<T>();
+                    mInstance = obj.AddComponent<T>();
                 }
             }
-            return instance;
+            return mInstance;
         }
     }
 
     public virtual void Awake()
     {
-        if (instance == null)
+        if (mInstance == null)
         {
-            instance = this as T;
+            mInstance = this as T;
             DontDestroyOnLoad(this.gameObject);
         }
         else

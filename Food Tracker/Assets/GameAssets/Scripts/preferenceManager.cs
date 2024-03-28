@@ -1,53 +1,35 @@
 using UnityEngine;
 
-public class PreferenceManager
+public class PreferenceManager : GenericSingletonClass<PreferenceManager>
 {
-    private static PreferenceManager instance;
-
-    private PreferenceManager()
+    public void SetBool(string pKey, bool pValue)
     {
+        PlayerPrefs.SetInt(pKey, pValue ? 1 : 0);
     }
 
-    public static PreferenceManager Instance
+    public bool GetBool(string pKey, bool pDefaultValue = false)
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new PreferenceManager();
-            }
-            return instance;
-        }
+        return PlayerPrefs.GetInt(pKey, pDefaultValue ? 1 : 0) == 1;
     }
 
-    public void SetBool(string key, bool value)
+    public void SetString(string pKey, string pValue)
     {
-        PlayerPrefs.SetInt(key, value ? 1 : 0);
+        PlayerPrefs.SetString(pKey, pValue);
     }
 
-    public bool GetBool(string key, bool defaultValue = false)
+    public string GetString(string pKey, string pDefaultValue = "")
     {
-        return PlayerPrefs.GetInt(key, defaultValue ? 1 : 0) == 1;
+        return PlayerPrefs.GetString(pKey, pDefaultValue);
     }
 
-    public void SetString(string key, string value)
+    public void SetInt(string pKey, int pDefaultValue)
     {
-        PlayerPrefs.SetString(key, value);
+        PlayerPrefs.SetInt(pKey, pDefaultValue);
     }
 
-    public string GetString(string key, string defaultValue = "")
+    public int GetInt(string pKey, int pDefaultValue = 0)
     {
-        return PlayerPrefs.GetString(key, defaultValue);
-    }
-
-    public void SetInt(string key, int value)
-    {
-        PlayerPrefs.SetInt(key, value);
-    }
-
-    public int GetInt(string key, int defaultValue = 0)
-    {
-        return PlayerPrefs.GetInt(key, defaultValue);
+        return PlayerPrefs.GetInt(pKey, pDefaultValue);
     }
 
     public void Save()

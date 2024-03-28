@@ -1,36 +1,18 @@
 using UnityEngine;
 
-public class ErrorManager
+public class ErrorManager : GenericSingletonClass<ErrorManager>
 {
-    private static ErrorManager instance;
-
-    private ErrorManager()
+    public string getTranslateError(string pError)
     {
-    }
-
-    public static ErrorManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new ErrorManager();
-            }
-            return instance;
-        }
-    }
-
-    public string translateError(string error)
-    {
-        if (error.Equals("InvalidParams"))
+        if (pError.Equals("InvalidParams"))
         {
             return "Username and password invalid";
         }
-        else if (error.Equals("EmailAddressNotAvailable"))
+        else if (pError.Equals("EmailAddressNotAvailable"))
         {
             return "Email address not available";
         }
-        return error;
+        return pError;
     }
 
 }

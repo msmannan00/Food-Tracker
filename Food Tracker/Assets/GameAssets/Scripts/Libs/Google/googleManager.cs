@@ -5,51 +5,50 @@ using System;
 	using GooglePlayGames;
 	using PlayFab.ClientModels;
 	using UnityEngine;
-	using GooglePlayGames;
 	using GooglePlayGames.BasicApi;
 #else
 #endif
 
-public class googleManager
+public class GoogleManager
 {
 
 #if !UNITY_IOS
-    public googleManager()
+    public GoogleManager()
     {
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+        PlayGamesClientConfiguration mConfig = new PlayGamesClientConfiguration.Builder()
         .AddOauthScope("profile")
         .RequestServerAuthCode(false)
         .Build();
 
-        PlayGamesPlatform.InitializeInstance(config);
+        PlayGamesPlatform.InitializeInstance(mConfig);
         PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
     }
 
-    public void OnSignGmail(Action callbackSuccess, Action<PlayFabError> callbackFailure)
+    public void OnSignGmail(Action pCallbackSuccess, Action<PlayFabError> pCallbackFailure)
     {
-        Social.localUser.Authenticate((bool success) => {
-            if (success)
+        Social.localUser.Authenticate((bool pSuccess) => {
+            if (pSuccess)
             {
-                var serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+                var mServerAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
                 PlayFabClientAPI.LoginWithGoogleAccount(new LoginWithGoogleAccountRequest()
                 {
                     TitleId = "BF51B",
-                    ServerAuthCode = serverAuthCode, 
+                    ServerAuthCode = mServerAuthCode, 
                     CreateAccount = true
                 },
                 res =>
                 {
-                    callbackSuccess();
+                    pCallbackSuccess();
                 },
                 err =>
                 {
-                    callbackFailure(err);
+                    pCallbackFailure(err);
                 });
             }
             else
             {
-                callbackFailure(null);
+                pCallbackFailure(null);
             }
         });
     }

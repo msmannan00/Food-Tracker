@@ -31,7 +31,7 @@ public class WelcomeController : MonoBehaviour
             Sprite pagePointer = Resources.Load<Sprite>("UIAssets/Welcome/Images/" + mPointerImage[mPageNumber]);
             mPage.GetComponent<Image>().sprite = pagePointer;
 
-            Sprite foodImage = Resources.Load<Sprite>("UIAssets/Welcome/Images/" + mPointerImage[mPageNumber]);
+            Sprite foodImage = Resources.Load<Sprite>("UIAssets/Welcome/Images/" + mFoodImage[mPageNumber]);
             mFood.GetComponent<Image>().sprite = foodImage;
         }
     }

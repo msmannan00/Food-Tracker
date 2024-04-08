@@ -1,0 +1,328 @@
+{
+  "Cereals": {
+    "EachServing": "15g CHO, 3g proteins, 7g fats, 140 kcal",
+    "Root": {
+      "Tarka Chawal": {
+        "Measure": "½ cup",
+        "Amount": "68g",
+        "Image": ""
+      },
+      "Matar Pulao": {
+        "Measure": "½ cup",
+        "Amount": "87g",
+        "Image": ""
+      },
+      "Sabzi Pulao": {
+        "Measure": "½ cup",
+        "Amount": "81g",
+        "Image": ""
+      },
+      "Aloo Chanay": {
+        "Measure": "½ cup",
+        "Amount": "96g",
+        "Image": ""
+      },
+      "Channay Palao": {
+        "Measure": "¼ cup",
+        "Amount": "60g",
+        "Image": ""
+      }
+    }
+  },
+  "Beans & Lentils": {
+    "EachServing": "15g CHO, 7g proteins, 9g fats, 170kcal",
+    "Root": {
+      "Channa Daal": {
+        "Measure": "1/3 cup",
+        "Amount": "60g",
+        "Image": ""
+      },
+      "Lobia": {
+        "Measure": "½ cup",
+        "Amount": "92g",
+        "Image": ""
+      },
+      "Haleem": {
+        "Measure": "½ cup",
+        "Amount": "110g",
+        "Image": ""
+      },
+      "Masoor Daal": {
+        "Measure": "1/3 cup",
+        "Amount": "87g",
+        "Image": ""
+      },
+      "Safaid Channay": {
+        "Measure": "½ cup",
+        "Amount": "140g",
+        "Image": ""
+      },
+      "Masar Daal": {
+        "Measure": "½ cup",
+        "Amount": "130g",
+        "Image": ""
+      },
+      "Channay Ki Daal Aur Kadu": {
+        "Measure": "½ cup",
+        "Amount": "100g",
+        "Image": ""
+      },
+      "Daal Mash": {
+        "Measure": "1/3 cup",
+        "Amount": "85g",
+        "Image": ""
+      },
+      "Daal Moong": {
+        "Measure": "1/3 cup",
+        "Amount": "89g",
+        "Image": ""
+      },
+      "Kabuli Chanay Ka Salan": {
+        "Measure": "½ cup",
+        "Amount": "150g",
+        "Image": ""
+      },
+      "Kadhi Pakora": {
+        "Measure": "½ cup",
+        "Amount": "110g",
+        "Image": ""
+      },
+      "Kalay Chanay Ka Salan": {
+        "Measure": "½ cup",
+        "Amount": "106g",
+        "Image": ""
+      },
+      "Saboth Masoor Ki Daal": {
+        "Measure": "½ cup",
+        "Amount": "123g",
+        "Image": ""
+      }
+    }
+  },
+  "Vegetables": {
+    "Starchy Vegetables": {
+      "EachServing": "15g CHO, 3g proteins, 9g fats, 150kcal",
+      "Root": {
+        "Aloo Bhujia": {
+          "Measure": "1/3 cup",
+          "Amount": "79g",
+          "Image": ""
+        },
+        "Aloo Gobi": {
+          "Measure": "½ cup",
+          "Amount": "123g",
+          "Image": ""
+        },
+        "Aloo, Matar, Gajjar": {
+          "Measure": "½ cup",
+          "Amount": "89g",
+          "Image": ""
+        },
+        "Arbi baigan ki bhujia": {
+          "Measure": "½ cup",
+          "Amount": "106g",
+          "Image": ""
+        },
+        "Aloo Mattar": {
+          "Measure": "½ cup",
+          "Amount": "81g",
+          "Image": ""
+        },
+        "Aloo Gajjar": {
+          "Measure": "½ cup",
+          "Amount": "154g",
+          "Image": ""
+        },
+        "Aloo Mongray": {
+          "Measure": "½ cup",
+          "Amount": "145g",
+          "Image": ""
+        }
+      }
+    },
+    "Non-Starchy Vegetables": {
+      "EachServing": "5g CHO, 2g proteins, 5g fats, 75kcal",
+      "Root": {
+        "Bhindi pyaaz": {
+          "Measure": "1/3 cup",
+          "Amount": "76g",
+          "Image": ""
+        },
+        "Tori Chapni": {
+          "Measure": "1/3 cup",
+          "Amount": "78g",
+          "Image": ""
+        },
+        "Tinday": {
+          "Measure": "½ cup",
+          "Amount": "93g",
+          "Image": ""
+        },
+        "Ghiyya": {
+          "Measure": "½ cup",
+          "Amount": "84g",
+          "Image": ""
+        },
+        "Gobhi": {
+          "Measure": "½ cup",
+          "Amount": "71g",
+          "Image": ""
+        },
+        "Bingan Bharta": {
+          "Measure": "1/3 cup",
+          "Amount": "60g",
+          "Image": ""
+        },
+        "Karely": {
+          "Measure": "¼ cup",
+          "Amount": "45g",
+          "Image": ""
+        },
+        "Saag": {
+          "Measure": "½ cup",
+          "Amount": "81g",
+          "Image": ""
+        }
+      }
+    }
+  },
+  "Meat": {
+    "Medium Fat": {
+      "EachServing": "3g CHO, 7g proteins, 15g fats, 175kcal",
+      "Root": {
+        "Beef Karahi": {
+          "Measure": "1/3 cup",
+          "Amount": "83g",
+          "Image": ""
+        },
+        "Beef Qeema": {
+          "Measure": "¼ cup",
+          "Amount": "58g",
+          "Image": ""
+        },
+        "Bhuna Keema": {
+          "Measure": "¼ cup",
+          "Amount": "52g",
+          "Image": ""
+        },
+        "Keema Pyaaz": {
+          "Measure": "¼ cup",
+          "Amount": "60g",
+          "Image": ""
+        },
+        "Keema Shimla Mirch": {
+          "Measure": "1/3 cup",
+          "Amount": "79g",
+          "Image": ""
+        }
+      }
+    },
+    "Lean": {
+      "EachServing": "3g CHO, 7g proteins, 11g fats, 140kcal",
+      "Root": {
+        "Murgh Handi": {
+          "Measure": "¼ cup",
+          "Amount": "56g",
+          "Image": ""
+        },
+        "Murgh Karahi": {
+          "Measure": "¼ cup",
+          "Amount": "52g",
+          "Image": ""
+        },
+        "Murgh Korma": {
+          "Measure": "¼ cup",
+          "Amount": "62g",
+          "Image": ""
+        }
+      }
+    }
+  },
+  "Combination Dishes": {
+    "Non-starchy Vegetables + Meat": {
+      "EachServing": "4g CHO, 7g proteins, 11g fats, 145kcal",
+      "Root": {
+        "Bhindi Gosht": {
+          "Measure": "½ cup",
+          "Amount": "106g",
+          "Image": ""
+        },
+        "Saag Gosht": {
+          "Measure": "½ cup",
+          "Amount": "160g",
+          "Image": ""
+        },
+        "Tinday Gosht": {
+          "Measure": "½ cup",
+          "Amount": "122g",
+          "Image": ""
+        },
+        "Karelay Gosht": {
+          "Measure": "1/3 cup",
+          "Amount": "51g",
+          "Image": ""
+        },
+        "Anday ka Khagina": {
+          "Measure": "1/3 cup",
+          "Amount": "67g",
+          "Image": ""
+        },
+        "Kado Gosht": {
+          "Measure": "½ cup",
+          "Amount": "115g",
+          "Image": ""
+        },
+        "Palak Gosht": {
+          "Measure": "¼ cup",
+          "Amount": "61g",
+          "Image": ""
+        },
+        "Shaljam Gosht": {
+          "Measure": "¼ cup",
+          "Amount": "81g",
+          "Image": ""
+        }
+      }
+    },
+    "Starchy Vegetables + Meat": {
+      "EachServing": "6g CHO, 7g proteins, 11g fats, 150kcal",
+      "Root": {
+        "Aloo Gosht": {
+          "Measure": "½ cup",
+          "Amount": "115g",
+          "Image": ""
+        },
+        "Aloo Keema": {
+          "Measure": "1/3 cup",
+          "Amount": "72g",
+          "Image": ""
+        },
+        "Matar Keema": {
+          "Measure": "¼ cup",
+          "Amount": "54g",
+          "Image": ""
+        }
+      }
+    },
+    "Meat + Cereals": {
+      "EachServing": "16g CHO, 9g proteins, 12g fats, 210kcal",
+      "Root": {
+        "Murgh Biryani": {
+          "Measure": "¾ cup",
+          "Amount": "138g",
+          "Image": ""
+        },
+        "Yakhni Pulao": {
+          "Measure": "2/3 cup",
+          "Amount": "126.5g",
+          "Image": ""
+        },
+        "Chicken Channay": {
+          "Measure": "½ cup",
+          "Amount": "159g",
+          "Image": ""
+        }
+      }
+    }
+  }
+}

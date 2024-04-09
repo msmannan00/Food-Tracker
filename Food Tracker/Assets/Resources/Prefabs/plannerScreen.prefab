@@ -5533,6 +5533,8 @@ MonoBehaviour:
   aDateRangeStart: {fileID: 4772591172103516520}
   aDateRangeEnd: {fileID: 4772591171724757813}
   aContinuePlan: {fileID: 4772591172018587586}
+  aBackMonth: {fileID: 4772591170238060650}
+  aBackDay: {fileID: 4660379318435064113}
   aDateRangeList:
   - {fileID: 186714865289486856}
   - {fileID: 186714865378854503}
@@ -5540,6 +5542,13 @@ MonoBehaviour:
   - {fileID: 186714865168300281}
   - {fileID: 186714865106795503}
   - {fileID: 186714865620160385}
+  aDateRangeListTriggers:
+  - {fileID: 186714865536158102}
+  - {fileID: 186714865870376139}
+  - {fileID: 186714864190518954}
+  - {fileID: 186714864834621492}
+  - {fileID: 186714865271912766}
+  - {fileID: 186714866210055976}
 --- !u!225 &841705802035679244
 CanvasGroup:
   m_ObjectHideFlags: 0

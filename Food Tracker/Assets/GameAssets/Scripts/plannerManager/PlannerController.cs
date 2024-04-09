@@ -15,7 +15,10 @@ public class PlannerController : MonoBehaviour, PageController
     public TMP_Text aDateRangeStart;
     public TMP_Text aDateRangeEnd;
     public Image aContinuePlan;
+    public GameObject aBackMonth;
+    public GameObject aBackDay;
     public GameObject[] aDateRangeList;
+    public GameObject[] aDateRangeListTriggers;
 
     public void onInit(Dictionary<string, object> data)
     {
@@ -84,6 +87,39 @@ public class PlannerController : MonoBehaviour, PageController
                 dayText.color = new Color32(0x8C, 0x8C, 0x8C, 0xFF);
                 dateText.color = new Color32(0x32, 0x31, 0x36, 0xFF);
             }
+
+            if (date < DateTime.Today)
+            {
+                aDateRangeListTriggers[i].SetActive(false);
+                background.color = new Color(background.color.r, background.color.g, background.color.b, 0.3f);
+            }
+            else
+            {
+                aDateRangeListTriggers[i].SetActive(true);
+                background.color = new Color(background.color.r, background.color.g, background.color.b, 1f);
+            }
+        }
+
+        if (mCurrentDate.AddMonths(-1) < DateTime.Today)
+        {
+            aBackMonth.GetComponent<Image>().raycastTarget = false;
+            aBackMonth.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
+        }
+        else
+        {
+            aBackMonth.GetComponent<Image>().raycastTarget = true;
+            aBackMonth.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+        }
+
+        if (mCurrentDate.AddDays(-1) < DateTime.Today)
+        {
+            aBackDay.GetComponent<Image>().raycastTarget = false;
+            aBackDay.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
+        }
+        else
+        {
+            aBackDay.GetComponent<Image>().raycastTarget = true;
+            aBackDay.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
         }
     }
 
@@ -102,18 +138,8 @@ public class PlannerController : MonoBehaviour, PageController
 
     void Start()
     {
-        bool mFirsTimePlanInitialized = PreferenceManager.Instance.GetBool("FirstTimePlanInitialized", false);
-        if (!mFirsTimePlanInitialized)
-        {
-            mCurrentDate = DateTime.Now;
-            onUpdateDates(3);
-        }
-        else
-        {
-            Dictionary<string, object> mData = new Dictionary<string, object> { };
-            StateManager.Instance.OpenStaticScreen(gameObject, "dashboardScreen", mData);
-        }
-
+        mCurrentDate = DateTime.Now;
+        onUpdateDates(3);
     }
 
     public void onStartPlan()

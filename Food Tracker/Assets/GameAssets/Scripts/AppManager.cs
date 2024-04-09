@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AppManager : MonoBehaviour
@@ -6,9 +7,17 @@ public class AppManager : MonoBehaviour
     {
         /*Initiating app pages*/
         Application.targetFrameRate = 60;
-        if (!PlayerPrefs.HasKey("WelcomeScreensShown_v3"))
+        if (!PreferenceManager.Instance.GetBool("WelcomeScreensShown_v3"))
         {
             StateManager.Instance.OpenStaticScreen(null, "welcomeScreen", null);
+        }
+        else
+        {
+            Dictionary<string, object> mData = new Dictionary<string, object>
+            {
+                { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
+            };
+            StateManager.Instance.OpenStaticScreen(null, "authScreen", mData);
         }
 
         /*Initiating loading of meal data*/

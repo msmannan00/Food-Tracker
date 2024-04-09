@@ -60,6 +60,7 @@ public class AuthController : MonoBehaviour, PageController
             Action<string, string> mCallbackSuccess = (string pResult1, string pResult2) =>
             {
                 GlobalAnimator.Instance.FadeOutLoader();
+                onSignIn();
             };
             Action<PlayFabError> callbackFailure = (pError) =>
             {
@@ -107,7 +108,26 @@ public class AuthController : MonoBehaviour, PageController
         aPlayFabManager.InitiatePasswordRecovery(aUsername.text, callbackSuccess, callbackFailure);
     }
 
-  
+    public void onSignIn()
+    {
+        bool mFirsTimePlanInitialized = PreferenceManager.Instance.GetBool("FirstTimePlanInitialized", false);
+        if (!mFirsTimePlanInitialized)
+        {
+            Dictionary<string, object> mData = new Dictionary<string, object>
+            {
+                { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
+            };
+
+            StateManager.Instance.OpenStaticScreen(gameObject, "plannerScreen", mData);
+        }
+        else
+        {
+            Dictionary<string, object> mData = new Dictionary<string, object> { };
+            StateManager.Instance.OpenStaticScreen(gameObject, "dashboardScreen", mData);
+        }
+
+    }
+
     public void OnSignGmail()
     {
     }

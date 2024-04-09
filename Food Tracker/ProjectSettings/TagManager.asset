@@ -8,6 +8,9 @@ TagManager:
   - authScreen
   - rootController
   - UIBlocker
+  - overlayBlocker
+  - plannerScreen
+  - dashboardScreen
   layers:
   - Default
   - TransparentFX

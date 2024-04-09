@@ -40,9 +40,10 @@ public class WelcomeController : MonoBehaviour, PageController
     {
         if (mPageNumber == 2)
         {
+            PreferenceManager.Instance.SetBool("WelcomeScreensShown_v3", true);
             Dictionary<string, object> mData = new Dictionary<string, object>
             {
-                { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
+                { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
             };
             StateManager.Instance.OpenStaticScreen(gameObject, "authScreen", mData);
         }
@@ -58,6 +59,7 @@ public class WelcomeController : MonoBehaviour, PageController
 
     public void OnLogin()
     {
+        PreferenceManager.Instance.SetBool("WelcomeScreensShown_v3", true);
         Dictionary<string, object> mData = new Dictionary<string, object>
             {
                 { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}

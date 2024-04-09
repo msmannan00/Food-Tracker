@@ -144,13 +144,9 @@ public class PlannerController : MonoBehaviour, PageController
 
     public void onStartPlan()
     {
-        PreferenceManager.Instance.SetBool("FirstTimePlanInitialized", true);
-        PreferenceManager.Instance.SetBool("ContinuePlan", mContinuePlan);
-        PreferenceManager.Instance.SetString("DateRangeStart", aDateRangeStart.text);
-        PreferenceManager.Instance.SetString("DateRangeEnd", aDateRangeEnd.text);
+        userSessionManager.Instance.createPlan(mContinuePlan, aDateRangeStart.text, aDateRangeEnd.text);
 
-
-        Dictionary<string, object> mData = new Dictionary<string, object>{};
+        Dictionary<string, object> mData = new Dictionary<string, object> { };
         StateManager.Instance.OpenStaticScreen(gameObject, "dashboardScreen", mData);
     }
 

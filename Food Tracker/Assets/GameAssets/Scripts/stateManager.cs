@@ -1,10 +1,13 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StateManager : GenericSingletonClass<StateManager>
 {
-    public void OpenStaticScreen(GameObject currentPage, string newPage, Dictionary<string, object> data)
+    private List<GameObject> inactivePages = new List<GameObject>();
+
+    public void OpenStaticScreen(GameObject currentPage, string newPage, Dictionary<string, object> data, bool keepState = false)
     {
         var prefabPath = "Prefabs/" + newPage;
         var prefabResource = Resources.Load<GameObject>(prefabPath);
@@ -19,10 +22,42 @@ public class StateManager : GenericSingletonClass<StateManager>
         {
             Action callbackSuccess = () =>
             {
-                Destroy(currentPage);
+                if (keepState)
+                {
+                    currentPage.SetActive(false);
+                    inactivePages.Add(currentPage);
+                }
+                else
+                {
+                    Destroy(currentPage);
+                }
             };
 
             GlobalAnimator.Instance.ApplyParallax(currentPage, prefab, callbackSuccess);
         }
+    }
+
+    public void HandleBackAction(GameObject currentActivePage)
+    {
+        Destroy(currentActivePage);
+
+        if (inactivePages.Count > 0)
+        {
+            GameObject lastPage = inactivePages[inactivePages.Count - 1];
+            CanvasGroup canvasGroup = lastPage.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = lastPage.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = 0;
+            lastPage.SetActive(true);
+            canvasGroup.DOFade(1, 0.2f).SetEase(Ease.InOutQuad);
+            inactivePages.RemoveAt(inactivePages.Count - 1);
+        }
+    }
+
+    public int getInactivePagesCount()
+    {
+        return inactivePages.Count;
     }
 }

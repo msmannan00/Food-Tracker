@@ -54,7 +54,7 @@ public class PlayfabManager : MonoBehaviour
         res =>
         {
             OnSaveuser(pEmail, pPassword);
-            pCallbackSuccess(pEmail, res.PlayFabId);
+            pCallbackSuccess(HelperMethods.Instance.ExtractUsernameFromEmail(pEmail), res.PlayFabId);
         },
         err =>
         {

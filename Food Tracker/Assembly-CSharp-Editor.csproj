@@ -58,11 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\YAxisEditor.cs" />
     <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\LineEntryDrawer.cs" />
-    <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\XAxisEditor.cs" />
-    <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\BarChartConfigEditor.cs" />
-    <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\BarEntryDrawer.cs" />
     <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\AxisBaseEditor.cs" />
     <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\ChartMenuItems.cs" />
+    <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\BarChartConfigEditor.cs" />
+    <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\BarEntryDrawer.cs" />
+    <Compile Include="Assets\Awesome Charts\Core\Scripts\Editor\XAxisEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.167\Google.PackageManagerResolver.dll" />
@@ -849,11 +849,11 @@
     <Reference Include="Analytics">
       <HintPath>Library\ScriptAssemblies\Analytics.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>Library\ScriptAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
@@ -894,6 +894,9 @@
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
     </Reference>
@@ -911,6 +914,9 @@
     </Reference>
     <Reference Include="UnityEngine.Purchasing.SecurityCore">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
       <HintPath>Library\ScriptAssemblies\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
@@ -944,12 +950,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

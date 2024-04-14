@@ -21,6 +21,6 @@ public class AppManager : MonoBehaviour
         }
 
         /*Initiating loading of meal data*/
-        MealManager.Instance.OnServerInitialized();
+        DataManager.Instance.OnServerInitialized();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -93,4 +94,21 @@ public class HelperMethods : GenericSingletonClass<HelperMethods>
         return true;
     }
 
+    public DateTime ParseDateString(string dateString)
+    {
+        if (DateTime.TryParse(dateString, out DateTime date))
+        {
+            return date;
+        }
+        return DateTime.Now;
+    }
+    public string ExtractUsernameFromEmail(string email)
+    {
+        int atIndex = email.IndexOf('@');
+        if (atIndex >= 0)
+        {
+            return email.Substring(0, atIndex);
+        }
+        return null;
+    }
 }

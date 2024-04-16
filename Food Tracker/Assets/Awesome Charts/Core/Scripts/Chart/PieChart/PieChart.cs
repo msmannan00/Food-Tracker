@@ -298,6 +298,19 @@ namespace AwesomeCharts {
             }
         }
 
+        public void UpdateEntry(string label, double newValue)
+        {
+            foreach (PieEntry entry in data.DataSet.Entries)
+            {
+                if (entry.Label == label)
+                {
+                    entry.Value = (float)newValue;
+                    SetDirty();
+                    break;
+                }
+            }
+        }
+
         public void RemoveEntryClickDelegate (EntryClickDelegate clickDelegate) {
             if (clickDelegates.Contains (clickDelegate)) {
                 clickDelegates.Remove (clickDelegate);

@@ -1,3 +1,4 @@
+using AwesomeCharts;
 using System;
 using TMPro;
 using UnityEngine;
@@ -14,9 +15,14 @@ public class dashboardStatsController : MonoBehaviour
     public TMP_Text aCarbs;
     public TMP_Text aFats;
     public TMP_Text aProteins;
+    public GameObject aPieChart;
+
+    private PieChart pieChart;
 
     void Start()
     {
+        pieChart = aPieChart.GetComponent<PieChart>(); // Get the PieChart component
+
         if (userSessionManager.Instance.mUserStatsModel.sStatus)
         {
             aActive.SetText("Inactive");
@@ -25,7 +31,7 @@ public class dashboardStatsController : MonoBehaviour
             Color lightRed = new Color(1f, 0.9f, 0.9f);
             aActiveBadgeBackground.color = lightRed;
         }
-        
+
         double kiloCalories = userSessionManager.Instance.mUserStatsModel.sKiloCalories;
         string formattedKiloCalories = kiloCalories < 10 ? kiloCalories.ToString("0.000") : kiloCalories.ToString("0.00");
         this.aTotalCal.SetText(formattedKiloCalories);
@@ -38,19 +44,22 @@ public class dashboardStatsController : MonoBehaviour
 
         this.aDateRange.SetText($"{formattedStartingDate} - {formattedEndingDate}");
 
-        aCarbs.SetText(userSessionManager.Instance.mUserStatsModel.sCarbs.ToString());
-        aFats.SetText(userSessionManager.Instance.mUserStatsModel.sFats.ToString());
-        aProteins.SetText(userSessionManager.Instance.mUserStatsModel.sProteins.ToString());
+        UpdatePieChartValues();
+    }
 
+    void UpdatePieChartValues()
+    {
         double carbs = userSessionManager.Instance.mUserStatsModel.sCarbs;
         double fats = userSessionManager.Instance.mUserStatsModel.sFats;
         double proteins = userSessionManager.Instance.mUserStatsModel.sProteins;
+
         double total = carbs + fats + proteins;
         string carbsText, fatsText, proteinsText;
 
         if (total == 0)
         {
             carbsText = fatsText = proteinsText = "0g (0%)";
+            pieChart.UpdateEntry("Other", 100);
         }
         else
         {
@@ -61,16 +70,15 @@ public class dashboardStatsController : MonoBehaviour
             carbsText = $"{carbs:N1}g ({carbsPercentage:N0}%)";
             fatsText = $"{fats:N1}g ({fatsPercentage:N0}%)";
             proteinsText = $"{proteins:N1}g ({proteinsPercentage:N0}%)";
+
+            pieChart.UpdateEntry("Carbs", carbsPercentage);
+            pieChart.UpdateEntry("Fats", fatsPercentage);
+            pieChart.UpdateEntry("Proteins", proteinsPercentage);
+            pieChart.UpdateEntry("Other", 100 - carbsPercentage - fatsPercentage - proteinsPercentage);
         }
 
         aCarbs.SetText(carbsText);
         aFats.SetText(fatsText);
         aProteins.SetText(proteinsText);
-
-    }
-
-    void Update()
-    {
-        
     }
 }

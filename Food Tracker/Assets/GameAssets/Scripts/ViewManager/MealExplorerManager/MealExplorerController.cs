@@ -12,6 +12,7 @@ public class MealExplorerController : MonoBehaviour, PageController
     public string mTitle;
     public TMP_Dropdown sDropdown;
     public TMP_Text aServingText;
+    public GridLayoutGroup gridLayoutGroup;
 
     string mSearchText = "";
 
@@ -23,6 +24,7 @@ public class MealExplorerController : MonoBehaviour, PageController
         sDropdown.onValueChanged.AddListener(delegate { initFoodCategories(); });
         PopulateDropdown();
         initFoodCategories();
+        UpdateCellSize();
     }
     private void HandleInputChanged(string text)
     {
@@ -52,7 +54,7 @@ public class MealExplorerController : MonoBehaviour, PageController
                         dish.name = "Category_" + index++;
                         dish.transform.SetParent(aScrollViewContent.transform, false);
                         mealSubCategoryController categoryController = dish.GetComponent<mealSubCategoryController>();
-                        categoryController.initCategory(mDishItem.Key, description, categoryItem, imagePath);
+                        categoryController.InitCategory(mDishItem.Key, description, categoryItem, imagePath);
                         aServingText.SetText(categoryItem.EachServing.Gram + " carbs, " + categoryItem.EachServing.Protein + " proteins, " + categoryItem.EachServing.Fat + " fats, " + categoryItem.EachServing.KiloCal);
                     }
                 }
@@ -94,7 +96,15 @@ public class MealExplorerController : MonoBehaviour, PageController
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StateManager.Instance.HandleBackAction(gameObject);
+        }
+    }
+
+    void UpdateCellSize()
+    {
+        gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width / 2.1f, gridLayoutGroup.cellSize.y);
     }
 
     public void onGoBack()

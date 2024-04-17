@@ -20,6 +20,7 @@ public class PlannerController : MonoBehaviour, PageController
     public GameObject[] aDateRangeList;
     public GameObject[] aDateRangeListTriggers;
     public GameObject aBackNavigation;
+    public GridLayoutGroup gridLayoutGroup;
 
     public void onInit(Dictionary<string, object> data)
     {
@@ -51,6 +52,7 @@ public class PlannerController : MonoBehaviour, PageController
 
     public void onUpdateSelectedIndex(int pIndex)
     {
+        GlobalAnimator.Instance.WobbleObject(aDateRangeList[pIndex]);
         onUpdateDates(pIndex);
         DateTime newStartDate = mCurrentDate.AddDays(mSelectedRangeIndex - 3);
         aDateRangeStart.text = newStartDate.ToString("MMM dd, yyyy");
@@ -91,12 +93,12 @@ public class PlannerController : MonoBehaviour, PageController
 
             if (date < DateTime.Today)
             {
-                aDateRangeListTriggers[i].SetActive(false);
+                aDateRangeListTriggers[i].GetComponent<Image>().raycastTarget  = false;
                 background.color = new Color(background.color.r, background.color.g, background.color.b, 0.3f);
             }
             else
             {
-                aDateRangeListTriggers[i].SetActive(true);
+                aDateRangeListTriggers[i].GetComponent<Image>().raycastTarget = true;
                 background.color = new Color(background.color.r, background.color.g, background.color.b, 1f);
             }
         }
@@ -146,6 +148,7 @@ public class PlannerController : MonoBehaviour, PageController
         }
         mCurrentDate = DateTime.Now;
         onUpdateDates(3);
+        UpdateCellSize();
     }
 
     public void onStartPlan()
@@ -157,13 +160,26 @@ public class PlannerController : MonoBehaviour, PageController
         StateManager.Instance.OpenStaticScreen(gameObject, "dashboardScreen", mData);
     }
 
-    void Update()
+    void UpdateCellSize()
     {
-        
+        float panelWidth = GetComponent<RectTransform>().rect.width;
+        float spacing = gridLayoutGroup.spacing.x * (6 - 1)*1.5f;
+        float padding = gridLayoutGroup.padding.left + gridLayoutGroup.padding.right;
+        float size = (panelWidth - spacing - padding);
+        gridLayoutGroup.cellSize = new Vector2(size / 8, size / 5f);
     }
 
     public void onGoBack()
     {
         StateManager.Instance.HandleBackAction(gameObject);
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StateManager.Instance.HandleBackAction(gameObject);
+        }
+    }
+
 }

@@ -7,11 +7,13 @@ public class dashboardController : MonoBehaviour, PageController
 {
     public TMP_Text aUserWelcome;
     public GameObject aScrollViewContent;
+    public GridLayoutGroup gridLayoutGroup;
 
     public void onInit(Dictionary<string, object> data)
     {
         aUserWelcome.text = "Welcome! " + userSessionManager.Instance.mProfileUsername;
         initFoodCategories();
+        UpdateCellSize();
     }
 
     public void updatePlanDetail()
@@ -46,6 +48,11 @@ public class dashboardController : MonoBehaviour, PageController
             layoutElement.minHeight = 50f;
             bottomSpace.transform.SetParent(aScrollViewContent.transform, false);
         }
+    }
+
+    void UpdateCellSize()
+    {
+        gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width/2.1f, gridLayoutGroup.cellSize.y);
     }
 
     void Update()

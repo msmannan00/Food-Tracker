@@ -12,6 +12,7 @@ TagManager:
   - plannerScreen
   - dashboardScreen
   - planDashboardScreen
+  - mealExplorerScreen
   layers:
   - Default
   - TransparentFX

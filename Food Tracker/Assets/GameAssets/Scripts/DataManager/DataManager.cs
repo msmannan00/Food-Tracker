@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DataManager : GenericSingletonClass<DataManager>
 {
-    private Dictionary<string, List<SubCategory>> mealData;
+    private Dictionary<string, MealCategory> mealData;
     private const string MealDataPrefKey = "MealData";
 
     public void OnServerInitialized()
@@ -17,12 +17,12 @@ public class DataManager : GenericSingletonClass<DataManager>
             {
                 jsonText = File.ReadAllText(Path.Combine(Application.dataPath, "GameAssets/Scripts/DataManager/mealdata.json"));
             }
-            mealData = JsonConvert.DeserializeObject<Dictionary<string, List<SubCategory>>>(jsonText);
+            mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
         }
         else
         {
             string jsonText = File.ReadAllText(Path.Combine(Application.dataPath, "GameAssets/Scripts/DataManager/mealdata.json"));
-            mealData = JsonConvert.DeserializeObject<Dictionary<string, List<SubCategory>>>(jsonText);
+            mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
 
             PreferenceManager.Instance.SetString(MealDataPrefKey, jsonText);
             PreferenceManager.Instance.SetBool(MealDataPrefKey, true);
@@ -30,7 +30,7 @@ public class DataManager : GenericSingletonClass<DataManager>
         }
     }
 
-    public Dictionary<string, List<SubCategory>> GetCategories()
+    public Dictionary<string, MealCategory> GetCategories()
     {
         return mealData;
     }
@@ -40,7 +40,7 @@ public class DataManager : GenericSingletonClass<DataManager>
         List<string> subCategories = new List<string>();
         if (mealData.ContainsKey(category))
         {
-            var categoryData = mealData[category];
+            var categoryData = mealData[category].SubCategories;
             foreach (var subCategory in categoryData)
             {
                 subCategories.Add(subCategory.Title);
@@ -54,7 +54,7 @@ public class DataManager : GenericSingletonClass<DataManager>
         List<MealItem> items = new List<MealItem>();
         if (mealData.ContainsKey(category))
         {
-            var categoryData = mealData[category];
+            var categoryData = mealData[category].SubCategories;
             foreach (var subCategory in categoryData)
             {
                 if (subCategory.Title == subCategoryTitle)
@@ -74,7 +74,7 @@ public class DataManager : GenericSingletonClass<DataManager>
     {
         if (mealData.ContainsKey(category))
         {
-            var categoryData = mealData[category];
+            var categoryData = mealData[category].SubCategories;
             foreach (var subCategory in categoryData)
             {
                 if (subCategory.Title == subCategoryTitle)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 public class MealCategory
 {
     public List<SubCategory> SubCategories { get; set; }
+    public string Title { get; set; }
+    public string ItemSourceImage { get; set; }
 }
 
 public class SubCategory
@@ -24,5 +26,5 @@ public class MealItem
 {
     public string Measure { get; set; }
     public string Amount { get; set; }
-    public string Image { get; set; } = "";
+    public string ItemSourceImage { get; set; } = "";
 }

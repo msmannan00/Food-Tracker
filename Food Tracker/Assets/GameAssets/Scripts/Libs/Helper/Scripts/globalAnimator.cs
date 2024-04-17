@@ -65,7 +65,7 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
         }
     }
 
-    public void ApplyParallax(GameObject currentPage, GameObject targetPage, Action callbackSuccess)
+    public void ApplyParallax(GameObject currentPage, GameObject targetPage, Action callbackSuccess, bool keepState = false)
     {
         var currentCanvas = currentPage.GetComponent<CanvasGroup>();
         var targetCanvas = targetPage.GetComponent<CanvasGroup>();
@@ -95,10 +95,17 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
             .OnComplete(() =>
             {
                 callbackSuccess?.Invoke();
-                currentPage.SetActive(false);
+                currentPage.SetActive(keepState);
                 Destroy(overlayBlocker);
                 targetCanvas.interactable = true;
             });
+    }
+    public void WobbleObject(GameObject pAppObject)
+    {
+        float mWobbleDuration = 0.45f;
+        Vector3 mWobbleStrength = new Vector3(1.05f, 1.05f, 1f);
+        pAppObject.transform.DOComplete();
+        pAppObject.transform.DOPunchScale(Vector3.one - mWobbleStrength, mWobbleDuration, 1, 0);
     }
 }
 

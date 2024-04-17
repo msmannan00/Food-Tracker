@@ -31,9 +31,6 @@ public class GlobalRawAnimator : MonoBehaviour
 
     public void WobbleObject(GameObject pAppObject)
     {
-        float mWobbleDuration = 0.45f;
-        Vector3 mWobbleStrength = new Vector3(1.05f, 1.05f, 1f);
-        pAppObject.transform.DOComplete();
-        pAppObject.transform.DOPunchScale(Vector3.one - mWobbleStrength, mWobbleDuration, 1, 0);
+        GlobalAnimator.Instance.WobbleObject(gameObject);
     }
 }

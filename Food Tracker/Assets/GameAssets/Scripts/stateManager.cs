@@ -33,7 +33,7 @@ public class StateManager : GenericSingletonClass<StateManager>
                 }
             };
 
-            GlobalAnimator.Instance.ApplyParallax(currentPage, prefab, callbackSuccess);
+            GlobalAnimator.Instance.ApplyParallax(currentPage, prefab, callbackSuccess, keepState);
         }
     }
 
@@ -51,7 +51,7 @@ public class StateManager : GenericSingletonClass<StateManager>
             }
             canvasGroup.alpha = 0;
             lastPage.SetActive(true);
-            canvasGroup.DOFade(1, 0.2f).SetEase(Ease.InOutQuad);
+            canvasGroup.DOFade(1, 0.3f).SetEase(Ease.InOutQuad);
             inactivePages.RemoveAt(inactivePages.Count - 1);
         }
     }

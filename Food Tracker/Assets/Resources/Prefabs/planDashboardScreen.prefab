@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 1332092172178253876}
   m_Layer: 5
   m_Name: planDashboardScreen
-  m_TagString: Untagged
+  m_TagString: planDashboardScreen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -28,16 +28,16 @@ public class dashboardController : MonoBehaviour, PageController
 
     public void initFoodCategories()
     {
-        Dictionary<string, List<SubCategory>> mCategories = DataManager.Instance.GetCategories();
+        Dictionary<string, MealCategory> mCategories = DataManager.Instance.GetCategories();
         int index = 0;
         foreach (var category in mCategories)
         {
-            GameObject categoryItem = Instantiate(Resources.Load<GameObject>("Prefabs/foodCategory"));
+            GameObject categoryItem = Instantiate(Resources.Load<GameObject>("Prefabs/mealCategory"));
             categoryItem.name = "Category_" + index++;
             categoryItem.transform.SetParent(aScrollViewContent.transform, false);
-            dashboardCategoryController categoryController = categoryItem.GetComponent<dashboardCategoryController>();
-            string imagePath = "UIAssets/Dashboard/Categories/category_" + index;
-            categoryController.SetCategory(category.Key, category.Value, imagePath);
+            mealCategoryController categoryController = categoryItem.GetComponent<mealCategoryController>();
+            string imagePath = "UIAssets/Dashboard/Categories/" + category.Value.ItemSourceImage;
+            categoryController.initCategory(category.Value.Title, category.Value.SubCategories, imagePath);
         }
         for (int i = 0; i < 2; i++)
         {

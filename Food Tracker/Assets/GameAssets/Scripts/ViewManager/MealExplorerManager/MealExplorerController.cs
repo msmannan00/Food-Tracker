@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,13 +8,20 @@ public class MealExplorerController : MonoBehaviour, PageController
     public List<SubCategory> mSubCategory;
     public GameObject aScrollViewContent;
     public TMP_InputField aSearchBar;
+    public List<string> mSubCategoryTitle;
+    public string mTitle;
+    public TMP_Dropdown sDropdown;
+    public TMP_Text aServingText;
 
     string mSearchText = "";
 
     public void onInit(Dictionary<string, object> data)
     {
         mSubCategory = (List<SubCategory>)data["data"];
+        mTitle = (string)data["title"];
         aSearchBar.onValueChanged.AddListener(HandleInputChanged);
+        sDropdown.onValueChanged.AddListener(delegate { initFoodCategories(); });
+        PopulateDropdown();
         initFoodCategories();
     }
     private void HandleInputChanged(string text)
@@ -34,17 +40,21 @@ public class MealExplorerController : MonoBehaviour, PageController
         int index = 0;
         foreach (var categoryItem in mSubCategory)
         {
-            foreach (var mDishItem in categoryItem.Dishes)
+            if (categoryItem.Title.Equals("root")  || categoryItem.Title.Equals(sDropdown.options[sDropdown.value].text))
             {
-                string imagePath = "UIAssets/mealExplorer/Categories/" + mDishItem.Value.ItemSourceImage;
-                string description = categoryItem.EachServing.KiloCal + " / " + mDishItem.Value.Amount;
-                if (mDishItem.Key.ToLower().Contains(mSearchText.ToLower()) || description.ToLower().Contains(mSearchText.ToLower()))
+                foreach (var mDishItem in categoryItem.Dishes)
                 {
-                    GameObject dish = Instantiate(Resources.Load<GameObject>("Prefabs/mealSubCategory"));
-                    dish.name = "Category_" + index++;
-                    dish.transform.SetParent(aScrollViewContent.transform, false);
-                    mealSubCategoryController categoryController = dish.GetComponent<mealSubCategoryController>();
-                    categoryController.initCategory(mDishItem.Key, description, categoryItem, imagePath);
+                    string imagePath = "UIAssets/mealExplorer/Categories/" + mDishItem.Value.ItemSourceImage;
+                    string description = categoryItem.EachServing.KiloCal + " / " + mDishItem.Value.Amount;
+                    if (mDishItem.Key.ToLower().Contains(mSearchText.ToLower()) || description.ToLower().Contains(mSearchText.ToLower()))
+                    {
+                        GameObject dish = Instantiate(Resources.Load<GameObject>("Prefabs/mealSubCategory"));
+                        dish.name = "Category_" + index++;
+                        dish.transform.SetParent(aScrollViewContent.transform, false);
+                        mealSubCategoryController categoryController = dish.GetComponent<mealSubCategoryController>();
+                        categoryController.initCategory(mDishItem.Key, description, categoryItem, imagePath);
+                        aServingText.SetText(categoryItem.EachServing.Gram + " carbs, " + categoryItem.EachServing.Protein + " proteins, " + categoryItem.EachServing.Fat + " fats, " + categoryItem.EachServing.KiloCal);
+                    }
                 }
             }
         }
@@ -55,8 +65,27 @@ public class MealExplorerController : MonoBehaviour, PageController
             layoutElement.minHeight = 50f;
             bottomSpace.transform.SetParent(aScrollViewContent.transform, false);
         }
+
     }
 
+    void PopulateDropdown()
+    {
+        sDropdown.options.Clear();
+        foreach (var categoryItem in mSubCategory)
+        {
+            if (!categoryItem.Title.Equals("root"))
+            {
+                sDropdown.options.Add(new TMP_Dropdown.OptionData(categoryItem.Title));
+            }
+            else
+            {
+                sDropdown.options.Add(new TMP_Dropdown.OptionData(mTitle));
+            }
+        }
+
+        sDropdown.value = 0;
+        sDropdown.RefreshShownValue();
+    }
 
     void Start()
     {

@@ -41,6 +41,7 @@ public class mealCategoryController : MonoBehaviour, IPointerClickHandler
     {
         Dictionary<string, object> mData = new Dictionary<string, object> { };
         mData["data"] = mSubCategory;
+        mData["title"] = aName.text;
         StateManager.Instance.OpenStaticScreen(gameObject, "mealExplorerScreen", mData, true);
     }
 

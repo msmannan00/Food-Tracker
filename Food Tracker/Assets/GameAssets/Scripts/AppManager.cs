@@ -6,6 +6,7 @@ public class AppManager : MonoBehaviour
     private void Start()
     {
         /*Initiating app pages*/
+        PlayerPrefs.DeleteAll();
         Application.targetFrameRate = 60;
         if (!PreferenceManager.Instance.GetBool("WelcomeScreensShown_v3"))
         {

@@ -150,6 +150,7 @@ public class PlannerController : MonoBehaviour, PageController
 
     public void onStartPlan()
     {
+        this.gameObject.SetActive(false);
         userSessionManager.Instance.createPlan(mContinuePlan, aDateRangeStart.text, aDateRangeEnd.text);
 
         Dictionary<string, object> mData = new Dictionary<string, object> { };

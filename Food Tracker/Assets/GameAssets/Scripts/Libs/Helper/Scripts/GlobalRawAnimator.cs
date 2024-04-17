@@ -31,6 +31,6 @@ public class GlobalRawAnimator : MonoBehaviour
 
     public void WobbleObject(GameObject pAppObject)
     {
-        GlobalAnimator.Instance.WobbleObject(gameObject);
+        GlobalAnimator.Instance.WobbleObject(pAppObject);
     }
 }

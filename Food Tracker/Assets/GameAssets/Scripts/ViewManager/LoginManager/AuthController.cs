@@ -57,7 +57,7 @@ public class AuthController : MonoBehaviour, PageController
     {
         this.aUsername.text = "msmannan00@gmail.com";
         this.aPassword.text = "killprg1";
-        OnTrigger();
+        //OnTrigger();
     }
 
     public void OnTrigger()

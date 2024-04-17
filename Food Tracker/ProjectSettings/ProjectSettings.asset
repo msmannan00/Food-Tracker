@@ -251,7 +251,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 1
   androidSplashScreen: {fileID: 2800000, guid: a2d66f4672945d344bb0d6008fd0d6f1, type: 3}
-  AndroidKeystoreName: C:/Users/Morgan Freeman/Documents/user.keystore
+  AndroidKeystoreName: C:/Users/Morgan Freeman/Music/user.keystore
   AndroidKeyaliasName: imammehdi@00
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0

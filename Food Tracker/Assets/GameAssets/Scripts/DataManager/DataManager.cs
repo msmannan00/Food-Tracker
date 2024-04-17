@@ -10,24 +10,28 @@ public class DataManager : GenericSingletonClass<DataManager>
 
     public void OnServerInitialized()
     {
+        Debug.Log(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
         if (PreferenceManager.Instance.GetBool(MealDataPrefKey))
         {
             string jsonText = PreferenceManager.Instance.GetString(MealDataPrefKey);
             if (jsonText.Equals(""))
             {
-                jsonText = File.ReadAllText(Path.Combine(Application.dataPath, "GameAssets/Scripts/DataManager/mealdata.json"));
+                TextAsset jsonData = Resources.Load<TextAsset>("DataManager/mealdata");
+                jsonText = jsonData.text;
             }
             mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
         }
         else
         {
-            string jsonText = File.ReadAllText(Path.Combine(Application.dataPath, "GameAssets/Scripts/DataManager/mealdata.json"));
+            TextAsset jsonData = Resources.Load<TextAsset>("DataManager/mealdata");
+            string jsonText = jsonData.text;
             mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
 
             PreferenceManager.Instance.SetString(MealDataPrefKey, jsonText);
             PreferenceManager.Instance.SetBool(MealDataPrefKey, true);
             PreferenceManager.Instance.Save();
         }
+        Debug.Log(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
     }
 
     public Dictionary<string, MealCategory> GetCategories()

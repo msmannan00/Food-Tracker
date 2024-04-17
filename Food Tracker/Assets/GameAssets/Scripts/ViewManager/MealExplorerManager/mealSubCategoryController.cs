@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class mealSubCategoryController : MonoBehaviour
+public class mealSubCategoryController : MonoBehaviour, IPointerClickHandler
 {
     public TMP_Text aName;
     public TMP_Text aDescription;
@@ -26,9 +27,13 @@ public class mealSubCategoryController : MonoBehaviour
         }
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        GlobalAnimator.Instance.WobbleObject(gameObject);
+    }
+
     void Start()
     {
-        
     }
 
     void Update()

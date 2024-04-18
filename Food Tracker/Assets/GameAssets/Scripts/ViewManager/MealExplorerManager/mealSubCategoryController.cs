@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -61,8 +62,12 @@ public class mealSubCategoryController : MonoBehaviour, IPointerClickHandler
         }
     }
 
+
     public void OnPointerClick(PointerEventData eventData)
     {
         GlobalAnimator.Instance.WobbleObject(gameObject);
+        Dictionary<string, object> mData = new Dictionary<string, object> { };
+        mData["data"] = mSubCategory;
+        StateManager.Instance.OpenStaticScreen(gameObject, "mealViewerScreen", mData, true);
     }
 }

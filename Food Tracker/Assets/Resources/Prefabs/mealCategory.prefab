@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.85882354, g: 0.85882354, b: 0.85882354, a: 1}
-  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
 --- !u!114 &945902443
 MonoBehaviour:
@@ -428,6 +428,7 @@ MonoBehaviour:
   aName: {fileID: 41983876991512387}
   aItemCount: {fileID: 5942190403185835538}
   aImage: {fileID: 5845293901938344820}
+  mParent: {fileID: 0}
 --- !u!1 &7485627642837411778
 GameObject:
   m_ObjectHideFlags: 0

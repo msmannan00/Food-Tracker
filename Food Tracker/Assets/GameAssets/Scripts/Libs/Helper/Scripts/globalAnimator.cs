@@ -96,7 +96,10 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
             {
                 callbackSuccess?.Invoke();
                 currentPage.SetActive(keepState);
-                Destroy(overlayBlocker);
+                if (!keepState)
+                {
+                    Destroy(overlayBlocker);
+                }
                 targetCanvas.interactable = true;
             });
     }

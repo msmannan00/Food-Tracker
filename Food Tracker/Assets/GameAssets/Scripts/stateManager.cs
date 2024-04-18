@@ -53,7 +53,12 @@ public class StateManager : GenericSingletonClass<StateManager>
 
     public void HandleBackAction(GameObject currentActivePage)
     {
-        Destroy(currentActivePage);
+        float moveTargetX = currentActivePage.transform.position.x + Screen.width;  
+
+        currentActivePage.transform.DOMoveX(moveTargetX, 0.3f).SetEase(Ease.InOutQuad).OnComplete(() =>
+        {
+            Destroy(currentActivePage);
+        });
 
         if (inactivePages.Count > 0)
         {
@@ -63,12 +68,30 @@ public class StateManager : GenericSingletonClass<StateManager>
             {
                 canvasGroup = lastPage.AddComponent<CanvasGroup>();
             }
-            canvasGroup.alpha = 0;
+            canvasGroup.alpha = 1;  
             lastPage.SetActive(true);
-            canvasGroup.DOFade(1, 0.3f).SetEase(Ease.InOutQuad);
+
+            lastPage.transform.position = new Vector3(lastPage.transform.position.x - 500, lastPage.transform.position.y, lastPage.transform.position.z);
+            lastPage.transform.DOMoveX(lastPage.transform.position.x + 500, 0f).SetEase(Ease.InOutQuad);
+
+            GameObject overlayBlocker = lastPage.transform.Find("overlayBlocker(Clone)").gameObject;
+            if (overlayBlocker != null)
+            {
+                CanvasGroup overlayCanvasGroup = overlayBlocker.GetComponent<CanvasGroup>();
+                if (overlayCanvasGroup == null)
+                {
+                    overlayCanvasGroup = overlayBlocker.AddComponent<CanvasGroup>();
+                }
+                overlayCanvasGroup.DOFade(0, 0.5f).SetEase(Ease.InOutQuad).OnComplete(() =>
+                {
+                    Destroy(overlayBlocker);
+                });
+            }
+
             inactivePages.RemoveAt(inactivePages.Count - 1);
         }
     }
+
 
     public void onRemoveBackHistory()
     {

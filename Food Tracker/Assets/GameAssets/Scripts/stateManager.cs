@@ -6,13 +6,18 @@ using UnityEngine;
 public class StateManager : GenericSingletonClass<StateManager>
 {
     private List<GameObject> inactivePages = new List<GameObject>();
+    private bool isProcessing = false;
 
     public void OpenStaticScreen(GameObject currentPage, string newPage, Dictionary<string, object> data, bool keepState = false)
     {
+        if (isProcessing) return;
+        isProcessing = true;
+
         if (!keepState)
         {
             onRemoveBackHistory();
         }
+
         var prefabPath = "Prefabs/" + newPage;
         var prefabResource = Resources.Load<GameObject>(prefabPath);
         var prefab = Instantiate(prefabResource);
@@ -35,9 +40,14 @@ public class StateManager : GenericSingletonClass<StateManager>
                 {
                     Destroy(currentPage);
                 }
+                isProcessing = false;
             };
 
             GlobalAnimator.Instance.ApplyParallax(currentPage, prefab, callbackSuccess, keepState);
+        }
+        else
+        {
+            isProcessing = false;
         }
     }
 

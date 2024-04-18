@@ -12,9 +12,9 @@ public class mealCategoryController : MonoBehaviour, IPointerClickHandler
     public TMP_Text aItemCount;
     public Image aImage;
     public List<SubCategory> mSubCategory;
+    public GameObject mParent;
 
-
-    public void initCategory(string pTitle, List<SubCategory> pSubCategory, string pImagePath)
+    public void initCategory(string pTitle, List<SubCategory> pSubCategory, string pImagePath, GameObject pParent)
     {
         aName.text = pTitle;
         mSubCategory = pSubCategory;
@@ -29,6 +29,7 @@ public class mealCategoryController : MonoBehaviour, IPointerClickHandler
             sprite = Resources.Load<Sprite>("UIAssets/Dashboard/Categories/default");
             aImage.sprite = sprite;
         }
+        mParent = pParent;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -42,7 +43,7 @@ public class mealCategoryController : MonoBehaviour, IPointerClickHandler
         Dictionary<string, object> mData = new Dictionary<string, object> { };
         mData["data"] = mSubCategory;
         mData["title"] = aName.text;
-        StateManager.Instance.OpenStaticScreen(gameObject, "mealExplorerScreen", mData, true);
+        StateManager.Instance.OpenStaticScreen(mParent, "mealExplorerScreen", mData, true);
     }
 
     void Start()

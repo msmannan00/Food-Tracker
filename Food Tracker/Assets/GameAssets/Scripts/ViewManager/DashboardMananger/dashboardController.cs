@@ -39,7 +39,7 @@ public class dashboardController : MonoBehaviour, PageController
             categoryItem.transform.SetParent(aScrollViewContent.transform, false);
             mealCategoryController categoryController = categoryItem.GetComponent<mealCategoryController>();
             string imagePath = "UIAssets/Dashboard/Categories/" + category.Value.ItemSourceImage;
-            categoryController.initCategory(category.Value.Title, category.Value.SubCategories, imagePath);
+            categoryController.initCategory(category.Value.Title, category.Value.SubCategories, imagePath, gameObject);
         }
         for (int i = 0; i < 2; i++)
         {

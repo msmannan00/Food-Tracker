@@ -9,6 +9,10 @@ public class StateManager : GenericSingletonClass<StateManager>
 
     public void OpenStaticScreen(GameObject currentPage, string newPage, Dictionary<string, object> data, bool keepState = false)
     {
+        if (!keepState)
+        {
+            onRemoveBackHistory();
+        }
         var prefabPath = "Prefabs/" + newPage;
         var prefabResource = Resources.Load<GameObject>(prefabPath);
         var prefab = Instantiate(prefabResource);
@@ -54,6 +58,15 @@ public class StateManager : GenericSingletonClass<StateManager>
             canvasGroup.DOFade(1, 0.3f).SetEase(Ease.InOutQuad);
             inactivePages.RemoveAt(inactivePages.Count - 1);
         }
+    }
+
+    public void onRemoveBackHistory()
+    {
+        foreach (GameObject page in inactivePages)
+        {
+            Destroy(page);
+        }
+        inactivePages.Clear();
     }
 
     public int getInactivePagesCount()

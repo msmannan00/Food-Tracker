@@ -11,7 +11,7 @@ public class AppManager : MonoBehaviour
            AndroidUtility.ShowStatusBar(new Color32(9, 126, 57, 255));
         #endif
 
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         Application.targetFrameRate = 60;
         if (!PreferenceManager.Instance.GetBool("WelcomeScreensShown_v3"))
         {

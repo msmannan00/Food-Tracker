@@ -25,7 +25,7 @@ public class mealSubCategoryController : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            LoadImageFromResources(pImagePath);
+            LoadImageFromResources("UIAssets/mealExplorer/Categories/" + pImagePath);
             loader.SetActive(false);
         }
     }

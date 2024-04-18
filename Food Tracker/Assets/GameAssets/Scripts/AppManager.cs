@@ -6,7 +6,12 @@ public class AppManager : MonoBehaviour
     private void Start()
     {
         /*Initiating app pages*/
-        PlayerPrefs.DeleteAll();
+        #if UNITY_ANDROID && !UNITY_EDITOR
+           Screen.fullScreen = false;
+           AndroidUtility.ShowStatusBar(new Color32(9, 126, 57, 255));
+        #endif
+
+        //PlayerPrefs.DeleteAll();
         Application.targetFrameRate = 60;
         if (!PreferenceManager.Instance.GetBool("WelcomeScreensShown_v3"))
         {

@@ -32,6 +32,11 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
         PreferenceManager.Instance.SetBool("ContinuePlan", pContinuePlan);
         PreferenceManager.Instance.SetString("DateRangeStart", pDateRangeStartText);
         PreferenceManager.Instance.SetString("DateRangeEnd", pDateRangeEndText);
+
+        string mStartingDate = PreferenceManager.Instance.GetString("DateRangeStart", DateTime.Now.ToString());
+        string mEndingDate = PreferenceManager.Instance.GetString("DateRangeEnd", DateTime.Now.ToString());
+
+        userSessionManager.Instance.mUserStatsModel.OnInitialize(pContinueWeeklyPlan: pContinuePlan, pStartingDate: HelperMethods.Instance.ParseDateString(mStartingDate), pEndingDate: HelperMethods.Instance.ParseDateString(mEndingDate));
     }
 
 }

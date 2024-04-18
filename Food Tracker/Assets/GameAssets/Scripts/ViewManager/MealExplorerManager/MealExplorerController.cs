@@ -46,7 +46,7 @@ public class MealExplorerController : MonoBehaviour, PageController
             {
                 foreach (var mDishItem in categoryItem.Dishes)
                 {
-                    string imagePath = "UIAssets/mealExplorer/Categories/" + mDishItem.Value.ItemSourceImage;
+                    string imagePath = mDishItem.Value.ItemSourceImage;
                     string description = categoryItem.EachServing.KiloCal + " / " + mDishItem.Value.Amount;
                     if (mDishItem.Key.ToLower().Contains(mSearchText.ToLower()) || description.ToLower().Contains(mSearchText.ToLower()))
                     {

@@ -26,7 +26,7 @@ public class DataManager : GenericSingletonClass<DataManager>
             }
             else
             {
-                mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
+                DeserializeMealData(jsonText, false);
             }
         }
         else
@@ -43,8 +43,15 @@ public class DataManager : GenericSingletonClass<DataManager>
             if (!webRequest.isNetworkError && !webRequest.isHttpError)
             {
                 string jsonText = webRequest.downloadHandler.text;
-                SaveMealData(jsonText);
-                mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
+                if (DeserializeMealData(jsonText, true))
+                {
+                    SaveMealData(jsonText);
+                }
+                else
+                {
+                    Debug.LogError("Remote meal data corrupted. Loading locally.");
+                    LoadLocalMealData();
+                }
             }
             else
             {
@@ -60,12 +67,35 @@ public class DataManager : GenericSingletonClass<DataManager>
         if (jsonData != null)
         {
             string jsonText = jsonData.text;
-            SaveMealData(jsonText);
-            mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
+            if (DeserializeMealData(jsonText, true))
+            {
+                SaveMealData(jsonText);
+            }
+            else
+            {
+                Debug.LogError("Local meal data file also corrupted.");
+            }
         }
         else
         {
             Debug.LogError("Local meal data file not found.");
+        }
+    }
+
+    private bool DeserializeMealData(string jsonText, bool shouldLogError)
+    {
+        try
+        {
+            mealData = JsonConvert.DeserializeObject<Dictionary<string, MealCategory>>(jsonText);
+            return true;
+        }
+        catch (JsonException ex)
+        {
+            if (shouldLogError)
+            {
+                Debug.LogError("JSON Parsing Error: " + ex.Message);
+            }
+            return false;
         }
     }
 

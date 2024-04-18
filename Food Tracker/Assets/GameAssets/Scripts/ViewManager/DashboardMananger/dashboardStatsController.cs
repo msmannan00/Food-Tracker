@@ -21,9 +21,11 @@ public class dashboardStatsController : MonoBehaviour
 
     void Start()
     {
-        pieChart = aPieChart.GetComponent<PieChart>(); // Get the PieChart component
+        pieChart = aPieChart.GetComponent<PieChart>();
 
-        if (userSessionManager.Instance.mUserStatsModel.sStatus)
+        DateTime currentDate = DateTime.Now;
+        DateTime endDate = userSessionManager.Instance.mUserStatsModel.sEndingDate;
+        if (!userSessionManager.Instance.mUserStatsModel.sContinueWeeklyPlan && currentDate > endDate)
         {
             aActive.SetText("Inactive");
             aActiveBadge.color = Color.red;

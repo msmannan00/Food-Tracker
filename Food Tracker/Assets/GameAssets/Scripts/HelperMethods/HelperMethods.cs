@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class HelperMethods : GenericSingletonClass<HelperMethods>
 {
@@ -102,6 +105,38 @@ public class HelperMethods : GenericSingletonClass<HelperMethods>
         }
         return DateTime.Now;
     }
+
+    public IEnumerator LoadImageFromURL(string imageUrl, Image aImage, GameObject loader)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(imageUrl);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            aImage.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            loader.SetActive(false);
+        }
+        else
+        {
+            this.LoadImageFromResources("UIAssets/mealExplorer/Categories/default", aImage);
+        }
+    }
+
+    public void LoadImageFromResources(string imagePath, Image aImage)
+    {
+        Sprite sprite = Resources.Load<Sprite>(imagePath);
+        if (sprite != null)
+        {
+            aImage.sprite = sprite;
+        }
+        else
+        {
+            sprite = Resources.Load<Sprite>("UIAssets/mealExplorer/Categories/default");
+            aImage.sprite = sprite;
+        }
+    }
+
     public string ExtractUsernameFromEmail(string email)
     {
         int atIndex = email.IndexOf('@');

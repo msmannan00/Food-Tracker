@@ -6,35 +6,35 @@
       {
         "Title": "root",
         "EachServing": {
-          "Gram": "15g",
-          "Protein": "3g",
-          "Fat": "7g",
-          "KiloCal": "140 kcal"
+          "Carb": "15",
+          "Protein": "3",
+          "Fat": "7",
+          "KiloCal": "140"
         },
         "Dishes": {
           "Tarka Chawal": {
-            "Measure": "½ cup",
-            "Amount": "68g",
+            "Measure": "½",
+            "Amount": "68",
             "ItemSourceImage": "tarka_chawal"
           },
           "Matar Pulao": {
-            "Measure": "½ cup",
-            "Amount": "87g",
+            "Measure": "½",
+            "Amount": "87",
             "ItemSourceImage": "matar_pulao"
           },
           "Sabzi Pulao": {
-            "Measure": "½ cup",
-            "Amount": "81g",
+            "Measure": "½",
+            "Amount": "81",
             "ItemSourceImage": "sabzi_pulao"
           },
           "Aloo Chanay": {
-            "Measure": "½ cup",
-            "Amount": "96g",
+            "Measure": "½",
+            "Amount": "96",
             "ItemSourceImage": "aloo_channay"
           },
           "Channay Palao": {
-            "Measure": "¼ cup",
-            "Amount": "60g",
+            "Measure": "¼",
+            "Amount": "60",
             "ItemSourceImage": "channay_pulao"
           }
         }
@@ -48,75 +48,75 @@
       {
         "Title": "root",
         "EachServing": {
-          "Gram": "15g",
-          "Protein": "7g",
-          "Fat": "9g",
-          "KiloCal": "170 kcal"
+          "Carb": "15",
+          "Protein": "7",
+          "Fat": "9",
+          "KiloCal": "170"
         },
         "Dishes": {
           "Channa Daal": {
-            "Measure": "1/3 cup",
-            "Amount": "60g",
+            "Measure": "1/3",
+            "Amount": "60",
             "ItemSourceImage": "channa_daal"
           },
           "Lobia": {
-            "Measure": "½ cup",
-            "Amount": "92g",
+            "Measure": "½",
+            "Amount": "92",
             "ItemSourceImage": "lobia"
           },
           "Haleem": {
-            "Measure": "½ cup",
-            "Amount": "110g",
+            "Measure": "½",
+            "Amount": "110",
             "ItemSourceImage": "haleem"
           },
           "Masoor Daal": {
-            "Measure": "1/3 cup",
-            "Amount": "87g",
+            "Measure": "1/3",
+            "Amount": "87",
             "ItemSourceImage": "masoor_daal"
           },
           "Safaid Channay": {
-            "Measure": "½ cup",
-            "Amount": "140g",
+            "Measure": "½",
+            "Amount": "140",
             "ItemSourceImage": "safaid_channay"
           },
           "Masar Daal": {
-            "Measure": "½ cup",
-            "Amount": "130g",
+            "Measure": "½",
+            "Amount": "130",
             "ItemSourceImage": "masar_daal"
           },
           "Channay Ki Daal Aur Kadu": {
-            "Measure": "½ cup",
-            "Amount": "100g",
+            "Measure": "½",
+            "Amount": "100",
             "ItemSourceImage": "channay_ki_daal_aur_kadu"
           },
           "Daal Mash": {
-            "Measure": "1/3 cup",
-            "Amount": "85g",
+            "Measure": "1/3",
+            "Amount": "85",
             "ItemSourceImage": "daal_mash"
           },
           "Daal Moong": {
-            "Measure": "1/3 cup",
-            "Amount": "89g",
+            "Measure": "1/3",
+            "Amount": "89",
             "ItemSourceImage": "daal_mong"
           },
           "Kabuli Chanay Ka Salan": {
-            "Measure": "½ cup",
-            "Amount": "150g",
+            "Measure": "½",
+            "Amount": "150",
             "ItemSourceImage": "kabuli_channay_ka_salan"
           },
           "Kadhi Pakora": {
-            "Measure": "½ cup",
-            "Amount": "110g",
+            "Measure": "½",
+            "Amount": "110",
             "ItemSourceImage": "kadhi_pakora"
           },
           "Kalay Chanay Ka Salan": {
-            "Measure": "½ cup",
-            "Amount": "106g",
+            "Measure": "½",
+            "Amount": "106",
             "ItemSourceImage": "kalay_chanay_ka_salan"
           },
           "Saboth Masoor Ki Daal": {
-            "Measure": "½ cup",
-            "Amount": "123g",
+            "Measure": "½",
+            "Amount": "123",
             "ItemSourceImage": "saboth_masoor_ki daal"
           }
         }
@@ -130,45 +130,45 @@
       {
         "Title": "Starchy Vegetables",
         "EachServing": {
-          "Gram": "15g",
-          "Protein": "3g",
-          "Fat": "9g",
-          "KiloCal": "150 kcal"
+          "Carb": "15",
+          "Protein": "3",
+          "Fat": "9",
+          "KiloCal": "150"
         },
         "Dishes": {
           "Aloo Bhujia": {
-            "Measure": "1/3 cup",
-            "Amount": "79g",
+            "Measure": "1/3",
+            "Amount": "79",
             "ItemSourceImage": "aloo_bhujia"
           },
           "Aloo Gobi": {
-            "Measure": "½ cup",
-            "Amount": "123g",
+            "Measure": "½",
+            "Amount": "123",
             "ItemSourceImage": "aloo_gobhi"
           },
           "Aloo, Matar, Gajjar": {
-            "Measure": "½ cup",
-            "Amount": "89g",
+            "Measure": "½",
+            "Amount": "89",
             "ItemSourceImage": "aloo_matar_gajar"
           },
           "Arbi baigan ki bhujia": {
-            "Measure": "½ cup",
-            "Amount": "106g",
+            "Measure": "½",
+            "Amount": "106",
             "ItemSourceImage": "arbi_baigan_ki_bhujia"
           },
           "Aloo Mattar": {
-            "Measure": "½ cup",
-            "Amount": "81g",
+            "Measure": "½",
+            "Amount": "81",
             "ItemSourceImage": "aloo_mattar"
           },
           "Aloo Gajjar": {
-            "Measure": "½ cup",
-            "Amount": "154g",
+            "Measure": "½",
+            "Amount": "154",
             "ItemSourceImage": "aloo_gajjar"
           },
           "Aloo Mongray": {
-            "Measure": "½ cup",
-            "Amount": "145g",
+            "Measure": "½",
+            "Amount": "145",
             "ItemSourceImage": "aloo_moongray"
           }
         }
@@ -176,50 +176,50 @@
       {
         "Title": "Non-Starchy Vegetables",
         "EachServing": {
-          "Gram": "5g",
-          "Protein": "2g",
-          "Fat": "5g",
-          "KiloCal": "75 kcal"
+          "Carb": "5",
+          "Protein": "2",
+          "Fat": "5",
+          "KiloCal": "75"
         },
         "Dishes": {
           "Bhindi pyaaz": {
-            "Measure": "1/3 cup",
-            "Amount": "76g",
+            "Measure": "1/3",
+            "Amount": "76",
             "ItemSourceImage": "bhindi_piyaz"
           },
           "Tori": {
-            "Measure": "1/3 cup",
-            "Amount": "78g",
+            "Measure": "1/3",
+            "Amount": "78",
             "ItemSourceImage": "tori"
           },
           "Tinday": {
-            "Measure": "½ cup",
-            "Amount": "93g",
+            "Measure": "½",
+            "Amount": "93",
             "ItemSourceImage": "tinday"
           },
           "Ghiyya": {
-            "Measure": "½ cup",
-            "Amount": "84g",
+            "Measure": "½",
+            "Amount": "84",
             "ItemSourceImage": "ghiyya"
           },
           "Gobhi": {
-            "Measure": "½ cup",
-            "Amount": "71g",
+            "Measure": "½",
+            "Amount": "71",
             "ItemSourceImage": "gobhi"
           },
           "Bingan Bharta": {
-            "Measure": "1/3 cup",
-            "Amount": "60g",
+            "Measure": "1/3",
+            "Amount": "60",
             "ItemSourceImage": "bingan_bharta"
           },
           "Karely": {
-            "Measure": "¼ cup",
-            "Amount": "45g",
+            "Measure": "¼",
+            "Amount": "45",
             "ItemSourceImage": "karely"
           },
           "Saag": {
-            "Measure": "½ cup",
-            "Amount": "81g",
+            "Measure": "½",
+            "Amount": "81",
             "ItemSourceImage": "saag"
           }
         }
@@ -233,35 +233,35 @@
       {
         "Title": "Medium Fat",
         "EachServing": {
-          "Gram": "3g",
-          "Protein": "7g",
-          "Fat": "15g",
-          "KiloCal": "175 kcal"
+          "Carb": "3",
+          "Protein": "7",
+          "Fat": "15",
+          "KiloCal": "175"
         },
         "Dishes": {
           "Beef Karahi": {
-            "Measure": "1/3 cup",
-            "Amount": "83g",
+            "Measure": "1/3",
+            "Amount": "83",
             "ItemSourceImage": "beef_karahi"
           },
           "Beef Qeema": {
-            "Measure": "¼ cup",
-            "Amount": "58g",
+            "Measure": "¼",
+            "Amount": "58",
             "ItemSourceImage": "beef_keema"
           },
           "Bhuna Keema": {
-            "Measure": "¼ cup",
-            "Amount": "52g",
+            "Measure": "¼",
+            "Amount": "52",
             "ItemSourceImage": "bhuna_keema"
           },
           "Keema Pyaaz": {
-            "Measure": "¼ cup",
-            "Amount": "60g",
+            "Measure": "¼",
+            "Amount": "60",
             "ItemSourceImage": "keema_piyaz"
           },
           "Keema Shimla Mirch": {
-            "Measure": "1/3 cup",
-            "Amount": "79g",
+            "Measure": "1/3",
+            "Amount": "79",
             "ItemSourceImage": "keema_shimla_mirch"
           }
         }
@@ -269,25 +269,25 @@
       {
         "Title": "Lean",
         "EachServing": {
-          "Gram": "3g",
-          "Protein": "7g",
-          "Fat": "11g",
-          "KiloCal": "140 kcal"
+          "Carb": "3",
+          "Protein": "7",
+          "Fat": "11",
+          "KiloCal": "140"
         },
         "Dishes": {
           "Murgh Handi": {
-            "Measure": "¼ cup",
-            "Amount": "56g",
+            "Measure": "¼",
+            "Amount": "56",
             "ItemSourceImage": "murgh_handi"
           },
           "Murgh Karahi": {
-            "Measure": "¼ cup",
-            "Amount": "52g",
+            "Measure": "¼",
+            "Amount": "52",
             "ItemSourceImage": "murgh_karahi"
           },
           "Murgh Korma": {
-            "Measure": "¼ cup",
-            "Amount": "62g",
+            "Measure": "¼",
+            "Amount": "62",
             "ItemSourceImage": "murgh_korma"
           }
         }
@@ -301,50 +301,50 @@
       {
         "Title": "Non-starchy Vegetables + Meat",
         "EachServing": {
-          "Gram": "4g",
-          "Protein": "7g",
-          "Fat": "11g",
-          "KiloCal": "145 kcal"
+          "Carb": "4",
+          "Protein": "7",
+          "Fat": "11",
+          "KiloCal": "145"
         },
         "Dishes": {
           "Bhindi Gosht": {
-            "Measure": "½ cup",
-            "Amount": "106g",
+            "Measure": "½",
+            "Amount": "106",
             "ItemSourceImage": "bhindi_gosht"
           },
           "Saag Gosht": {
-            "Measure": "½ cup",
-            "Amount": "160g",
+            "Measure": "½",
+            "Amount": "160",
             "ItemSourceImage": "saag_gosht"
           },
           "Tinday Gosht": {
-            "Measure": "½ cup",
-            "Amount": "122g",
+            "Measure": "½",
+            "Amount": "122",
             "ItemSourceImage": "tinday_gosht"
           },
           "Karelay Gosht": {
-            "Measure": "1/3 cup",
-            "Amount": "51g",
+            "Measure": "1/3",
+            "Amount": "51",
             "ItemSourceImage": "karely_gosht"
           },
           "Anday ka Khagina": {
-            "Measure": "1/3 cup",
-            "Amount": "67g",
+            "Measure": "1/3",
+            "Amount": "67",
             "ItemSourceImage": "anday_ka_khagina"
           },
           "Kado Gosht": {
-            "Measure": "½ cup",
-            "Amount": "115g",
+            "Measure": "½",
+            "Amount": "115",
             "ItemSourceImage": "kado_gosht"
           },
           "Palak Gosht": {
-            "Measure": "¼ cup",
-            "Amount": "61g",
+            "Measure": "¼",
+            "Amount": "61",
             "ItemSourceImage": "palak_gosht"
           },
           "Shaljam Gosht": {
-            "Measure": "¼ cup",
-            "Amount": "81g",
+            "Measure": "¼",
+            "Amount": "81",
             "ItemSourceImage": "shaljam_gosht"
           }
         }
@@ -352,25 +352,25 @@
       {
         "Title": "Starchy Vegetables + Meat",
         "EachServing": {
-          "Gram": "6g",
-          "Protein": "7g",
-          "Fat": "11g",
-          "KiloCal": "150 kcal"
+          "Carb": "6",
+          "Protein": "7",
+          "Fat": "11",
+          "KiloCal": "150"
         },
         "Dishes": {
           "Aloo Gosht": {
-            "Measure": "½ cup",
-            "Amount": "115g",
+            "Measure": "½",
+            "Amount": "115",
             "ItemSourceImage": "aloo_gosht"
           },
           "Aloo Keema": {
-            "Measure": "1/3 cup",
-            "Amount": "72g",
+            "Measure": "1/3",
+            "Amount": "72",
             "ItemSourceImage": "aloo_keema"
           },
           "Matar Keema": {
-            "Measure": "¼ cup",
-            "Amount": "54g",
+            "Measure": "¼",
+            "Amount": "54",
             "ItemSourceImage": "matar_keema"
           }
         }
@@ -378,25 +378,25 @@
       {
         "Title": "Meat + Cereals",
         "EachServing": {
-          "Gram": "16g",
-          "Protein": "9g",
-          "Fat": "12g",
-          "KiloCal": "21 kcal"
+          "Carb": "16",
+          "Protein": "9",
+          "Fat": "12",
+          "KiloCal": "21"
         },
         "Dishes": {
           "Murgh Biryani": {
-            "Measure": "¾ cup",
-            "Amount": "138g",
+            "Measure": "¾",
+            "Amount": "138",
             "ItemSourceImage": "murgh_biryani"
           },
           "Yakhni Pulao": {
-            "Measure": "2/3 cup",
-            "Amount": "126.5g",
+            "Measure": "2/3",
+            "Amount": "126.5",
             "ItemSourceImage": "yakhni_pulao"
           },
           "Chicken Channay": {
-            "Measure": "½ cup",
-            "Amount": "159g",
+            "Measure": "½",
+            "Amount": "159",
             "ItemSourceImage": "chicken_channay"
           }
         }

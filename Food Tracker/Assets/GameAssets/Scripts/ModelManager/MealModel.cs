@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 public class MealCategory
@@ -16,15 +17,25 @@ public class SubCategory
 
 public class ServingInfo
 {
-    public string Gram { get; set; }
-    public string Protein { get; set; }
-    public string Fat { get; set; }
-    public string KiloCal { get; set; }
+    [JsonConverter(typeof(StringToNumberConverter))]
+    public double Carb { get; set; }
+
+    [JsonConverter(typeof(StringToNumberConverter))]
+    public double Protein { get; set; }
+
+    [JsonConverter(typeof(StringToNumberConverter))]
+    public double Fat { get; set; }
+
+    [JsonConverter(typeof(StringToNumberConverter))]
+    public double KiloCal { get; set; }
 }
 
 public class MealItem
 {
     public string Measure { get; set; }
-    public string Amount { get; set; }
+
+    [JsonConverter(typeof(StringToNumberConverter))]
+    public double Amount { get; set; }
+
     public string ItemSourceImage { get; set; } = "";
 }

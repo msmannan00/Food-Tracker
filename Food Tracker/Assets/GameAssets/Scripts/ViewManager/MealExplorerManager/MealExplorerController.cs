@@ -54,8 +54,8 @@ public class MealExplorerController : MonoBehaviour, PageController
                         dish.name = "Category_" + index++;
                         dish.transform.SetParent(aScrollViewContent.transform, false);
                         mealSubCategoryController categoryController = dish.GetComponent<mealSubCategoryController>();
-                        categoryController.InitCategory(mDishItem.Key, description, categoryItem, imagePath);
-                        aServingText.SetText(categoryItem.EachServing.Gram + " carbs, " + categoryItem.EachServing.Protein + " proteins, " + categoryItem.EachServing.Fat + " fats, " + categoryItem.EachServing.KiloCal);
+                        categoryController.InitCategory(mDishItem.Key, description, mDishItem.Value, categoryItem.EachServing, imagePath, gameObject);
+                        aServingText.SetText(categoryItem.EachServing.Carb + " carbs, " + categoryItem.EachServing.Protein + " proteins, " + categoryItem.EachServing.Fat + " fats, " + categoryItem.EachServing.KiloCal);
                     }
                 }
             }

@@ -38,4 +38,5 @@ public class MealItem
     public double Amount { get; set; }
 
     public string ItemSourceImage { get; set; } = "";
+    public string RecipeURL { get; set; } = "";
 }

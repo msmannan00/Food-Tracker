@@ -14,6 +14,7 @@ public class mealViewerController : MonoBehaviour, PageController
     public Image aHeaderImage;
     public GameObject aPieChart;
     public GameObject aImageLoader;
+    public GameObject aOpenRecipe;
     public TMP_Text aTitle;
     public TMP_Text aQuantityValue;
     public TMP_Text aServingSizeValue;
@@ -80,6 +81,16 @@ public class mealViewerController : MonoBehaviour, PageController
             pieChart.UpdateEntry("Proteins", proteinsPercentage);
             pieChart.UpdateEntry("Other", 100 - carbsPercentage - fatsPercentage - proteinsPercentage);
         }
+        if (mDish.RecipeURL.Equals(""))
+        {
+            aOpenRecipe.SetActive(false);
+        }
+
+    }
+
+    public void openRecipe()
+    {
+        Application.OpenURL(mDish.RecipeURL);
     }
 
     public void onGoBack()

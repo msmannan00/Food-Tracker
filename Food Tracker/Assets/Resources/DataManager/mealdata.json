@@ -15,27 +15,32 @@
           "Tarka Chawal": {
             "Measure": "½",
             "Amount": "68",
-            "ItemSourceImage": "tarka_chawal"
+            "ItemSourceImage": "tarka_chawal",
+            "RecipeURL": ""
           },
           "Matar Pulao": {
             "Measure": "½",
             "Amount": "87",
-            "ItemSourceImage": "matar_pulao"
+            "ItemSourceImage": "matar_pulao",
+            "RecipeURL": ""
           },
           "Sabzi Pulao": {
             "Measure": "½",
             "Amount": "81",
-            "ItemSourceImage": "sabzi_pulao"
+            "ItemSourceImage": "sabzi_pulao",
+            "RecipeURL": ""
           },
           "Aloo Chanay": {
             "Measure": "½",
             "Amount": "96",
-            "ItemSourceImage": "aloo_channay"
+            "ItemSourceImage": "aloo_channay",
+            "RecipeURL": ""
           },
           "Channay Palao": {
             "Measure": "¼",
             "Amount": "60",
-            "ItemSourceImage": "channay_pulao"
+            "ItemSourceImage": "channay_pulao",
+            "RecipeURL": ""
           }
         }
       }
@@ -57,67 +62,80 @@
           "Channa Daal": {
             "Measure": "1/3",
             "Amount": "60",
-            "ItemSourceImage": "channa_daal"
+            "ItemSourceImage": "channa_daal",
+            "RecipeURL": ""
           },
           "Lobia": {
             "Measure": "½",
             "Amount": "92",
-            "ItemSourceImage": "lobia"
+            "ItemSourceImage": "lobia",
+            "RecipeURL": ""
           },
           "Haleem": {
             "Measure": "½",
             "Amount": "110",
-            "ItemSourceImage": "haleem"
+            "ItemSourceImage": "haleem",
+            "RecipeURL": ""
           },
           "Masoor Daal": {
             "Measure": "1/3",
             "Amount": "87",
-            "ItemSourceImage": "masoor_daal"
+            "ItemSourceImage": "masoor_daal",
+            "RecipeURL": ""
           },
           "Safaid Channay": {
             "Measure": "½",
             "Amount": "140",
-            "ItemSourceImage": "safaid_channay"
+            "ItemSourceImage": "safaid_channay",
+            "RecipeURL": ""
           },
           "Masar Daal": {
             "Measure": "½",
             "Amount": "130",
-            "ItemSourceImage": "masar_daal"
+            "ItemSourceImage": "masar_daal",
+            "RecipeURL": ""
           },
           "Channay Ki Daal Aur Kadu": {
             "Measure": "½",
             "Amount": "100",
-            "ItemSourceImage": "channay_ki_daal_aur_kadu"
+            "ItemSourceImage": "channay_ki_daal_aur_kadu",
+            "RecipeURL": ""
           },
           "Daal Mash": {
             "Measure": "1/3",
             "Amount": "85",
-            "ItemSourceImage": "daal_mash"
+            "ItemSourceImage": "daal_mash",
+            "RecipeURL": ""
           },
           "Daal Moong": {
             "Measure": "1/3",
             "Amount": "89",
-            "ItemSourceImage": "daal_mong"
+            "ItemSourceImage": "daal_mong",
+            "RecipeURL": ""
           },
           "Kabuli Chanay Ka Salan": {
             "Measure": "½",
             "Amount": "150",
-            "ItemSourceImage": "kabuli_channay_ka_salan"
+            "ItemSourceImage": "kabuli_channay_ka_salan",
+            "RecipeURL": ""
           },
           "Kadhi Pakora": {
             "Measure": "½",
             "Amount": "110",
-            "ItemSourceImage": "kadhi_pakora"
+            "ItemSourceImage": "kadhi_pakora",
+            "RecipeURL": ""
           },
           "Kalay Chanay Ka Salan": {
             "Measure": "½",
             "Amount": "106",
-            "ItemSourceImage": "kalay_chanay_ka_salan"
+            "ItemSourceImage": "kalay_chanay_ka_salan",
+            "RecipeURL": ""
           },
           "Saboth Masoor Ki Daal": {
             "Measure": "½",
             "Amount": "123",
-            "ItemSourceImage": "saboth_masoor_ki daal"
+            "ItemSourceImage": "saboth_masoor_ki_daal",
+            "RecipeURL": ""
           }
         }
       }
@@ -139,37 +157,44 @@
           "Aloo Bhujia": {
             "Measure": "1/3",
             "Amount": "79",
-            "ItemSourceImage": "aloo_bhujia"
+            "ItemSourceImage": "aloo_bhujia",
+            "RecipeURL": ""
           },
           "Aloo Gobi": {
             "Measure": "½",
             "Amount": "123",
-            "ItemSourceImage": "aloo_gobhi"
+            "ItemSourceImage": "aloo_gobi",
+            "RecipeURL": ""
           },
-          "Aloo, Matar, Gajjar": {
+          "Aloo, Matar, Gajar": {
             "Measure": "½",
             "Amount": "89",
-            "ItemSourceImage": "aloo_matar_gajar"
+            "ItemSourceImage": "aloo_matar_gajar",
+            "RecipeURL": ""
           },
           "Arbi baigan ki bhujia": {
             "Measure": "½",
             "Amount": "106",
-            "ItemSourceImage": "arbi_baigan_ki_bhujia"
+            "ItemSourceImage": "arbi_baigan_ki_bhujia",
+            "RecipeURL": ""
           },
           "Aloo Mattar": {
             "Measure": "½",
             "Amount": "81",
-            "ItemSourceImage": "aloo_mattar"
+            "ItemSourceImage": "aloo_mattar",
+            "RecipeURL": ""
           },
           "Aloo Gajjar": {
             "Measure": "½",
             "Amount": "154",
-            "ItemSourceImage": "aloo_gajjar"
+            "ItemSourceImage": "aloo_gajjar",
+            "RecipeURL": ""
           },
           "Aloo Mongray": {
             "Measure": "½",
             "Amount": "145",
-            "ItemSourceImage": "aloo_moongray"
+            "ItemSourceImage": "aloo_moongray",
+            "RecipeURL": ""
           }
         }
       },
@@ -185,42 +210,50 @@
           "Bhindi pyaaz": {
             "Measure": "1/3",
             "Amount": "76",
-            "ItemSourceImage": "bhindi_piyaz"
+            "ItemSourceImage": "bhindi_piyaz",
+            "RecipeURL": ""
           },
           "Tori": {
             "Measure": "1/3",
             "Amount": "78",
-            "ItemSourceImage": "tori"
+            "ItemSourceImage": "tori",
+            "RecipeURL": ""
           },
           "Tinday": {
             "Measure": "½",
             "Amount": "93",
-            "ItemSourceImage": "tinday"
+            "ItemSourceImage": "tinday",
+            "RecipeURL": ""
           },
           "Ghiyya": {
             "Measure": "½",
             "Amount": "84",
-            "ItemSourceImage": "ghiyya"
+            "ItemSourceImage": "ghiyya",
+            "RecipeURL": ""
           },
           "Gobhi": {
             "Measure": "½",
             "Amount": "71",
-            "ItemSourceImage": "gobhi"
+            "ItemSourceImage": "gobhi",
+            "RecipeURL": ""
           },
           "Bingan Bharta": {
             "Measure": "1/3",
             "Amount": "60",
-            "ItemSourceImage": "bingan_bharta"
+            "ItemSourceImage": "bingan_bharta",
+            "RecipeURL": ""
           },
           "Karely": {
             "Measure": "¼",
             "Amount": "45",
-            "ItemSourceImage": "karely"
+            "ItemSourceImage": "karely",
+            "RecipeURL": ""
           },
           "Saag": {
             "Measure": "½",
             "Amount": "81",
-            "ItemSourceImage": "saag"
+            "ItemSourceImage": "saag",
+            "RecipeURL": ""
           }
         }
       }
@@ -242,27 +275,32 @@
           "Beef Karahi": {
             "Measure": "1/3",
             "Amount": "83",
-            "ItemSourceImage": "beef_karahi"
+            "ItemSourceImage": "beef_karahi",
+            "RecipeURL": ""
           },
           "Beef Qeema": {
             "Measure": "¼",
             "Amount": "58",
-            "ItemSourceImage": "beef_keema"
+            "ItemSourceImage": "beef_keema",
+            "RecipeURL": ""
           },
           "Bhuna Keema": {
             "Measure": "¼",
             "Amount": "52",
-            "ItemSourceImage": "bhuna_keema"
+            "ItemSourceImage": "bhuna_keema",
+            "RecipeURL": ""
           },
           "Keema Pyaaz": {
             "Measure": "¼",
             "Amount": "60",
-            "ItemSourceImage": "keema_piyaz"
+            "ItemSourceImage": "keema_piyaz",
+            "RecipeURL": ""
           },
           "Keema Shimla Mirch": {
             "Measure": "1/3",
             "Amount": "79",
-            "ItemSourceImage": "keema_shimla_mirch"
+            "ItemSourceImage": "keema_shimla_mirch",
+            "RecipeURL": ""
           }
         }
       },
@@ -278,17 +316,20 @@
           "Murgh Handi": {
             "Measure": "¼",
             "Amount": "56",
-            "ItemSourceImage": "murgh_handi"
+            "ItemSourceImage": "murgh_handi",
+            "RecipeURL": ""
           },
           "Murgh Karahi": {
             "Measure": "¼",
             "Amount": "52",
-            "ItemSourceImage": "murgh_karahi"
+            "ItemSourceImage": "murgh_karahi",
+            "RecipeURL": ""
           },
           "Murgh Korma": {
             "Measure": "¼",
             "Amount": "62",
-            "ItemSourceImage": "murgh_korma"
+            "ItemSourceImage": "murgh_korma",
+            "RecipeURL": ""
           }
         }
       }
@@ -310,42 +351,50 @@
           "Bhindi Gosht": {
             "Measure": "½",
             "Amount": "106",
-            "ItemSourceImage": "bhindi_gosht"
+            "ItemSourceImage": "bhindi_gosht",
+            "RecipeURL": ""
           },
           "Saag Gosht": {
             "Measure": "½",
             "Amount": "160",
-            "ItemSourceImage": "saag_gosht"
+            "ItemSourceImage": "saag_gosht",
+            "RecipeURL": ""
           },
           "Tinday Gosht": {
             "Measure": "½",
             "Amount": "122",
-            "ItemSourceImage": "tinday_gosht"
+            "ItemSourceImage": "tinday_gosht",
+            "RecipeURL": ""
           },
           "Karelay Gosht": {
             "Measure": "1/3",
             "Amount": "51",
-            "ItemSourceImage": "karely_gosht"
+            "ItemSourceImage": "karely_gosht",
+            "RecipeURL": ""
           },
           "Anday ka Khagina": {
             "Measure": "1/3",
             "Amount": "67",
-            "ItemSourceImage": "anday_ka_khagina"
+            "ItemSourceImage": "anday_ka_khagina",
+            "RecipeURL": ""
           },
           "Kado Gosht": {
             "Measure": "½",
             "Amount": "115",
-            "ItemSourceImage": "kado_gosht"
+            "ItemSourceImage": "kado_gosht",
+            "RecipeURL": ""
           },
           "Palak Gosht": {
             "Measure": "¼",
             "Amount": "61",
-            "ItemSourceImage": "palak_gosht"
+            "ItemSourceImage": "palak_gosht",
+            "RecipeURL": ""
           },
           "Shaljam Gosht": {
             "Measure": "¼",
             "Amount": "81",
-            "ItemSourceImage": "shaljam_gosht"
+            "ItemSourceImage": "shaljam_gosht",
+            "RecipeURL": ""
           }
         }
       },
@@ -361,17 +410,20 @@
           "Aloo Gosht": {
             "Measure": "½",
             "Amount": "115",
-            "ItemSourceImage": "aloo_gosht"
+            "ItemSourceImage": "aloo_gosht",
+            "RecipeURL": ""
           },
           "Aloo Keema": {
             "Measure": "1/3",
             "Amount": "72",
-            "ItemSourceImage": "aloo_keema"
+            "ItemSourceImage": "aloo_keema",
+            "RecipeURL": ""
           },
           "Matar Keema": {
             "Measure": "¼",
             "Amount": "54",
-            "ItemSourceImage": "matar_keema"
+            "ItemSourceImage": "matar_keema",
+            "RecipeURL": ""
           }
         }
       },
@@ -381,23 +433,26 @@
           "Carb": "16",
           "Protein": "9",
           "Fat": "12",
-          "KiloCal": "21"
+          "KiloCal": "210"
         },
         "Dishes": {
           "Murgh Biryani": {
             "Measure": "¾",
             "Amount": "138",
-            "ItemSourceImage": "murgh_biryani"
+            "ItemSourceImage": "murgh_biryani",
+            "RecipeURL": ""
           },
           "Yakhni Pulao": {
             "Measure": "2/3",
             "Amount": "126.5",
-            "ItemSourceImage": "yakhni_pulao"
+            "ItemSourceImage": "yakhni_pulao",
+            "RecipeURL": ""
           },
           "Chicken Channay": {
             "Measure": "½",
             "Amount": "159",
-            "ItemSourceImage": "chicken_channay"
+            "ItemSourceImage": "chicken_channay",
+            "RecipeURL": ""
           }
         }
       }

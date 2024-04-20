@@ -20,6 +20,9 @@ public class planDashboardController : MonoBehaviour, PageController
     DateTime mCurrentDate;
     int mSelectedRangeIndex = 3;
 
+    public GameObject aContent;
+
+
     public void onInit(Dictionary<string, object> data)
     {
     }
@@ -31,6 +34,7 @@ public class planDashboardController : MonoBehaviour, PageController
         mCurrentDate = DateTime.Now;
         onUpdateDates(3);
         UpdateCellSize();
+        initDailyPlanSection();
     }
 
     public void onNextDate()
@@ -61,14 +65,19 @@ public class planDashboardController : MonoBehaviour, PageController
     {
         GlobalAnimator.Instance.WobbleObject(aDateRangeList[pIndex]);
         onUpdateDates(pIndex);
-        aCurrentDay.text = DateTime.Now.DayOfWeek.ToString();
-        aCurrentDate.text = DateTime.Now.ToString("MMM dd, yyyy");
+        DateTime newStartDate = mCurrentDate.AddDays(mSelectedRangeIndex - 3);
+        aCurrentDay.text = newStartDate.ToString("ddd");
+        aCurrentDate.text = newStartDate.ToString("MMM dd, yyyy"); ;
     }
 
     private void onUpdateDates(int pSelectedIndex)
     {
         mSelectedRangeIndex = pSelectedIndex;
         aMonthYearDate.text = mCurrentDate.ToString("MMMM yyyy");
+
+        aCurrentDay.text = mCurrentDate.ToString("ddd");
+        aCurrentDate.text = mCurrentDate.ToString("MMM dd, yyyy");
+
         DateTime startDate = userSessionManager.Instance.mUserStatsModel.sStartingDate;
         DateTime? endDate = userSessionManager.Instance.mUserStatsModel.sContinueWeeklyPlan ? (DateTime?)null : userSessionManager.Instance.mUserStatsModel.sEndingDate;
 
@@ -118,6 +127,7 @@ public class planDashboardController : MonoBehaviour, PageController
         UpdateNavigationButton(aNextDay, mCurrentDate.AddDays(1), startDate, endDate, false);
     }
 
+
     private void UpdateNavigationButton(GameObject button, DateTime dateToCheck, DateTime startDate, DateTime? endDate, bool isStart)
     {
         bool isInRange;
@@ -134,7 +144,17 @@ public class planDashboardController : MonoBehaviour, PageController
         button.GetComponent<Image>().color = isInRange ? new Color(1f, 1f, 1f, 1f) : new Color(1f, 1f, 1f, 0.3f);
     }
 
-
+    void initDailyPlanSection()
+    {
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/dailyPlannerCategory");
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject instance = Instantiate(prefab, aContent.transform);
+            instance.name = "dailyPlannerCategoryInstance" + (i + 1);
+            planCategoryController categoryController = instance.GetComponent<planCategoryController>();
+            categoryController.initCategory(i, gameObject);
+        }
+    }
     void UpdateCellSize()
     {
         float panelWidth = GetComponent<RectTransform>().rect.width;

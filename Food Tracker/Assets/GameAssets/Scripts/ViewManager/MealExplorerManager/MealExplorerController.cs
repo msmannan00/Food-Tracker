@@ -1,3 +1,4 @@
+using AwesomeCharts;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class MealExplorerController : MonoBehaviour, PageController
 
     public void onInit(Dictionary<string, object> data)
     {
+
         mSubCategory = (List<SubCategory>)data["data"];
         mTitle = (string)data["title"];
         aSearchBar.onValueChanged.AddListener(HandleInputChanged);

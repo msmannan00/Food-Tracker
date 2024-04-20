@@ -1,3 +1,4 @@
+using AwesomeCharts;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,13 +27,14 @@ public class mealViewerController : MonoBehaviour, PageController
     public TMP_Text aKiloCalories;
     public TMP_Text aFatPercentageFacts;
     public TMP_Text aProteinsCalories;
-
+    private PieChart pieChart;
 
     public void onInit(Dictionary<string, object> data)
     {
         mTitle = (string)data["title"];
         mEachServing = (ServingInfo)data["eachServing"];
         mDish = (MealItem)data["dish"];
+        pieChart = aPieChart.GetComponent<PieChart>();
     }
 
     void Start()
@@ -54,20 +56,30 @@ public class mealViewerController : MonoBehaviour, PageController
         double proteinsPercentage = (mEachServing.Protein / total) * 100;
 
         aTitle.text = mTitle;
-        aQuantityValue.text = mDish.Amount.ToString() + "g";
-        aServingSizeValue.text = mDish.Measure + " cup";
-        aCarbValue.text = mEachServing.Carb.ToString() + "g";
-        aFatValue.text = mEachServing.Fat.ToString() + "g";
-        aProteinValue.text = mEachServing.Protein.ToString() + "g";
-        aCarbPercentage.text = carbsPercentage.ToString() + "%";
-        aFatPercentage.text = fatsPercentage.ToString() + "%";
-        aProteinPercentage.text = proteinsPercentage.ToString() + "%";
-        aKiloCalories.text = mEachServing.KiloCal.ToString();
+        aQuantityValue.text = mDish.Amount.ToString("N2") + "g";
+        aServingSizeValue.text = mDish.Measure + " cup";  // Ensure 'Measure' is a numeric value before formatting
+        aCarbValue.text = mEachServing.Carb.ToString("N2") + "g";
+        aFatValue.text = mEachServing.Fat.ToString("N2") + "g";
+        aProteinValue.text = mEachServing.Protein.ToString("N2") + "g";
+        aCarbPercentage.text = carbsPercentage.ToString("N2") + "%";
+        aFatPercentage.text = fatsPercentage.ToString("N2") + "%";
+        aProteinPercentage.text = proteinsPercentage.ToString("N2") + "%";
+        aKiloCalories.text = mEachServing.KiloCal.ToString("N2");
 
-        aFatPercentageFacts.text = fatsPercentage.ToString() + "%";
-        aProteinsCalories.text = proteinsPercentage.ToString() + "%";
+        aFatPercentageFacts.text = fatsPercentage.ToString("N2") + "%";
+        aProteinsCalories.text = proteinsPercentage.ToString("N2") + "%";
 
-
+        if (total == 0)
+        {
+            pieChart.UpdateEntry("Other", 100);
+        }
+        else
+        {
+            pieChart.UpdateEntry("Carbs", carbsPercentage);
+            pieChart.UpdateEntry("Fats", fatsPercentage);
+            pieChart.UpdateEntry("Proteins", proteinsPercentage);
+            pieChart.UpdateEntry("Other", 100 - carbsPercentage - fatsPercentage - proteinsPercentage);
+        }
     }
 
     public void onGoBack()
@@ -77,6 +89,6 @@ public class mealViewerController : MonoBehaviour, PageController
 
     void Update()
     {
-        
+
     }
 }

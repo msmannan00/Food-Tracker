@@ -9,12 +9,12 @@ TagManager:
   - rootController
   - UIBlocker
   - overlayBlocker
-  - plannerScreen
   - dashboardScreen
-  - planDashboardScreen
   - mealExplorerScreen
-  - mealViewerScreen
-  - mealExplorerEditScreen
+  - addMealScreen
+  - dailyMealScreen
+  - mealDetailScreen
+  - planCreatorScreen
   layers:
   - Default
   - TransparentFX

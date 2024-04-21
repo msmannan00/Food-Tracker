@@ -19,13 +19,13 @@ public class dashboardController : MonoBehaviour, PageController
     public void updatePlanDetail()
     {
         Dictionary<string, object> mData = new Dictionary<string, object> { };
-        StateManager.Instance.OpenStaticScreen(gameObject, "plannerScreen", mData, true);
+        StateManager.Instance.OpenStaticScreen("planCreator", gameObject, "planCreatorScreen", mData, true);
     }
 
     public void viewPlanDetail()
     {
         Dictionary<string, object> mData = new Dictionary<string, object> { };
-        StateManager.Instance.OpenStaticScreen(gameObject, "planDashboardScreen", mData, true);
+        StateManager.Instance.OpenStaticScreen("dailyMeal", gameObject, "dailyMealScreen", mData, true);
     }
 
     public void initFoodCategories()
@@ -34,10 +34,10 @@ public class dashboardController : MonoBehaviour, PageController
         int index = 0;
         foreach (var category in mCategories)
         {
-            GameObject categoryItem = Instantiate(Resources.Load<GameObject>("Prefabs/mealCategory"));
+            GameObject categoryItem = Instantiate(Resources.Load<GameObject>("Prefabs/dashboard/dashboardMealCategory"));
             categoryItem.name = "Category_" + index++;
             categoryItem.transform.SetParent(aScrollViewContent.transform, false);
-            mealCategoryController categoryController = categoryItem.GetComponent<mealCategoryController>();
+            DashboardMealCategoryController categoryController = categoryItem.GetComponent<DashboardMealCategoryController>();
             string imagePath = "UIAssets/Dashboard/Categories/" + category.Value.ItemSourceImage;
             categoryController.initCategory(category.Value.Title, category.Value.SubCategories, imagePath, gameObject);
         }

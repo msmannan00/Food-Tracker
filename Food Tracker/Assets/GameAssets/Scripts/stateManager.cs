@@ -8,7 +8,7 @@ public class StateManager : GenericSingletonClass<StateManager>
     private List<GameObject> inactivePages = new List<GameObject>();
     private bool isProcessing = false;
 
-    public void OpenStaticScreen(GameObject currentPage, string newPage, Dictionary<string, object> data, bool keepState = false)
+    public void OpenStaticScreen(string folderPath, GameObject currentPage, string newPage, Dictionary<string, object> data, bool keepState = false)
     {
         if (isProcessing) return;
         isProcessing = true;
@@ -18,7 +18,7 @@ public class StateManager : GenericSingletonClass<StateManager>
             onRemoveBackHistory();
         }
 
-        var prefabPath = "Prefabs/" + newPage;
+        var prefabPath = "Prefabs/"+ folderPath + "/" + newPage;
         var prefabResource = Resources.Load<GameObject>(prefabPath);
         var prefab = Instantiate(prefabResource);
         var container = GameObject.FindGameObjectWithTag(newPage);

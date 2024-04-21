@@ -15,7 +15,7 @@ public class AppManager : MonoBehaviour
         Application.targetFrameRate = 60;
         if (!PreferenceManager.Instance.GetBool("WelcomeScreensShown_v3"))
         {
-            StateManager.Instance.OpenStaticScreen(null, "welcomeScreen", null);
+            StateManager.Instance.OpenStaticScreen("welcome", null, "welcomeScreen", null);
         }
         else
         {
@@ -23,7 +23,7 @@ public class AppManager : MonoBehaviour
             {
                 { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
             };
-            StateManager.Instance.OpenStaticScreen(null, "authScreen", mData);
+            StateManager.Instance.OpenStaticScreen("auth", null, "authScreen", mData);
         }
 
         /*Initiating loading of meal data*/

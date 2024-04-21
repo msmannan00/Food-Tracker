@@ -35,7 +35,7 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
 
     public void FadeInLoader()
     {
-        GameObject overlayBlockerInstance = Resources.Load<GameObject>("Prefabs/UIBlocker");
+        GameObject overlayBlockerInstance = Resources.Load<GameObject>("Prefabs/shared/UIBlocker");
         if (overlayBlockerInstance != null)
         {
             GameObject instance = UnityEngine.Object.Instantiate(overlayBlockerInstance);
@@ -70,7 +70,7 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
         var currentCanvas = currentPage.GetComponent<CanvasGroup>();
         var targetCanvas = targetPage.GetComponent<CanvasGroup>();
 
-        var overlayBlocker = Instantiate(Resources.Load<GameObject>("Prefabs/overlayBlocker"));
+        var overlayBlocker = Instantiate(Resources.Load<GameObject>("Prefabs/shared/overlayBlocker"));
         overlayBlocker.transform.SetParent(currentPage.transform, false);
         overlayBlocker.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         overlayBlocker.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);

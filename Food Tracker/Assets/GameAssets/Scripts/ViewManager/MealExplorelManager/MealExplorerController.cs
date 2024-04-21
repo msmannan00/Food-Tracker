@@ -55,7 +55,7 @@ public class MealExplorerController : MonoBehaviour, PageController
                         GameObject dish = Instantiate(Resources.Load<GameObject>("Prefabs/mealExplorer/mealExplorerCategory"));
                         dish.name = "Category_" + index++;
                         dish.transform.SetParent(aScrollViewContent.transform, false);
-                        mealExplorerCategoryController categoryController = dish.GetComponent<mealExplorerCategoryController>();
+                        MealExplorerCategoryController categoryController = dish.GetComponent<MealExplorerCategoryController>();
                         categoryController.InitCategory(mDishItem.Key, description, mDishItem.Value, categoryItem.EachServing, imagePath, gameObject);
                         aServingText.SetText(categoryItem.EachServing.Carb + " carbs, " + categoryItem.EachServing.Protein + " proteins, " + categoryItem.EachServing.Fat + " fats, " + categoryItem.EachServing.KiloCal);
                     }

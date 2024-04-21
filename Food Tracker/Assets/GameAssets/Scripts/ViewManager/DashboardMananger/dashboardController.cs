@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class dashboardController : MonoBehaviour, PageController 
+public class DashboardController : MonoBehaviour, PageController 
 {
     public TMP_Text aUserWelcome;
     public GameObject aScrollViewContent;

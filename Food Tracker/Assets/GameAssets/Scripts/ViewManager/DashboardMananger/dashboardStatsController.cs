@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class dashboardStatsController : MonoBehaviour
+public class DashboardStatsController : MonoBehaviour
 {
     [Header("Stats Data")]
     public TMP_Text aActive;

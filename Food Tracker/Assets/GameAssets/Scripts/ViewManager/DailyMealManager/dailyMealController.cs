@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class dailyMealController : MonoBehaviour, PageController
+public class DailyMealController : MonoBehaviour, PageController
 {
     public TMP_Text aMonthYearDate;
     public GameObject aBackMonth;
@@ -151,7 +151,7 @@ public class dailyMealController : MonoBehaviour, PageController
         {
             GameObject instance = Instantiate(prefab, aContent.transform);
             instance.name = "dailyPlannerCategoryInstance" + (i + 1);
-            dailyMealCategoryController categoryController = instance.GetComponent<dailyMealCategoryController>();
+            DailyMealCategoryController categoryController = instance.GetComponent<DailyMealCategoryController>();
             categoryController.initCategory(i, gameObject);
         }
     }

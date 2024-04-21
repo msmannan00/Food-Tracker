@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class dailyMealCategoryController : MonoBehaviour
+public class DailyMealCategoryController : MonoBehaviour
 {
     public Image aCategoryIcon;
     public TMP_Text aHeader;

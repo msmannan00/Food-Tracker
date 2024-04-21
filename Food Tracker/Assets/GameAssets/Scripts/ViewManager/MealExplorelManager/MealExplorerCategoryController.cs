@@ -6,14 +6,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class mealExplorerCategoryController : MonoBehaviour, IPointerClickHandler
+public class MealExplorerCategoryController : MonoBehaviour, IPointerClickHandler
 {
     public TMP_Text aName;
     public TMP_Text aDescription;
     public Image aImage;
     public GameObject loader;
-    public GameObject mParent;
 
+    GameObject mParent;
     string mTitle;
     ServingInfo mEachServing;
     MealItem mDishes;

@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 8677258922988998163}
   - component: {fileID: 146941612652951723}
   - component: {fileID: 5395855407166962271}
-  - component: {fileID: 945902443}
+  - component: {fileID: 2508415472804325316}
   m_Layer: 5
   m_Name: dashboardMealCategory
   m_TagString: Untagged
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0.85882354, g: 0.85882354, b: 0.85882354, a: 1}
   m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
---- !u!114 &945902443
+--- !u!114 &2508415472804325316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,13 +422,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7302680034623667263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11bd8103e02289b4986da92a48565116, type: 3}
+  m_Script: {fileID: 11500000, guid: ddb29ab3447363641ad879b9954824e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aName: {fileID: 41983876991512387}
   aItemCount: {fileID: 5942190403185835538}
   aImage: {fileID: 5845293901938344820}
-  mParent: {fileID: 0}
 --- !u!1 &7485627642837411778
 GameObject:
   m_ObjectHideFlags: 0

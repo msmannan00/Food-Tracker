@@ -95,7 +95,7 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
             .OnComplete(() =>
             {
                 callbackSuccess?.Invoke();
-                currentPage.SetActive(keepState);
+                currentPage.SetActive(false);
                 if (!keepState)
                 {
                     Destroy(overlayBlocker);

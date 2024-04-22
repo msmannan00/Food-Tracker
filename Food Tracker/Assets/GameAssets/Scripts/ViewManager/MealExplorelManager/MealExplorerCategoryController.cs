@@ -46,6 +46,6 @@ public class MealExplorerCategoryController : MonoBehaviour, IPointerClickHandle
         mData["title"] = mTitle;
         mData["eachServing"] = mEachServing;
         mData["dish"] = mDishes;
-        StateManager.Instance.OpenStaticScreen("mealDetailS", mParent, "mealDetailScreen", mData, true);
+        StateManager.Instance.OpenStaticScreen("mealDetail", mParent, "mealDetailScreen", mData, true);
     }
 }

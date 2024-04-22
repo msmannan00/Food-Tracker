@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DashboardStatsController : MonoBehaviour
+public class DailyStatController : MonoBehaviour
 {
     [Header("Stats Data")]
     public TMP_Text aActive;
@@ -18,6 +18,7 @@ public class DashboardStatsController : MonoBehaviour
     public GameObject aPieChart;
 
     private PieChart pieChart;
+    DateTime mDate;
 
     void OnEnable()
     {
@@ -25,6 +26,11 @@ public class DashboardStatsController : MonoBehaviour
         {
             UpdatePieChartValues();
         }
+    }
+
+    public void initCategory(DateTime pDate)
+    {
+        mDate = pDate;
     }
 
     void Start()
@@ -60,7 +66,7 @@ public class DashboardStatsController : MonoBehaviour
         double fats = 0;
         double proteins = 0;
 
-        foreach (var dayMeals in userSessionManager.Instance.mPlanModel.Meals.Values)
+        if (userSessionManager.Instance.mPlanModel.Meals.TryGetValue(mDate, out var dayMeals))
         {
             foreach (var meal in dayMeals.Values)
             {
@@ -76,7 +82,6 @@ public class DashboardStatsController : MonoBehaviour
                 }
             }
         }
-
         string formattedKiloCalories = kiloCalories < 10 ? kiloCalories.ToString("0.000") : kiloCalories.ToString("0.00");
         this.aTotalCal.SetText(formattedKiloCalories);
 

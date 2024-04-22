@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,11 +11,13 @@ public class DailyMealCategoryController : MonoBehaviour
     public TMP_Text aHeader;
     GameObject mParent;
     int mDayState = 0;
+    DateTime mDate;
 
-    public void initCategory(int state, GameObject pParent)
+    public void initCategory(int state, DateTime pDate, GameObject pParent)
     {
         string imageName = "";
         mDayState = state;
+        mDate = pDate;
         mParent = pParent;
 
         if (state == 0)
@@ -39,6 +43,7 @@ public class DailyMealCategoryController : MonoBehaviour
     {
         Dictionary<string, object> mData = new Dictionary<string, object> { };
         mData["state"] = mDayState;
+        mData["date"] = mDate;
         StateManager.Instance.OpenStaticScreen("addMeal", mParent, "addMealScreen", mData, true);
     }
 

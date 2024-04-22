@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,10 +18,12 @@ public class DailyMealController : MonoBehaviour, PageController
     public TMP_Text aCurrentDate;
     public TMP_Text aCurrentDay;
     DateTime mCurrentDate;
+    DateTime mCurrentIndexDate;
     int mSelectedRangeIndex = 3;
 
     public GameObject aContent;
-
+    public GameObject aDailyStats;
+    GameObject dailyStatsPrefab;
 
     public void onInit(Dictionary<string, object> data)
     {
@@ -30,8 +32,8 @@ public class DailyMealController : MonoBehaviour, PageController
 
     void Start()
     {
-        bool isPlanInitialized = (bool)PreferenceManager.Instance.GetBool("FirstTimePlanInitialized", false);
-        mCurrentDate = DateTime.Now;
+        mCurrentDate = DateTime.Now.Date;
+        mCurrentIndexDate = mCurrentDate;
         onUpdateDates(3);
         UpdateCellSize();
         initDailyPlanSection();
@@ -40,25 +42,33 @@ public class DailyMealController : MonoBehaviour, PageController
     public void onNextDate()
     {
         mCurrentDate = mCurrentDate.AddDays(1);
+        mCurrentIndexDate = mCurrentDate;
         onUpdateDates(3);
+        initDailyPlanSection();
     }
 
     public void onPreviousDate()
     {
         mCurrentDate = mCurrentDate.AddDays(-1);
+        mCurrentIndexDate = mCurrentDate;
         onUpdateDates(3);
+        initDailyPlanSection();
     }
 
     public void onNextMonth()
     {
         mCurrentDate = mCurrentDate.AddMonths(1);
+        mCurrentIndexDate = mCurrentDate;
         onUpdateDates(3);
+        initDailyPlanSection();
     }
 
     public void onPreviousMonth()
     {
         mCurrentDate = mCurrentDate.AddMonths(-1);
+        mCurrentIndexDate = mCurrentDate;
         onUpdateDates(3);
+        initDailyPlanSection();
     }
 
     public void onUpdateSelectedIndex(int pIndex)
@@ -67,7 +77,9 @@ public class DailyMealController : MonoBehaviour, PageController
         onUpdateDates(pIndex);
         DateTime newStartDate = mCurrentDate.AddDays(mSelectedRangeIndex - 3);
         aCurrentDay.text = newStartDate.ToString("ddd");
-        aCurrentDate.text = newStartDate.ToString("MMM dd, yyyy"); ;
+        aCurrentDate.text = newStartDate.ToString("MMM dd, yyyy");
+        mCurrentIndexDate = newStartDate;
+        initDailyPlanSection();
     }
 
     private void onUpdateDates(int pSelectedIndex)
@@ -146,14 +158,32 @@ public class DailyMealController : MonoBehaviour, PageController
 
     void initDailyPlanSection()
     {
+        if (dailyStatsPrefab != null)
+        {
+            GameObject.Destroy(dailyStatsPrefab);
+        }
+
+        for (int i = aContent.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = aContent.transform.GetChild(i);
+            if (child.name.Contains("dailyPlannerCategoryInstance"))
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
+
         GameObject prefab = Resources.Load<GameObject>("Prefabs/dailyMeal/dailyMealCategory");
         for (int i = 0; i < 3; i++)
         {
             GameObject instance = Instantiate(prefab, aContent.transform);
             instance.name = "dailyPlannerCategoryInstance" + (i + 1);
             DailyMealCategoryController categoryController = instance.GetComponent<DailyMealCategoryController>();
-            categoryController.initCategory(i, gameObject);
+            categoryController.initCategory(i, mCurrentIndexDate, gameObject);
         }
+        GameObject stats = Resources.Load<GameObject>("Prefabs/dailyMeal/dailyStats");
+        dailyStatsPrefab = Instantiate(stats, aDailyStats.transform);
+        DailyStatController statController = dailyStatsPrefab.GetComponent<DailyStatController>();
+        statController.initCategory(mCurrentIndexDate);
     }
     void UpdateCellSize()
     {

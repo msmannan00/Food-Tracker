@@ -70,6 +70,7 @@ public class StateManager : GenericSingletonClass<StateManager>
             }
             canvasGroup.alpha = 1;  
             lastPage.SetActive(true);
+            lastPage.GetComponent<CanvasGroup>().interactable = true;
 
             lastPage.transform.position = new Vector3(lastPage.transform.position.x - 500, lastPage.transform.position.y, lastPage.transform.position.z);
             lastPage.transform.DOMoveX(lastPage.transform.position.x + 500, 0f).SetEase(Ease.InOutQuad);

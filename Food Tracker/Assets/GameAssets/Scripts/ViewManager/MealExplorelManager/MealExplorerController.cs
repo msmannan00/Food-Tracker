@@ -10,12 +10,12 @@ public class MealExplorerController : MonoBehaviour, PageController
     public GameObject aScrollViewContent;
     public TMP_InputField aSearchBar;
     public List<string> mSubCategoryTitle;
-    public string mTitle;
     public TMP_Dropdown sDropdown;
     public TMP_Text aServingText;
     public GridLayoutGroup gridLayoutGroup;
 
     string mSearchText = "";
+    string mTitle;
 
     public void onInit(Dictionary<string, object> data)
     {
@@ -85,6 +85,7 @@ public class MealExplorerController : MonoBehaviour, PageController
             {
                 sDropdown.options.Add(new TMP_Dropdown.OptionData(mTitle));
             }
+
         }
 
         sDropdown.value = 0;

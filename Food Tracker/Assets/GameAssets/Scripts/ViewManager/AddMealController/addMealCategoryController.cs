@@ -38,7 +38,7 @@ public class addMealCategoryController : MonoBehaviour
 
         aName.text = pTitle;
         aDescriptionTop.text = pServing.KiloCal + " kcals - " + pServing.Carb + "g carbs";
-        aDescriptionBottom.text = pServing.KiloCal + "g protiens - " + pServing.Carb + "g fats";
+        aDescriptionBottom.text = pServing.Protein + "g protiens - " + pServing.Fat + "g fats";
 
 
         if (pImagePath.StartsWith("http://") || pImagePath.StartsWith("https://"))
@@ -91,7 +91,7 @@ public class addMealCategoryController : MonoBehaviour
     {
         if (!isCounterBlocked)
         {
-            if (aMealServingCount < 99)
+            if (aMealServingCount < 99.5)
             {
                 aMealServingCount = aMealServingCount + 0.5;
                 aCounter.text = aMealServingCount.ToString();
@@ -104,7 +104,7 @@ public class addMealCategoryController : MonoBehaviour
     {
         if (!isCounterBlocked)
         {
-            if (aMealServingCount > 1)
+            if (aMealServingCount > 0.5)
             {
                 aMealServingCount = aMealServingCount - 0.5;
                 aCounter.text = aMealServingCount.ToString();
@@ -121,6 +121,8 @@ public class addMealCategoryController : MonoBehaviour
         userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle] = null;
         userSessionManager.Instance.SavePlanModel();
         blockCounter();
+        aCounter.text = "0.5";
+        aMealServingCount = 0.5f;
     }
 
     public void onAddMeal()
@@ -167,7 +169,7 @@ public class addMealCategoryController : MonoBehaviour
     {
         isCounterBlocked = false;
         Color currentOutlineColor;
-        if (aMealServingCount >= 99)
+        if (aMealServingCount >= 99.5)
         {
             aCountPlus.GetComponent<Image>().raycastTarget = false;
             currentOutlineColor = aCountPlus.GetComponent<Outline>().effectColor;
@@ -182,7 +184,7 @@ public class addMealCategoryController : MonoBehaviour
             aCountPlus.GetComponent<Outline>().DOColor(currentOutlineColor, 0.1f);
         }
 
-        if (aMealServingCount <= 1)
+        if (aMealServingCount <= 0.5)
         {
             aCountMinus.GetComponent<Image>().raycastTarget = false;
             currentOutlineColor = aCountMinus.GetComponent<Outline>().effectColor;

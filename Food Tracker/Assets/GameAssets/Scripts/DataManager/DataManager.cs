@@ -51,14 +51,26 @@ public class DataManager : GenericSingletonClass<DataManager>
                 {
                     Debug.LogError("Remote meal data corrupted. Loading locally.");
                     LoadLocalMealData();
+                    mealOnlineParserError();
                 }
             }
             else
             {
                 Debug.Log("Failed to download meal data, loading locally.");
                 LoadLocalMealData();
+                mealOnlineParserError();
             }
         }
+    }
+
+    void mealOnlineParserError()
+    {
+        GameObject alertPrefab = Resources.Load<GameObject>("Prefabs/alerts/alertFailure");
+        GameObject alertsContainer = GameObject.FindGameObjectWithTag("alerts");
+        GameObject instantiatedAlert = Instantiate(alertPrefab, alertsContainer.transform);
+        AlertController alertController = instantiatedAlert.GetComponent<AlertController>();
+        alertController.InitController("Internal error occured, please try again later", pTrigger: "Continue", pHeader: "Server Error");
+        GlobalAnimator.Instance.AnimateAlpha(instantiatedAlert, true);
     }
 
     private void LoadLocalMealData()

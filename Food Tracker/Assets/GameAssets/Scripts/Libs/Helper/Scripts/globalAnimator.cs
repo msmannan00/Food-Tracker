@@ -33,6 +33,27 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
         });
     }
 
+    public void AnimateAlpha(GameObject gameObject, bool fadeIn)
+    {
+        CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        canvasGroup.alpha = fadeIn ? 0 : 1;
+        float targetAlpha = fadeIn ? 1 : 0;
+        float duration = 0.25f;
+
+        canvasGroup.DOFade(targetAlpha, duration).OnComplete(() =>
+        {
+            if (!fadeIn)
+            {
+                Destroy(gameObject);
+            }
+        });
+    }
+
     public void FadeInLoader()
     {
         GameObject overlayBlockerInstance = Resources.Load<GameObject>("Prefabs/shared/UIBlocker");

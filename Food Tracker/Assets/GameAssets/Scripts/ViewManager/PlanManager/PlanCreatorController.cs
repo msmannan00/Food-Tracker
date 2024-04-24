@@ -179,7 +179,11 @@ public class PlanCreatorController : MonoBehaviour, PageController
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StateManager.Instance.HandleBackAction(gameObject);
+            bool isPlanInitialized = (bool)PreferenceManager.Instance.GetBool("FirstTimePlanInitialized", false);
+            if (isPlanInitialized)
+            {
+                StateManager.Instance.HandleBackAction(gameObject);
+            }
         }
     }
 

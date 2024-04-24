@@ -103,7 +103,18 @@ public class AuthController : MonoBehaviour, PageController
     {
         Action callbackSuccess = () =>
         {
+            Action callbackSuccess = () =>
+            {
+                Application.OpenURL("mailto:");
+            };
+
             GlobalAnimator.Instance.FadeOutLoader();
+            GameObject alertPrefab = Resources.Load<GameObject>("Prefabs/alerts/alertSuccess");
+            GameObject alertsContainer = GameObject.FindGameObjectWithTag("alerts");
+            GameObject instantiatedAlert = Instantiate(alertPrefab, alertsContainer.transform);
+            AlertController alertController = instantiatedAlert.GetComponent<AlertController>();
+            alertController.InitController("Reset password instructions have been sent to your email address", pCallbackSuccess: callbackSuccess, pTrigger : "Open Mail");
+            GlobalAnimator.Instance.AnimateAlpha(instantiatedAlert, true);
         };
 
         Action<PlayFabError> callbackFailure = (pError) =>
@@ -111,6 +122,13 @@ public class AuthController : MonoBehaviour, PageController
             GlobalAnimator.Instance.FadeOutLoader();
             GlobalAnimator.Instance.FadeIn(aError.gameObject);
             aError.text = ErrorManager.Instance.getTranslateError(pError.Error.ToString());
+
+            GameObject alertPrefab = Resources.Load<GameObject>("Prefabs/alerts/alertFailure");
+            GameObject alertsContainer = GameObject.FindGameObjectWithTag("alerts");
+            GameObject instantiatedAlert = Instantiate(alertPrefab, alertsContainer.transform);
+            AlertController alertController = instantiatedAlert.GetComponent<AlertController>();
+            alertController.InitController("Internal error occured, please try again later", pTrigger: "Continue", pHeader: "Server Error");
+            GlobalAnimator.Instance.AnimateAlpha(instantiatedAlert, true);
         };
         GlobalAnimator.Instance.FadeInLoader();
         aPlayFabManager.InitiatePasswordRecovery(aUsername.text, callbackSuccess, callbackFailure);

@@ -159,7 +159,7 @@ public class DailyMealController : MonoBehaviour, PageController
         }
 
         button.GetComponent<Image>().raycastTarget = isInRange;
-        button.GetComponent<Image>().color = isInRange ? new Color(1f, 1f, 1f, 1f) : new Color(1f, 1f, 1f, 0.3f);
+        button.transform.GetChild(0).GetComponent<Image>().color = isInRange ? new Color(1f, 1f, 1f, 1f) : new Color(1f, 1f, 1f, 0.3f);
     }
 
     void initDailyPlanSection()

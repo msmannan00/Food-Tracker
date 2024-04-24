@@ -12,7 +12,7 @@ public class AppManager : MonoBehaviour
         #endif
 
         Application.targetFrameRate = 60;
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         if (!PreferenceManager.Instance.GetBool("WelcomeScreensShown_v3"))
         {
             StateManager.Instance.OpenStaticScreen("welcome", null, "welcomeScreen", null);

@@ -106,23 +106,23 @@ public class PlanCreatorController : MonoBehaviour, PageController
         if (mCurrentDate.AddMonths(-1) < DateTime.Today)
         {
             aBackMonth.GetComponent<Image>().raycastTarget = false;
-            aBackMonth.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
+            aBackMonth.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
         }
         else
         {
             aBackMonth.GetComponent<Image>().raycastTarget = true;
-            aBackMonth.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+            aBackMonth.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
         }
 
         if (mCurrentDate.AddDays(-1) < DateTime.Today)
         {
             aBackDay.GetComponent<Image>().raycastTarget = false;
-            aBackDay.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
+            aBackDay.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
         }
         else
         {
             aBackDay.GetComponent<Image>().raycastTarget = true;
-            aBackDay.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+            aBackDay.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
         }
     }
 

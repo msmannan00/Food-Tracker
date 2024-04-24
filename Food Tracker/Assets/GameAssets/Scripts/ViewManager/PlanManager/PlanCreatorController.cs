@@ -154,6 +154,7 @@ public class PlanCreatorController : MonoBehaviour, PageController
     public void onStartPlan()
     {
         this.gameObject.SetActive(false);
+        userSessionManager.Instance.RemovePlanModel();
         userSessionManager.Instance.createPlan(mContinuePlan, aDateRangeStart.text, aDateRangeEnd.text);
 
         Dictionary<string, object> mData = new Dictionary<string, object> { };

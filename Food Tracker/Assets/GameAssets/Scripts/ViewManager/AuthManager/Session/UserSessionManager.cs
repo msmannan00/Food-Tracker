@@ -1,5 +1,7 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class userSessionManager : GenericSingletonClass<userSessionManager>
@@ -11,6 +13,7 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
 
     public void OnInitialize(string pProfileUsername, string pProfileID)
     {
+        LoadPlanModel();
         this.mProfileUsername = pProfileUsername;
         this.mProfileID = pProfileID;
         this.mUserStatsModel = new userStatsModel();
@@ -19,7 +22,6 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
         string mStartingDate = PreferenceManager.Instance.GetString("DateRangeStart", DateTime.Now.ToString());
         string mEndingDate = PreferenceManager.Instance.GetString("DateRangeEnd", DateTime.Now.ToString());
         this.mUserStatsModel.OnInitialize(pContinueWeeklyPlan: mContinueWeeklyPlan, pStartingDate: HelperMethods.Instance.ParseDateString(mStartingDate), pEndingDate: HelperMethods.Instance.ParseDateString(mEndingDate));
-        LoadPlanModel();
     }
 
     public void OnResetSession()
@@ -43,7 +45,7 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
 
     public void SavePlanModel()
     {
-        string json = JsonUtility.ToJson(mPlanModel);
+        string json = JsonConvert.SerializeObject(mPlanModel, Formatting.Indented);
         PlayerPrefs.SetString("PlanModel", json);
         PlayerPrefs.Save();
     }
@@ -53,9 +55,18 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
         string json = PlayerPrefs.GetString("PlanModel");
         if (!string.IsNullOrEmpty(json))
         {
-            mPlanModel = JsonUtility.FromJson<PlanModel>(json);
+            mPlanModel = JsonConvert.DeserializeObject<PlanModel>(json);
         }
     }
 
+    public void RemovePlanModel()
+    {
+        if (PlayerPrefs.HasKey("PlanModel"))
+        {
+            PlayerPrefs.DeleteKey("PlanModel");
+            PlayerPrefs.Save();
+            mPlanModel = new PlanModel();
+        }
+    }
 }
 

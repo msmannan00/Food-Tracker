@@ -21,7 +21,7 @@ public class MealExplorerCategoryController : MonoBehaviour, IPointerClickHandle
     public void InitCategory(string pTitle, string description, MealItem pDish, ServingInfo pServing, string pImagePath, GameObject pParent)
     {
         aName.text = pTitle;
-        aDescription.text = description;
+        aDescription.text = pDish.Measure + " Cups";
         mTitle = pTitle;
         mEachServing = pServing;
         mDishes = pDish;

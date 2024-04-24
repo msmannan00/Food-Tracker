@@ -57,7 +57,7 @@ public class MealExplorerController : MonoBehaviour, PageController
                         dish.transform.SetParent(aScrollViewContent.transform, false);
                         MealExplorerCategoryController categoryController = dish.GetComponent<MealExplorerCategoryController>();
                         categoryController.InitCategory(mDishItem.Key, description, mDishItem.Value, categoryItem.EachServing, imagePath, gameObject);
-                        aServingText.SetText(categoryItem.EachServing.Carb + " carbs, " + categoryItem.EachServing.Protein + " proteins, " + categoryItem.EachServing.Fat + " fats, " + categoryItem.EachServing.KiloCal);
+                        aServingText.SetText(categoryItem.EachServing.Carb + "g carbs, " + categoryItem.EachServing.Protein + "g proteins, " + categoryItem.EachServing.Fat + "g fats, " + categoryItem.EachServing.KiloCal + " kcal");
                     }
                 }
             }

@@ -12,6 +12,7 @@ public class DashboardMealCategoryController : MonoBehaviour, IPointerClickHandl
     public TMP_Text aItemCount;
     public Image aImage;
     public List<SubCategory> mSubCategory;
+    public GameObject loader;
     GameObject mParent;
 
     public void initCategory(string pTitle, List<SubCategory> pSubCategory, string pImagePath, GameObject pParent)
@@ -19,16 +20,16 @@ public class DashboardMealCategoryController : MonoBehaviour, IPointerClickHandl
         aName.text = pTitle;
         mSubCategory = pSubCategory;
         aItemCount.text = pSubCategory.Count.ToString() + " Items";
-        Sprite sprite = Resources.Load<Sprite>(pImagePath);
-        if (sprite != null)
+        if (pImagePath.StartsWith("http://") || pImagePath.StartsWith("https://"))
         {
-            aImage.sprite = sprite;
+            StartCoroutine(HelperMethods.Instance.LoadImageFromURL(pImagePath, aImage, loader));
         }
         else
         {
-            sprite = Resources.Load<Sprite>("UIAssets/Dashboard/Categories/default");
-            aImage.sprite = sprite;
+            HelperMethods.Instance.LoadImageFromResources("UIAssets/Dashboard/Categories/" + pImagePath, aImage);
+            loader.SetActive(false);
         }
+
         mParent = pParent;
     }
 

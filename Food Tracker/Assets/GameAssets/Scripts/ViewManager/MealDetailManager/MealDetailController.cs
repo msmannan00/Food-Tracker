@@ -26,8 +26,9 @@ public class MealDetailController : MonoBehaviour, PageController
     public TMP_Text aProteinPercentage;
 
     public TMP_Text aKiloCalories;
-    public TMP_Text aFatPercentageFacts;
-    public TMP_Text aProteinsCalories;
+    public TMP_Text aFat;
+    public TMP_Text aProteins;
+    public TMP_Text aCarbs;
     private PieChart pieChart;
 
     public void onInit(Dictionary<string, object> data)
@@ -67,8 +68,9 @@ public class MealDetailController : MonoBehaviour, PageController
         aProteinPercentage.text = proteinsPercentage.ToString("N2") + "%";
         aKiloCalories.text = mEachServing.KiloCal.ToString("N2");
 
-        aFatPercentageFacts.text = fatsPercentage.ToString("N2") + "%";
-        aProteinsCalories.text = proteinsPercentage.ToString("N2") + "%";
+        aFat.text = fatsPercentage.ToString("N2") + "%";
+        aProteins.text = proteinsPercentage.ToString("N2") + "%";
+        aCarbs.text = carbsPercentage.ToString("N2") + "%";
 
         if (total == 0)
         {
@@ -100,6 +102,9 @@ public class MealDetailController : MonoBehaviour, PageController
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StateManager.Instance.HandleBackAction(gameObject);
+        }
     }
 }

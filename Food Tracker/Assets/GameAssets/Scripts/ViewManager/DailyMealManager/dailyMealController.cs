@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class DailyMealController : MonoBehaviour, PageController
@@ -27,6 +28,11 @@ public class DailyMealController : MonoBehaviour, PageController
 
     public void onInit(Dictionary<string, object> data)
     {
+    }
+
+    private void OnEnable()
+    {
+        initDailyPlanSection();
     }
 
 
@@ -166,7 +172,7 @@ public class DailyMealController : MonoBehaviour, PageController
         for (int i = aContent.transform.childCount - 1; i >= 0; i--)
         {
             Transform child = aContent.transform.GetChild(i);
-            if (child.name.Contains("dailyPlannerCategoryInstance"))
+            if (child.name.Contains("dailyPlannerCategoryInstance") || child.name.Contains("space") || child.name.Contains("mealItem") || child.name.Contains("dailyMealCategoryItem"))
             {
                 GameObject.Destroy(child.gameObject);
             }
@@ -179,6 +185,49 @@ public class DailyMealController : MonoBehaviour, PageController
             instance.name = "dailyPlannerCategoryInstance" + (i + 1);
             DailyMealCategoryController categoryController = instance.GetComponent<DailyMealCategoryController>();
             categoryController.initCategory(i, mCurrentIndexDate, gameObject);
+
+            if (userSessionManager.Instance.mPlanModel.Meals.TryGetValue(mCurrentIndexDate, out var dayMeals))
+            {
+                if (dayMeals.ContainsKey(i))
+                {
+                    var meal = dayMeals[i];
+
+                    GameObject dailyCategoryItem = null;
+                    bool wasItemFound = false;
+                    foreach (var detail in meal.Details)
+                    {
+                        if (detail.Value != null)
+                        {
+                            GameObject mealCategory = Resources.Load<GameObject>("Prefabs/dailyMeal/dailyMealCategoryItem");
+                            dailyCategoryItem = Instantiate(mealCategory, aContent.transform);
+                            dailyCategoryItem.name = "mealItem" + (i + 1);
+                            DailyMealCategoryItemController mealController = dailyCategoryItem.GetComponent<DailyMealCategoryItemController>();
+                            mealController.initCategory(detail.Key, detail.Value);
+                            wasItemFound = true;
+                        }
+                    }
+
+                    if (dailyCategoryItem != null)
+                    {
+                        Transform background = dailyCategoryItem.transform.Find("background");
+                        if (background != null)
+                        {
+                            Transform divider = background.Find("divider");
+                            if (divider != null)
+                            {
+                                Destroy(divider.gameObject);
+                            }
+                        }
+
+                    }
+                    if (wasItemFound)
+                    {
+                        GameObject space = Resources.Load<GameObject>("Prefabs/dailyMeal/dailyMealCategorySpace");
+                        Instantiate(space, aContent.transform);
+                        space.name = "space";
+                    }
+                }
+            }
         }
         GameObject stats = Resources.Load<GameObject>("Prefabs/dailyMeal/dailyStats");
         dailyStatsPrefab = Instantiate(stats, aDailyStats.transform);
@@ -201,6 +250,9 @@ public class DailyMealController : MonoBehaviour, PageController
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StateManager.Instance.HandleBackAction(gameObject);
+        }
     }
 }

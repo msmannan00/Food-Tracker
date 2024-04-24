@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,10 @@ public class AddMealController : MonoBehaviour, PageController
     public GameObject aScrollViewContent;
     public List<SubCategory> mSubCategory = new List<SubCategory>();
     public TMP_Dropdown sDropdown;
+    public TMP_InputField aSearchBar;
     public TMP_Text aServingText;
     public GridLayoutGroup gridLayoutGroup;
+    string mSearchText = "";
 
     int mDayState;
     DateTime mDate;
@@ -22,10 +25,17 @@ public class AddMealController : MonoBehaviour, PageController
         mDayState = (int)data["state"];
         mDate = (DateTime)data["date"];
 
+        aSearchBar.onValueChanged.AddListener(HandleInputChanged);
         sDropdown.onValueChanged.AddListener(delegate { initFoodCategories(); });
         PopulateDropdown();
         initFoodCategories();
         UpdateCellSize();
+    }
+
+    private void HandleInputChanged(string text)
+    {
+        mSearchText = text;
+        initFoodCategories();
     }
 
     public void initFoodCategories()
@@ -42,15 +52,18 @@ public class AddMealController : MonoBehaviour, PageController
             {
                 if (subCategory.Title.Equals(sDropdown.options[sDropdown.value].text))
                 {
-                    aServingText.SetText(subCategory.EachServing.Carb + " carbs, " + subCategory.EachServing.Protein + " proteins, " + subCategory.EachServing.Fat + " fats, " + subCategory.EachServing.KiloCal);
+                    aServingText.SetText(subCategory.EachServing.Carb + "g carbs, " + subCategory.EachServing.Protein + "g proteins, " + subCategory.EachServing.Fat + "g fats, " + subCategory.EachServing.KiloCal+" kcal");
                     foreach (var dish in subCategory.Dishes)
                     {
-                        GameObject categoryItem = Instantiate(Resources.Load<GameObject>("Prefabs/addMeal/addMealCategory"));
-                        categoryItem.name = "Category_" + index++;
-                        categoryItem.transform.SetParent(aScrollViewContent.transform, false);
-                        addMealCategoryController categoryController = categoryItem.GetComponent<addMealCategoryController>();
-                        string imagePath = dish.Value.ItemSourceImage;
-                        categoryController.initCategory(dish.Key, dish.Value, subCategory.EachServing, imagePath, mDayState, mDate);
+                        if(dish.Key.ToLower().Contains(mSearchText.ToLower()))
+                        {
+                            GameObject categoryItem = Instantiate(Resources.Load<GameObject>("Prefabs/addMeal/addMealCategory"));
+                            categoryItem.name = "Category_" + index++;
+                            categoryItem.transform.SetParent(aScrollViewContent.transform, false);
+                            addMealCategoryController categoryController = categoryItem.GetComponent<addMealCategoryController>();
+                            string imagePath = dish.Value.ItemSourceImage;
+                            categoryController.initCategory(dish.Key, dish.Value, subCategory.EachServing, imagePath, mDayState, mDate);
+                        }
                     }
                 }
             }
@@ -103,6 +116,9 @@ public class AddMealController : MonoBehaviour, PageController
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StateManager.Instance.HandleBackAction(gameObject);
+        }
     }
 }

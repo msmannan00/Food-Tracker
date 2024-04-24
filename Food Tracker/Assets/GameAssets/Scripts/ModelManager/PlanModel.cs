@@ -46,5 +46,5 @@ public class MealDetail
     public double Kcals { get; set; }
     public double Carbs { get; set; }
     public double Proteins { get; set; }
-    public int ServingAmount { get; set; }
+    public double ServingAmount { get; set; }
 }

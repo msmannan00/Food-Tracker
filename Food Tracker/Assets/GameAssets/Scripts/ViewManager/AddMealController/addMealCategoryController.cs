@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using UnityEngine.Playables;
+using DG.Tweening;
 
 public class addMealCategoryController : MonoBehaviour
 {
@@ -17,8 +18,9 @@ public class addMealCategoryController : MonoBehaviour
     public GameObject aAddMealButton;
     public GameObject aRemoveMealButton;
 
-    int aMealServingCount = 1;
+    double aMealServingCount = 0.5f;
     public GameObject loader;
+    Boolean isCounterBlocked = false;
 
     public Image aCountPlus;
     public Image aCountMinus;
@@ -56,6 +58,7 @@ public class addMealCategoryController : MonoBehaviour
     {
         try
         {
+            blockCounter();
             var meals = userSessionManager.Instance.mPlanModel.Meals;
             if (meals != null && meals.ContainsKey(mDate))
             {
@@ -72,6 +75,7 @@ public class addMealCategoryController : MonoBehaviour
                             aRemoveMealButton.SetActive(true);
                             aMealServingCount = mMealDetail.ServingAmount;
                             aCounter.text = aMealServingCount.ToString();
+                            counterButtonStatus();
                         }
                     }
                 }
@@ -85,23 +89,29 @@ public class addMealCategoryController : MonoBehaviour
 
     public void countIncrement()
     {
-        if (aMealServingCount < 99)
+        if (!isCounterBlocked)
         {
-            aMealServingCount = aMealServingCount+1;
-            aCounter.text = aMealServingCount.ToString();
+            if (aMealServingCount < 99)
+            {
+                aMealServingCount = aMealServingCount + 0.5;
+                aCounter.text = aMealServingCount.ToString();
+            }
+            initMeal();
+            counterButtonStatus();
         }
-        counterButtonStatus();
-        initMeal();
     }
     public void countDecrement()
     {
-        if (aMealServingCount > 1)
+        if (!isCounterBlocked)
         {
-            aMealServingCount = aMealServingCount-1;
-            aCounter.text = aMealServingCount.ToString();
+            if (aMealServingCount > 1)
+            {
+                aMealServingCount = aMealServingCount - 0.5;
+                aCounter.text = aMealServingCount.ToString();
+            }
+            initMeal();
+            counterButtonStatus();
         }
-        counterButtonStatus();
-        initMeal();
     }
 
     public void onRemoveMeal()
@@ -110,6 +120,7 @@ public class addMealCategoryController : MonoBehaviour
         aAddMealButton.SetActive(true);
         userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle] = null;
         userSessionManager.Instance.SavePlanModel();
+        blockCounter();
     }
 
     public void onAddMeal()
@@ -117,6 +128,7 @@ public class addMealCategoryController : MonoBehaviour
         aRemoveMealButton.SetActive(true);
         aAddMealButton.SetActive(false);
         initMeal();
+        counterButtonStatus();
     }
 
     void initMeal()
@@ -135,28 +147,57 @@ public class addMealCategoryController : MonoBehaviour
         userSessionManager.Instance.SavePlanModel();
     }
 
+    void blockCounter()
+    {
+        Color currentOutlineColor;
+        currentOutlineColor = aCountPlus.GetComponent<Outline>().effectColor;
+        currentOutlineColor.a = 0.2f;
+        aCountPlus.GetComponent<Outline>().DOColor(currentOutlineColor, 0.2f);
+        aCountPlus.GetComponent<Image>().raycastTarget = false;
+
+        currentOutlineColor = aCountMinus.GetComponent<Outline>().effectColor;
+        currentOutlineColor.a = 0.2f;
+        aCountMinus.GetComponent<Outline>().DOColor(currentOutlineColor, 0.2f);
+        aCountMinus.GetComponent<Image>().raycastTarget = false;
+        isCounterBlocked = true;
+        aCounter.alpha = 0.5f;
+    }
+
     void counterButtonStatus()
     {
+        isCounterBlocked = false;
+        Color currentOutlineColor;
         if (aMealServingCount >= 99)
         {
             aCountPlus.GetComponent<Image>().raycastTarget = false;
-            aCountPlus.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
+            currentOutlineColor = aCountPlus.GetComponent<Outline>().effectColor;
+            currentOutlineColor.a = 0.2f;
+            aCountPlus.GetComponent<Outline>().DOColor(currentOutlineColor, 0.1f);
         }
         else
         {
             aCountPlus.GetComponent<Image>().raycastTarget = true;
-            aCountPlus.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+            currentOutlineColor = aCountPlus.GetComponent<Outline>().effectColor;
+            currentOutlineColor.a = 1f;
+            aCountPlus.GetComponent<Outline>().DOColor(currentOutlineColor, 0.1f);
         }
+
         if (aMealServingCount <= 1)
         {
             aCountMinus.GetComponent<Image>().raycastTarget = false;
-            aCountMinus.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.3f);
+            currentOutlineColor = aCountMinus.GetComponent<Outline>().effectColor;
+            currentOutlineColor.a = 0.2f;
+            aCountMinus.GetComponent<Outline>().DOColor(currentOutlineColor, 0.1f);
         }
         else
         {
             aCountMinus.GetComponent<Image>().raycastTarget = true;
-            aCountMinus.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+            currentOutlineColor = aCountMinus.GetComponent<Outline>().effectColor;
+            currentOutlineColor.a = 1f;
+            aCountMinus.GetComponent<Outline>().DOColor(currentOutlineColor, 0.1f);
         }
+        aCounter.alpha = 1f;
+
     }
 
 }

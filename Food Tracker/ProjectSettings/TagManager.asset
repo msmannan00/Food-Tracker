@@ -15,6 +15,7 @@ TagManager:
   - dailyMealScreen
   - mealDetailScreen
   - planCreatorScreen
+  - alerts
   layers:
   - Default
   - TransparentFX

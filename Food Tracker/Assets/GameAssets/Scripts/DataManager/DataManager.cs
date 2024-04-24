@@ -91,10 +91,7 @@ public class DataManager : GenericSingletonClass<DataManager>
         }
         catch (JsonException ex)
         {
-            if (shouldLogError)
-            {
-                Debug.LogError("JSON Parsing Error: " + ex.Message);
-            }
+            Debug.LogError("JSON Parsing Error: " + ex.Message);
             return false;
         }
     }

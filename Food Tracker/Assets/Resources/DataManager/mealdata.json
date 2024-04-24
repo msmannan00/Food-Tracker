@@ -1,4 +1,163 @@
 {
+  "Beverages": {
+    "Title": "Beverages",
+    "ItemSourceImage": "beverages",
+    "subCategories": [
+      {
+        "Title": "Dairy based beverages",
+        "EachServing": {
+          "Carb": "12",
+          "Protein": "8",
+          "Fat": "8",
+          "KiloCal": "150"
+        },
+        "Dishes": {
+          "Mixed chai": {
+            "Measure": "2",
+            "Amount": "473",
+            "ItemSourceImage": "mixed_chai"
+          },
+          "Dhoodh pati": {
+            "Measure": "1",
+            "Amount": "237",
+            "ItemSourceImage": "dhoodh_pati"
+          },
+          "Kashmiri chai": {
+            "Measure": "2",
+            "Amount": "474",
+            "ItemSourceImage": "kashmiri_chai"
+          },
+          "Coffee": {
+            "Measure": "2",
+            "Amount": "473",
+            "ItemSourceImage": "coffee"
+          },
+          "Cold coffee": {
+            "Measure": "1",
+            "Amount": "237",
+            "ItemSourceImage": "cold_coffee"
+          },
+          "Meethi lassi": {
+            "Measure": "2",
+            "Amount": "473",
+            "ItemSourceImage": "meethi_lassi"
+          },
+          "Meethi lassi with milk": {
+            "Measure": "1 ½",
+            "Amount": "355",
+            "ItemSourceImage": "meethi_lassi_with_milk"
+          },
+          "Namkeen lassi": {
+            "Measure": "2",
+            "Amount": "473",
+            "ItemSourceImage": "namkeen_lassi"
+          },
+          "Chatti ki lassi": {
+            "Measure": "2",
+            "Amount": "473",
+            "ItemSourceImage": "chatti_ki_lassi"
+          },
+          "Kachi lassi": {
+            "Measure": "2",
+            "Amount": "473",
+            "ItemSourceImage": "kachi_lassi"
+          },
+          "Makaniyan lassi": {
+            "Measure": "1",
+            "Amount": "237",
+            "ItemSourceImage": "makaniyan_lassi"
+          },
+          "Sardai": {
+            "Measure": "¾",
+            "Amount": "177.5",
+            "ItemSourceImage": "sardai"
+          },
+          "Rabri Dhoodh": {
+            "Measure": "½",
+            "Amount": "118.5",
+            "ItemSourceImage": "rabri_dhoodh"
+          },
+          "Dhoodh soda": {
+            "Measure": "1 ¼",
+            "Amount": "296",
+            "ItemSourceImage": "dhoodh_soda"
+          },
+          "Falooda": {
+            "Measure": "½",
+            "Amount": "118",
+            "ItemSourceImage": "falooda"
+          }
+        }
+      },
+      {
+        "Title": "Fruit based beverages & thirst quenchers",
+        "EachServing": {
+          "Carb": "15",
+          "Protein": "0",
+          "Fat": "0",
+          "KiloCal": "60"
+        },
+        "Dishes": {
+          "Falsa juice": {
+            "Measure": "1",
+            "Amount": "237",
+            "ItemSourceImage": "falsa_juice"
+          },
+          "Mango squash": {
+            "Measure": "1",
+            "Amount": "237",
+            "ItemSourceImage": "mango_squash"
+          },
+          "Ghanay ka rass": {
+            "Measure": "⅓",
+            "Amount": "79",
+            "ItemSourceImage": "ghanay_ka_rass"
+          },
+          "Shikanjween": {
+            "Measure": "1",
+            "Amount": "237",
+            "ItemSourceImage": "shikanjween"
+          },
+          "Lemon Soda": {
+            "Measure": "½",
+            "Amount": "118",
+            "ItemSourceImage": "lemon_soda"
+          }
+        }
+      },
+      {
+        "Title": "Combination beverages (fruits and dairy)",
+        "EachServing": {
+          "Carb": "27",
+          "Protein": "8",
+          "Fat": "8",
+          "KiloCal": "210"
+        },
+        "Dishes": {
+          "Mango milkshake": {
+            "Measure": "1 ¼",
+            "Amount": "296",
+            "ItemSourceImage": "mango_milkshake"
+          },
+          "Date milkshake": {
+            "Measure": "1",
+            "Amount": "237",
+            "ItemSourceImage": "date_milkshake"
+          },
+          "Banana milkshake": {
+            "Measure": "1 ⅓",
+            "Amount": "315",
+            "ItemSourceImage": "banana_milkshake"
+          },
+          "Strawberry milkshake": {
+            "Measure": "1 ½",
+            "Amount": "355",
+            "ItemSourceImage": "strawberry_milkshake"
+          }
+        }
+      }
+    ]
+  },
   "Cereals": {
     "Title": "Cereals",
     "ItemSourceImage": "cereals",
@@ -16,7 +175,7 @@
             "Measure": "½",
             "Amount": "68",
             "ItemSourceImage": "tarka_chawal",
-            "RecipeURL": ""
+            "RecipeURL": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
           },
           "Matar Pulao": {
             "Measure": "½",

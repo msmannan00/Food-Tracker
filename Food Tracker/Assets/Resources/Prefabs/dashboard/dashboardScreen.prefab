@@ -145,7 +145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f1ac120c1c6ca034ba28f426a5666479, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1cb6caa5870a7b4c8982987ba7febeb, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 8
+  m_PixelsPerUnitMultiplier: 11
 --- !u!114 &2384136782103893819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f1ac120c1c6ca034ba28f426a5666479, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1cb6caa5870a7b4c8982987ba7febeb, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 8
+  m_PixelsPerUnitMultiplier: 11
 --- !u!114 &2384136782183991288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1233,6 +1233,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2384136782639702968}
     m_Modifications:
+    - target: {fileID: 5327927208418708414, guid: af869097d62514d499a609e1850bb935, type: 3}
+      propertyPath: m_text
+      value: Nutrition  Intake
+      objectReference: {fileID: 0}
     - target: {fileID: 5327927208909768090, guid: af869097d62514d499a609e1850bb935, type: 3}
       propertyPath: m_Name
       value: dashboardStats

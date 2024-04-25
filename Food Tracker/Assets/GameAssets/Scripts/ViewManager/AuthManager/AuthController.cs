@@ -85,6 +85,19 @@ public class AuthController : MonoBehaviour, PageController
             Action callbackSuccess = () =>
             {
                 GlobalAnimator.Instance.FadeOutLoader();
+
+                GameObject alertPrefab = Resources.Load<GameObject>("Prefabs/alerts/alertSuccess");
+                GameObject alertsContainer = GameObject.FindGameObjectWithTag("alerts");
+                GameObject instantiatedAlert = Instantiate(alertPrefab, alertsContainer.transform);
+                AlertController alertController = instantiatedAlert.GetComponent<AlertController>();
+                alertController.InitController("Account Created Successfully", pTrigger: "Continue Login");
+                GlobalAnimator.Instance.AnimateAlpha(instantiatedAlert, true);
+
+                Dictionary<string, object> mData = new Dictionary<string, object>
+                {
+                    { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
+                };
+                StateManager.Instance.OpenStaticScreen("auth", gameObject, "authScreen", mData);
             };
 
             Action<PlayFabError> callbackFailure = (pError) =>

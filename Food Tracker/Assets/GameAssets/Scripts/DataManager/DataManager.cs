@@ -8,7 +8,16 @@ public class DataManager : GenericSingletonClass<DataManager>
 {
     private Dictionary<string, MealCategory> mealData;
     private const string MealDataPrefKey = "MealData";
+
+    //Local Development
     private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=1A_AhmdhAXAxRbguW1encplQ6RNJ9GTlS";
+
+    //Production Development
+    //private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=12Wgv_a_pz7bsxKHxVReBKoI7w0MhKf74";
+
+    //Production Live
+    //private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=1xgFSs-rC-qqf4WAnU5iWeudXSiafHvWW";
+
 
     public void OnServerInitialized()
     {

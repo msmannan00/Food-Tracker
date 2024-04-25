@@ -85,7 +85,7 @@ public class PlayfabManager : MonoBehaviour
                 var mServerAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
                 PlayFabClientAPI.LoginWithGoogleAccount(new LoginWithGoogleAccountRequest()
                 {
-                    TitleId = "BF51B",
+                    TitleId = "B9E19",
                     ServerAuthCode = mServerAuthCode,
                     CreateAccount = true
                 },
@@ -97,7 +97,7 @@ public class PlayfabManager : MonoBehaviour
                 err =>
                 {
                     OnTryLogin(PlayerPrefs.GetString("username"),
-                 PlayerPrefs.GetString("password"), pCallbackSuccessPlayfab, pCallbackFailurePlayfab);
+                    PlayerPrefs.GetString("password"), pCallbackSuccessPlayfab, pCallbackFailurePlayfab);
                     pCallbackSuccess();
                 });
             }

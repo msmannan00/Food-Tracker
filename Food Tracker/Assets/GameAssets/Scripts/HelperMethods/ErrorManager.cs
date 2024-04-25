@@ -12,6 +12,10 @@ public class ErrorManager : GenericSingletonClass<ErrorManager>
         {
             return "Email address not available";
         }
+        else if (pError.Equals("AccountNotFound"))
+        {
+            return "Account not found";
+        }
         return pError;
     }
 

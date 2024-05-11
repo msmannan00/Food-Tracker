@@ -3,13 +3,13 @@ using TMPro;
 using System;
 using PlayFab;
 using System.Collections.Generic;
-using PlayFab.Internal;
-using UnityEngine.UI;
+using Assets.SimpleGoogleSignIn.Scripts;
 
 public class AuthController : MonoBehaviour, PageController
 {
     [Header("Managers")]
     public GoogleManager aGmailManager;
+    public PlayfabManager aPlayFabManager;
 
     [Header("Utilities")]
     public TMP_Text aError;
@@ -22,18 +22,89 @@ public class AuthController : MonoBehaviour, PageController
     public TextMeshProUGUI aTriggerButton;
 
     private string mAuthType;
-    PlayfabManager mPlayFabManager;
+    public GoogleAuth GoogleAuth;
+
+    public void Start()
+    {
+        PlayerPrefs.DeleteAll();
+        GoogleAuth = new GoogleAuth();
+    }
+
+
+    void GameilSignIn()
+    {
+
+        if (GoogleAuth.SavedAuth != null)
+        {
+            GoogleAuth.SignIn(OnSignIn, caching: true);
+            userSessionManager.Instance.OnInitialize(mAuthType, "");
+        }
+
+        else
+        {
+            GoogleAuth.SignIn(OnSignIn, caching: true);
+        }
+        GlobalAnimator.Instance.FadeInLoader();
+    }
+
+    public void SignOut()
+    {
+        GoogleAuth.SignOut(revokeAccessToken: true);
+    }
+
+    private void OnSignIn(bool success, string error, UserInfo userInfo)
+    {
+        if (success)
+        {
+            GlobalAnimator.Instance.FadeOutLoader();
+            print("loged in");
+
+        }
+        mAuthType = success ? $"{userInfo.name}!" : error;
+        userSessionManager.Instance.OnInitialize(mAuthType, "");
+        print(mAuthType);
+    }
+
+
+    public void Navigate(string url)
+    {
+        Application.OpenURL(url);
+    }
+
+
+    public void onSignIn()
+    {
+        gameObject.transform.parent.SetSiblingIndex(1);
+
+        bool mFirsTimePlanInitialized = PreferenceManager.Instance.GetBool("FirstTimePlanInitialized_" + userSessionManager.Instance.mProfileUsername, false);
+        if (!mFirsTimePlanInitialized)
+        {
+            Dictionary<string, object> mData = new Dictionary<string, object>
+            {
+                { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
+            };
+
+            StateManager.Instance.OpenStaticScreen("planCreator", gameObject, "planCreatorScreen", mData);
+        }
+        else
+        {
+
+            GlobalAnimator.Instance.FadeOutLoader();
+            Dictionary<string, object> mData = new Dictionary<string, object> { };
+            StateManager.Instance.OpenStaticScreen("dashboard", gameObject, "dashboardScreen", mData);
+        }
+        userSessionManager.Instance.LoadPlanModel();
+    }
+
 
 
     public void onInit(Dictionary<string, object> pData)
     {
-        StateManager.Instance.onRemoveBackHistory();
-        mPlayFabManager = PlayfabManager.Instance;
         this.mAuthType = (string)pData.GetValueOrDefault(AuthKey.sAuthType, AuthConstant.sAuthTypeSignup);
         if (this.mAuthType == AuthConstant.sAuthTypeLogin)
         {
             aTriggerButton.text = "Log In";
-            aPageToggleText1.text = "I Don’t have an account? ";
+            aPageToggleText1.text = "I Don?t have an account? ";
             aPageToggleText2.text = "Signup";
         }
         else if (this.mAuthType == AuthConstant.sAuthTypeSignup)
@@ -55,12 +126,7 @@ public class AuthController : MonoBehaviour, PageController
         Application.OpenURL("");
     }
 
-    void Start()
-    {
-        this.aUsername.text = "msmannan00@gmail.com";
-        this.aPassword.text = "killprg1";
-        //OnTrigger();
-    }
+
 
     public void OnTrigger()
     {
@@ -80,7 +146,7 @@ public class AuthController : MonoBehaviour, PageController
             };
 
             GlobalAnimator.Instance.FadeInLoader();
-            mPlayFabManager.OnTryLogin(this.aUsername.text, this.aPassword.text, mCallbackSuccess, callbackFailure);
+            aPlayFabManager.OnTryLogin(this.aUsername.text, this.aPassword.text, mCallbackSuccess, callbackFailure);
         }
         else if (this.mAuthType == AuthConstant.sAuthTypeSignup)
         {
@@ -110,7 +176,7 @@ public class AuthController : MonoBehaviour, PageController
             };
 
             GlobalAnimator.Instance.FadeInLoader();
-            mPlayFabManager.OnTryRegisterNewAccount(this.aUsername.text, this.aPassword.text, callbackSuccess, callbackFailure);
+            aPlayFabManager.OnTryRegisterNewAccount(this.aUsername.text, this.aPassword.text, callbackSuccess, callbackFailure);
         }
     }
 
@@ -128,7 +194,7 @@ public class AuthController : MonoBehaviour, PageController
             GameObject alertsContainer = GameObject.FindGameObjectWithTag("alerts");
             GameObject instantiatedAlert = Instantiate(alertPrefab, alertsContainer.transform);
             AlertController alertController = instantiatedAlert.GetComponent<AlertController>();
-            alertController.InitController("Reset password instructions have been sent to your email address", pCallbackSuccess: callbackSuccess, pTrigger : "Open Mail");
+            alertController.InitController("Reset password instructions have been sent to your email address", pCallbackSuccess: callbackSuccess, pTrigger: "Open Mail");
             GlobalAnimator.Instance.AnimateAlpha(instantiatedAlert, true);
         };
 
@@ -146,43 +212,29 @@ public class AuthController : MonoBehaviour, PageController
             GlobalAnimator.Instance.AnimateAlpha(instantiatedAlert, true);
         };
         GlobalAnimator.Instance.FadeInLoader();
-        mPlayFabManager.InitiatePasswordRecovery(aUsername.text, callbackSuccess, callbackFailure);
+        aPlayFabManager.InitiatePasswordRecovery(aUsername.text, callbackSuccess, callbackFailure);
     }
 
-    public void onSignIn()
-    {
-        gameObject.transform.parent.SetSiblingIndex(1);
-        bool mFirsTimePlanInitialized = PreferenceManager.Instance.GetBool("FirstTimePlanInitialized_" + userSessionManager.Instance.mProfileUsername, false);
-        if (!mFirsTimePlanInitialized)
-        {
-            Dictionary<string, object> mData = new Dictionary<string, object>
-            {
-                { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
-            };
 
-            StateManager.Instance.OpenStaticScreen("planCreator", gameObject, "planCreatorScreen", mData);
-        }
-        else
-        {
-            Dictionary<string, object> mData = new Dictionary<string, object> { };
-            StateManager.Instance.OpenStaticScreen("dashboard", gameObject, "dashboardScreen", mData);
-        }
-        userSessionManager.Instance.LoadPlanModel();
-    }
 
     public void OnSignGmail()
     {
+        onSignIn();
+        GameilSignIn();
+        GlobalAnimator.Instance.FadeOutLoader();
+
+
     }
 
     public void OnResetErrors()
-        {
-            GlobalAnimator.Instance.FadeOut(aUsername.gameObject);
-            GlobalAnimator.Instance.FadeOut(aPassword.gameObject);
-        }
+    {
+        GlobalAnimator.Instance.FadeOut(aUsername.gameObject);
+        GlobalAnimator.Instance.FadeOut(aPassword.gameObject);
+    }
 
     public void OnToogleAuth()
     {
-        if(this.mAuthType == AuthConstant.sAuthTypeLogin)
+        if (this.mAuthType == AuthConstant.sAuthTypeLogin)
         {
             Dictionary<string, object> mData = new Dictionary<string, object>
             {
@@ -190,7 +242,7 @@ public class AuthController : MonoBehaviour, PageController
             };
             StateManager.Instance.OpenStaticScreen("auth", gameObject, "authScreen", mData);
         }
-        else if(this.mAuthType == AuthConstant.sAuthTypeSignup)
+        else if (this.mAuthType == AuthConstant.sAuthTypeSignup)
         {
             OnResetErrors();
             Dictionary<string, object> mData = new Dictionary<string, object>

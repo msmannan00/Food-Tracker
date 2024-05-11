@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class addMealCategoryController : MonoBehaviour
 {
@@ -14,12 +15,15 @@ public class addMealCategoryController : MonoBehaviour
     public GameObject aRemoveMealButton;
 
     public GameObject loader;
-    Boolean isCounterBlocked = false;
+    public TMP_Text aCounter;
+    public Image aCountPlus;
+    public Image aCountMinus;
 
     string mTitle;
     DateTime mDate;
     int mDayState;
     ServingInfo mServing;
+    double aMealServingCount = 0.5f;
 
     public void initCategory(string pTitle, MealItem pDish, ServingInfo pServing, string pImagePath, int pDayState, DateTime pDate)
     {
@@ -32,6 +36,16 @@ public class addMealCategoryController : MonoBehaviour
         aDescriptionTop.text = pServing.KiloCal + " kcals - " + pServing.Carb + "g carbs";
         aDescriptionBottom.text = pServing.Protein + "g protiens - " + pServing.Fat + "g fats";
 
+        if (userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState] != null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle]!=null)
+        {
+            aCounter.text = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount.ToString();
+            aMealServingCount = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount;
+        }
+        else
+        {
+            aCounter.text = "0.5";
+            aMealServingCount = 0.5f;
+        }
 
         if (pImagePath.StartsWith("http://") || pImagePath.StartsWith("https://"))
         {
@@ -82,6 +96,10 @@ public class addMealCategoryController : MonoBehaviour
         aAddMealButton.SetActive(true);
         userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle] = null;
         userSessionManager.Instance.SavePlanModel();
+
+        aMealServingCount = 0.5;
+        aCounter.text = "0.5";
+
     }
 
     public void onAddMeal()
@@ -102,9 +120,33 @@ public class addMealCategoryController : MonoBehaviour
         mMealDetail.Kcals = mServing.KiloCal;
         mMealDetail.Carbs = mServing.Carb;
         mMealDetail.Proteins = mServing.Protein;
-        mMealDetail.ServingAmount = 0.5f;
+        mMealDetail.ServingAmount = aMealServingCount;
         userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle] = mMealDetail;
         userSessionManager.Instance.SavePlanModel();
+    }
+    public void countIncrement()
+    {
+        if (aMealServingCount < 99.5)
+        {
+            aMealServingCount = aMealServingCount + 0.5;
+            aCounter.text = aMealServingCount.ToString();
+        }
+        if (aRemoveMealButton.active)
+        {
+            initMeal();
+        }
+    }
+    public void countDecrement()
+    {
+        if (aMealServingCount > 0.5)
+        {
+            aMealServingCount = aMealServingCount - 0.5;
+            aCounter.text = aMealServingCount.ToString();
+        }
+        if (aRemoveMealButton.active)
+        {
+            initMeal();
+        }
     }
 
 }

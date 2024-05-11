@@ -691,6 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aCategoryIcon: {fileID: 7790664040135904625}
   aHeader: {fileID: 2755154867936601729}
+  aEditText: {fileID: 4434928400192285704}
 --- !u!114 &1773267596
 MonoBehaviour:
   m_ObjectHideFlags: 0

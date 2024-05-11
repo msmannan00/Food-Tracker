@@ -2291,6 +2291,7 @@ MonoBehaviour:
   aUserWelcome: {fileID: 2384136782748903769}
   aScrollViewContent: {fileID: 856061055106163334}
   gridLayoutGroup: {fileID: 1394531304}
+  aDailyPlanButton: {fileID: 2384136782183991271}
 --- !u!225 &1076389377557747513
 CanvasGroup:
   m_ObjectHideFlags: 0

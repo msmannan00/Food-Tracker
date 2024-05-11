@@ -12,9 +12,17 @@ public class DailyMealCategoryController : MonoBehaviour
     GameObject mParent;
     int mDayState = 0;
     DateTime mDate;
+    public GameObject aEditText;
 
     public void initCategory(int state, DateTime pDate, GameObject pParent)
     {
+        DateTime currentDate = DateTime.Now;
+        DateTime endDate = userSessionManager.Instance.mUserStatsModel.sEndingDate;
+        if (!userSessionManager.Instance.mUserStatsModel.sContinueWeeklyPlan && currentDate > endDate)
+        {
+            aEditText.SetActive(false);
+        }
+
         string imageName = "";
         mDayState = state;
         mDate = pDate;

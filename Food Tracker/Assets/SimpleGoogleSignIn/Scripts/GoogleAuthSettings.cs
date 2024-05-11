@@ -58,12 +58,13 @@ namespace Assets.SimpleGoogleSignIn.Scripts
 
         public bool Redefined()
         {
-            return ClientIdGeneric != "275731233438-nv59vdj6ornprhtppnm8qle2jt3ebjol.apps.googleusercontent.com"
-                   && CustomUriSchemeGeneric != "simple.oauth"
-                   && ClientIdDesktop != "275731233438-v1anl61611mmer6ohqes9a310mkc2di8.apps.googleusercontent.com"
-                   && ClientSecretDesktop != "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"
-                   && ClientIdWebGL != "275731233438-3hvi982vbhpcpkjihioa4d3gum074lds.apps.googleusercontent.com"
-                   && ClientSecretWebGL != "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";
+            return true;
+            //return ClientIdGeneric != "275731233438-nv59vdj6ornprhtppnm8qle2jt3ebjol.apps.googleusercontent.com"
+            //       && CustomUriSchemeGeneric != "simple.oauth"
+            //       && ClientIdDesktop != "275731233438-v1anl61611mmer6ohqes9a310mkc2di8.apps.googleusercontent.com"
+            //       && ClientSecretDesktop != "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"
+            //       && ClientIdWebGL != "275731233438-3hvi982vbhpcpkjihioa4d3gum074lds.apps.googleusercontent.com"
+            //       && ClientSecretWebGL != "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";
         }
     }
 }

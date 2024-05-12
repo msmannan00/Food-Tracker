@@ -3,21 +3,39 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
+using DG.Tweening; // Include DOTween for animations
 
 public class DataManager : GenericSingletonClass<DataManager>
 {
     private Dictionary<string, MealCategory> mealData = null;
     private const string MealDataPrefKey = "MealData";
+
+    //Local Development
+    //private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=1A_AhmdhAXAxRbguW1encplQ6RNJ9GTlS";
+
+    //Production Development
+    //private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=12Wgv_a_pz7bsxKHxVReBKoI7w0MhKf74";
+
+    //Production Live
     private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=1xgFSs-rC-qqf4WAnU5iWeudXSiafHvWW";
 
     private GameObject uiBlocker;
+    private CanvasGroup uiBlockerCanvasGroup;
 
     void Start()
     {
-        uiBlocker = GameObject.Find("UIBlocker");  // Ensure UIBlocker is the correct name of your GameObject
-        if (uiBlocker == null)
+        uiBlocker = GameObject.Find("UIBlocker");  // Make sure UIBlocker is correctly named in your scene
+        if (uiBlocker != null)
         {
-            Debug.LogError("UIBlocker prefab not found in the scene.");
+            uiBlockerCanvasGroup = uiBlocker.GetComponent<CanvasGroup>();
+            if (uiBlockerCanvasGroup == null)
+            {
+                uiBlockerCanvasGroup = uiBlocker.AddComponent<CanvasGroup>();
+            }
+        }
+        else
+        {
+            Debug.LogError("UIBlocker not found in the scene. Please ensure it is correctly named and active.");
         }
     }
 
@@ -53,6 +71,7 @@ public class DataManager : GenericSingletonClass<DataManager>
         if (uiBlocker != null)
         {
             uiBlocker.SetActive(true);
+            uiBlockerCanvasGroup.alpha = 1;  // Ensure the blocker is fully visible when shown
         }
     }
 
@@ -60,7 +79,10 @@ public class DataManager : GenericSingletonClass<DataManager>
     {
         if (uiBlocker != null)
         {
-            uiBlocker.SetActive(false);
+            uiBlockerCanvasGroup.DOFade(0, 0.5f).OnComplete(() =>
+            {
+                uiBlocker.SetActive(false);
+            });
         }
     }
 
@@ -132,7 +154,10 @@ public class DataManager : GenericSingletonClass<DataManager>
         }
         catch (JsonException ex)
         {
-            Debug.LogError("JSON Parsing Error: " + ex.Message);
+            if (shouldLogError)
+            {
+                Debug.LogError("JSON Parsing Error: " + ex.Message);
+            }
             return false;
         }
     }
@@ -143,7 +168,6 @@ public class DataManager : GenericSingletonClass<DataManager>
         PreferenceManager.Instance.SetBool(MealDataPrefKey, true);
         PreferenceManager.Instance.Save();
     }
-
     public Dictionary<string, MealCategory> GetCategories()
     {
         return mealData;

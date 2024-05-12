@@ -37,7 +37,7 @@ public class AuthController : MonoBehaviour, PageController
         {
             onSignIn();
             GoogleAuth.SignIn(OnSignIn, caching: true);
-            userSessionManager.Instance.OnInitialize(mAuthType, "");
+            userSessionManager.Instance.OnInitialize(HelperMethods.Instance.ExtractUsernameFromEmail(GoogleAuth.SavedAuth.UserInfo.email), GoogleAuth.SavedAuth.UserInfo.sub);
             print("Saved Gmail LogedIn -" + GoogleAuth.SavedAuth);
         }
 
@@ -66,7 +66,7 @@ public class AuthController : MonoBehaviour, PageController
             GlobalAnimator.Instance.FadeOutLoader();
             onSignIn();
             mAuthType = success ? $"{userInfo.name}!" : error;
-            userSessionManager.Instance.OnInitialize(mAuthType, "");
+            userSessionManager.Instance.OnInitialize(HelperMethods.Instance.ExtractUsernameFromEmail(GoogleAuth.SavedAuth.UserInfo.email), GoogleAuth.SavedAuth.UserInfo.sub);
             print(mAuthType);
 
         }
@@ -244,10 +244,16 @@ public class AuthController : MonoBehaviour, PageController
 
     public void OnSignGmail()
     {
-        GmailSignIn();
-        GlobalAnimator.Instance.FadeOutLoader();
-
-
+        if (GoogleAuth.SavedAuth != null)
+        {
+            userSessionManager.Instance.OnInitialize(HelperMethods.Instance.ExtractUsernameFromEmail(GoogleAuth.SavedAuth.UserInfo.email), GoogleAuth.SavedAuth.UserInfo.sub);
+            onSignIn();
+        }
+        else
+        {
+            GmailSignIn();
+            GlobalAnimator.Instance.FadeOutLoader();
+        }
     }
 
     public void OnResetErrors()

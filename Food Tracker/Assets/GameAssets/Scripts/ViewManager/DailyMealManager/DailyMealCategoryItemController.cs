@@ -27,6 +27,7 @@ public class DailyMealCategoryItemController : MonoBehaviour
         {
             aMealServingCount = aMealServingCount + 0.5;
             aCounter.text = aMealServingCount.ToString();
+            initMeal();
         }
         mOnReloadData.Invoke();
     }
@@ -36,6 +37,7 @@ public class DailyMealCategoryItemController : MonoBehaviour
         {
             aMealServingCount = aMealServingCount - 0.5;
             aCounter.text = aMealServingCount.ToString();
+            initMeal();
         }
         mOnReloadData.Invoke();
     }

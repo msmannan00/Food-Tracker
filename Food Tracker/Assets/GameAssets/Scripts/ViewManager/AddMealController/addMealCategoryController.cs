@@ -35,15 +35,22 @@ public class addMealCategoryController : MonoBehaviour
         aDescriptionTop.text = pServing.KiloCal + " kcals - " + pServing.Carb + "g carbs";
         aDescriptionBottom.text = pServing.Protein + "g protiens - " + pServing.Fat + "g fats";
 
-        if (userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState] != null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle]!=null)
+        try
         {
-            aCounter.text = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount.ToString();
-            aMealServingCount = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount;
+            if (userSessionManager.Instance.mPlanModel.Meals[mDate]!=null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState] != null && userSessionManager.Instance.mPlanModel.Meals[mDate] != null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle] != null)
+            {
+                aCounter.text = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount.ToString();
+                aMealServingCount = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount;
+            }
+            else
+            {
+                aCounter.text = "0.5";
+                aMealServingCount = 0.5f;
+            }
         }
-        else
-        {
-            aCounter.text = "0.5";
-            aMealServingCount = 0.5f;
+        catch (Exception xe) {
+            int e = 0;
+            e++;
         }
 
         if (pImagePath.StartsWith("http://") || pImagePath.StartsWith("https://"))

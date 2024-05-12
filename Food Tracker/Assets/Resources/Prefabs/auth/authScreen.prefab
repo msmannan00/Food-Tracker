@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca222228914878458a08b31b3263a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aPlayFabManager: {fileID: 0}
+  aPlayFabManager: {fileID: 129821095995701514}
   aError: {fileID: 5074589827851031312}
   aPageToggleText1: {fileID: 29169862077086224}
   aPageToggleText2: {fileID: 29169862441119200}

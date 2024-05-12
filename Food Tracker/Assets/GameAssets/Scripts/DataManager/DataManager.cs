@@ -8,19 +8,22 @@ public class DataManager : GenericSingletonClass<DataManager>
 {
     private Dictionary<string, MealCategory> mealData = null;
     private const string MealDataPrefKey = "MealData";
-
-    //Local Development
-    //private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=1A_AhmdhAXAxRbguW1encplQ6RNJ9GTlS";
-
-    //Production Development
-    //private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=12Wgv_a_pz7bsxKHxVReBKoI7w0MhKf74";
-
-    //Production Live
     private const string MealDataUrl = "https://drive.google.com/uc?export=download&id=1xgFSs-rC-qqf4WAnU5iWeudXSiafHvWW";
 
+    private GameObject uiBlocker;
+
+    void Start()
+    {
+        uiBlocker = GameObject.Find("UIBlocker");  // Ensure UIBlocker is the correct name of your GameObject
+        if (uiBlocker == null)
+        {
+            Debug.LogError("UIBlocker prefab not found in the scene.");
+        }
+    }
 
     public void OnServerInitialized()
     {
+        ShowUIBlocker();
         StartCoroutine(InitializeMealData());
     }
 
@@ -41,6 +44,23 @@ public class DataManager : GenericSingletonClass<DataManager>
         else
         {
             yield return TryLoadMealDataFromWebOrLocal();
+        }
+        HideUIBlocker();
+    }
+
+    private void ShowUIBlocker()
+    {
+        if (uiBlocker != null)
+        {
+            uiBlocker.SetActive(true);
+        }
+    }
+
+    private void HideUIBlocker()
+    {
+        if (uiBlocker != null)
+        {
+            uiBlocker.SetActive(false);
         }
     }
 

@@ -8,7 +8,6 @@ using Assets.SimpleGoogleSignIn.Scripts;
 public class AuthController : MonoBehaviour, PageController
 {
     [Header("Managers")]
-   // public GoogleManager aGmailManager;
     public PlayfabManager aPlayFabManager;
 
     [Header("Utilities")]
@@ -53,7 +52,6 @@ public class AuthController : MonoBehaviour, PageController
     public void SignOut()
     {
         GoogleAuth.SignOut(revokeAccessToken: true);
-        // Output.text = "Not signed in";
     }
 
     public void GetAccessToken()
@@ -63,11 +61,9 @@ public class AuthController : MonoBehaviour, PageController
 
     private void OnSignIn(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.UserInfo userInfo)
     {
-        //Output.text = success ? $"Hello, {userInfo.name}!" : error;
         if (success)
         {
             GlobalAnimator.Instance.FadeOutLoader();
-            print("loged in");
             onSignIn();
             mAuthType = success ? $"{userInfo.name}!" : error;
             userSessionManager.Instance.OnInitialize(mAuthType, "");
@@ -79,7 +75,6 @@ public class AuthController : MonoBehaviour, PageController
 
     private void OnGetAccessToken(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.TokenResponse tokenResponse)
     {
-        //Output.text = success ? $"Access token: {tokenResponse.AccessToken}" : error;
 
         if (!success) return;
 
@@ -92,8 +87,6 @@ public class AuthController : MonoBehaviour, PageController
 
     private void OnValidateSignature(bool success, string error)
     {
-        //Output.text += Environment.NewLine;
-        //Output.text += success ? "JWT signature validated" : error;
     }
 
     public void Navigate(string url)
@@ -251,7 +244,6 @@ public class AuthController : MonoBehaviour, PageController
 
     public void OnSignGmail()
     {
-        //onSignIn();
         GmailSignIn();
         GlobalAnimator.Instance.FadeOutLoader();
 

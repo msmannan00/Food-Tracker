@@ -2933,7 +2933,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
         - m_Target: {fileID: 5074589826418191595}
           m_TargetAssemblyTypeName: AuthController, Assembly-CSharp
           m_MethodName: OnSignGmail
@@ -2945,7 +2945,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
 --- !u!1 &5074589827851031327
 GameObject:
   m_ObjectHideFlags: 0

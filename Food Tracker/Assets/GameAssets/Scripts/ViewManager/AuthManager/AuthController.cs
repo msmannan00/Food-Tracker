@@ -8,7 +8,7 @@ using Assets.SimpleGoogleSignIn.Scripts;
 public class AuthController : MonoBehaviour, PageController
 {
     [Header("Managers")]
-    public GoogleManager aGmailManager;
+   // public GoogleManager aGmailManager;
     public PlayfabManager aPlayFabManager;
 
     [Header("Utilities")]
@@ -26,23 +26,26 @@ public class AuthController : MonoBehaviour, PageController
 
     public void Start()
     {
-        PlayerPrefs.DeleteAll();
         GoogleAuth = new GoogleAuth();
+        GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);
     }
 
 
-    void GameilSignIn()
+    void GmailSignIn()
     {
 
         if (GoogleAuth.SavedAuth != null)
         {
+            onSignIn();
             GoogleAuth.SignIn(OnSignIn, caching: true);
             userSessionManager.Instance.OnInitialize(mAuthType, "");
+            print("Saved Gmail LogedIn -" + GoogleAuth.SavedAuth);
         }
 
         else
         {
             GoogleAuth.SignIn(OnSignIn, caching: true);
+            print("Else Now Fresh SignIn");
         }
         GlobalAnimator.Instance.FadeInLoader();
     }
@@ -50,21 +53,48 @@ public class AuthController : MonoBehaviour, PageController
     public void SignOut()
     {
         GoogleAuth.SignOut(revokeAccessToken: true);
+        // Output.text = "Not signed in";
     }
 
-    private void OnSignIn(bool success, string error, UserInfo userInfo)
+    public void GetAccessToken()
     {
+        GoogleAuth.GetAccessToken(OnGetAccessToken);
+    }
+
+    private void OnSignIn(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.UserInfo userInfo)
+    {
+        //Output.text = success ? $"Hello, {userInfo.name}!" : error;
         if (success)
         {
             GlobalAnimator.Instance.FadeOutLoader();
             print("loged in");
+            onSignIn();
+            mAuthType = success ? $"{userInfo.name}!" : error;
+            userSessionManager.Instance.OnInitialize(mAuthType, "");
+            print(mAuthType);
 
         }
-        mAuthType = success ? $"{userInfo.name}!" : error;
-        userSessionManager.Instance.OnInitialize(mAuthType, "");
-        print(mAuthType);
+      
     }
 
+    private void OnGetAccessToken(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.TokenResponse tokenResponse)
+    {
+        //Output.text = success ? $"Access token: {tokenResponse.AccessToken}" : error;
+
+        if (!success) return;
+
+        var jwt = new Assets.SimpleGoogleSignIn.Scripts.JWT(tokenResponse.IdToken);
+
+        Debug.Log($"JSON Web Token (JWT) Payload: {jwt.Payload}");
+
+        jwt.ValidateSignature(GoogleAuth.ClientId, OnValidateSignature);
+    }
+
+    private void OnValidateSignature(bool success, string error)
+    {
+        //Output.text += Environment.NewLine;
+        //Output.text += success ? "JWT signature validated" : error;
+    }
 
     public void Navigate(string url)
     {
@@ -79,6 +109,7 @@ public class AuthController : MonoBehaviour, PageController
         bool mFirsTimePlanInitialized = PreferenceManager.Instance.GetBool("FirstTimePlanInitialized_" + userSessionManager.Instance.mProfileUsername, false);
         if (!mFirsTimePlanInitialized)
         {
+            print("1stTime Gmail log in");
             Dictionary<string, object> mData = new Dictionary<string, object>
             {
                 { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
@@ -92,6 +123,7 @@ public class AuthController : MonoBehaviour, PageController
             GlobalAnimator.Instance.FadeOutLoader();
             Dictionary<string, object> mData = new Dictionary<string, object> { };
             StateManager.Instance.OpenStaticScreen("dashboard", gameObject, "dashboardScreen", mData);
+            print("2nd time log in");
         }
         userSessionManager.Instance.LoadPlanModel();
     }
@@ -219,8 +251,8 @@ public class AuthController : MonoBehaviour, PageController
 
     public void OnSignGmail()
     {
-        onSignIn();
-        GameilSignIn();
+        //onSignIn();
+        GmailSignIn();
         GlobalAnimator.Instance.FadeOutLoader();
 
 

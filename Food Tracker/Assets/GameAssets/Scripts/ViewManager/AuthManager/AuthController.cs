@@ -3,11 +3,16 @@ using TMPro;
 using System;
 using PlayFab;
 using System.Collections.Generic;
+using PlayFab.Internal;
+using UnityEngine.UI;
 using Assets.SimpleGoogleSignIn.Scripts;
+using Assets.SimpleFacebookSignIn.Scripts;
+using System.Collections;
 
 public class AuthController : MonoBehaviour, PageController
 {
     [Header("Managers")]
+    //public GoogleManager aGmailManager;
     public PlayfabManager aPlayFabManager;
 
     [Header("Utilities")]
@@ -21,23 +26,51 @@ public class AuthController : MonoBehaviour, PageController
     public TextMeshProUGUI aTriggerButton;
 
     private string mAuthType;
+
+
     public GoogleAuth GoogleAuth;
+    public Text Log;
+    public Text Output;
+
+    public FacebookAuth FacebookAuth;
+
+
+    //---- Google Signin-----//
 
     public void Start()
     {
+
         GoogleAuth = new GoogleAuth();
         GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);
+        FacebookAuth = new FacebookAuth();
+        //StartCoroutine(CallSavedlogins());
     }
 
 
+    IEnumerator CallSavedlogins()
+    {
+
+
+        if (GoogleAuth.SavedAuth != null)
+        {
+            GlobalAnimator.Instance.FadeInLoader();
+            yield return new WaitForSeconds(2);
+            //GlobalAnimator.Instance.FadeInLoader();
+            GoogleAuth.SignIn(OnSignIn, caching: true);
+            userSessionManager.Instance.OnInitialize(mAuthType, "");
+            print("Saved Gmail LogedIn -" + GoogleAuth.SavedAuth);
+            onSignIn();
+        }
+
+
+    }
     void GmailSignIn()
     {
 
         if (GoogleAuth.SavedAuth != null)
         {
-            onSignIn();
             GoogleAuth.SignIn(OnSignIn, caching: true);
-            userSessionManager.Instance.OnInitialize(HelperMethods.Instance.ExtractUsernameFromEmail(GoogleAuth.SavedAuth.UserInfo.email), GoogleAuth.SavedAuth.UserInfo.sub);
+            userSessionManager.Instance.OnInitialize(mAuthType, "");
             print("Saved Gmail LogedIn -" + GoogleAuth.SavedAuth);
         }
 
@@ -52,6 +85,7 @@ public class AuthController : MonoBehaviour, PageController
     public void SignOut()
     {
         GoogleAuth.SignOut(revokeAccessToken: true);
+        // Output.text = "Not signed in";
     }
 
     public void GetAccessToken()
@@ -61,24 +95,25 @@ public class AuthController : MonoBehaviour, PageController
 
     private void OnSignIn(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.UserInfo userInfo)
     {
+        //Output.text = success ? $"Hello, {userInfo.name}!" : error;
         if (success)
         {
             GlobalAnimator.Instance.FadeOutLoader();
-            onSignIn();
-            mAuthType = success ? $"{userInfo.name}!" : error;
-            userSessionManager.Instance.OnInitialize(HelperMethods.Instance.ExtractUsernameFromEmail(GoogleAuth.SavedAuth.UserInfo.email), GoogleAuth.SavedAuth.UserInfo.sub);
-            print(mAuthType);
+            print("loged in");
 
         }
-      
+        mAuthType = success ? $"{userInfo.name}!" : error;
+        userSessionManager.Instance.OnInitialize(mAuthType, "");
+        print(mAuthType);
     }
 
     private void OnGetAccessToken(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.TokenResponse tokenResponse)
     {
+        //Output.text = success ? $"Access token: {tokenResponse.AccessToken}" : error;
 
         if (!success) return;
 
-        var jwt = new Assets.SimpleGoogleSignIn.Scripts.JWT(tokenResponse.IdToken);
+        var jwt = new Assets.SimpleFacebookSignIn.Scripts.JWT(tokenResponse.IdToken);
 
         Debug.Log($"JSON Web Token (JWT) Payload: {jwt.Payload}");
 
@@ -87,6 +122,8 @@ public class AuthController : MonoBehaviour, PageController
 
     private void OnValidateSignature(bool success, string error)
     {
+        //Output.text += Environment.NewLine;
+        //Output.text += success ? "JWT signature validated" : error;
     }
 
     public void Navigate(string url)
@@ -121,6 +158,93 @@ public class AuthController : MonoBehaviour, PageController
         userSessionManager.Instance.LoadPlanModel();
     }
 
+
+    //---------End Gmail---------//
+
+
+    //-----------------Facbook login---------------------//
+
+    public void FBSignIn()
+    {
+        FacebookAuth.FBSignIn(FBOnSignIn, caching: true);
+    }
+
+    public void FBSignOut()
+    {
+        FacebookAuth.FBSignOut(revokeAccessToken: true);
+        //Output.text = "Not signed in";
+    }
+
+    public void FBGetAccessToken()
+    {
+        FacebookAuth.FBGetAccessToken(FBOnGetAccessToken);
+    }
+
+    private void FBOnSignIn(bool success, string error, Assets.SimpleFacebookSignIn.Scripts.UserInfo userInfo)
+    {
+        //Output.text = success ? $"Hello, {userInfo.name}!" : error;
+        if (success)
+        {
+            GlobalAnimator.Instance.FadeOutLoader();
+
+            mAuthType = success ? $"{userInfo.name}!" : error;
+            userSessionManager.Instance.OnInitialize(mAuthType, "");
+            print(mAuthType);
+        }
+        print("FB Loged In");
+    }
+
+    private void FBOnGetAccessToken(bool success, string error, Assets.SimpleFacebookSignIn.Scripts.TokenResponse tokenResponse)
+    {
+        //Output.text = success ? $"Access token: {tokenResponse.AccessToken}" : error;
+
+        if (!success) return;
+
+        var jwt = new Assets.SimpleFacebookSignIn.Scripts.JWT(tokenResponse.IdToken);
+
+        Debug.Log($"JSON Web Token (JWT) Payload: {jwt.Payload}");
+
+        jwt.ValidateSignature(FacebookAuth.ClientId, OnValidateSignature);
+    }
+
+    private void FBOnValidateSignature(bool success, string error)
+    {
+        //Output.text += Environment.NewLine;
+        //Output.text += success ? "JWT signature validated" : error;
+    }
+
+    public void FBNavigate(string url)
+    {
+        Application.OpenURL(url);
+    }
+
+    public void onFBSignIn()
+    {
+        gameObject.transform.parent.SetSiblingIndex(1);
+
+        bool mFBFirsTimePlanInitialized = PreferenceManager.Instance.GetBool("FBFirstTimePlanInitialized_" + userSessionManager.Instance.mProfileUsername, false);
+        if (!mFBFirsTimePlanInitialized)
+        {
+            print("1stTime log in");
+            Dictionary<string, object> mData = new Dictionary<string, object>
+            {
+                { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
+            };
+
+            StateManager.Instance.OpenStaticScreen("planCreator", gameObject, "planCreatorScreen", mData);
+        }
+        else
+        {
+
+            GlobalAnimator.Instance.FadeInLoader();
+            Dictionary<string, object> mData = new Dictionary<string, object> { };
+            StateManager.Instance.OpenStaticScreen("dashboard", gameObject, "dashboardScreen", mData);
+            print("2nd time log in");
+        }
+        userSessionManager.Instance.LoadPlanModel();
+    }
+
+    //-----------------End FB-----------------------//
 
 
     public void onInit(Dictionary<string, object> pData)
@@ -244,16 +368,20 @@ public class AuthController : MonoBehaviour, PageController
 
     public void OnSignGmail()
     {
-        if (GoogleAuth.SavedAuth != null)
-        {
-            userSessionManager.Instance.OnInitialize(HelperMethods.Instance.ExtractUsernameFromEmail(GoogleAuth.SavedAuth.UserInfo.email), GoogleAuth.SavedAuth.UserInfo.sub);
-            onSignIn();
-        }
-        else
-        {
-            GmailSignIn();
-            GlobalAnimator.Instance.FadeOutLoader();
-        }
+        onSignIn();
+        GmailSignIn();
+        GlobalAnimator.Instance.FadeOutLoader();
+
+
+    }
+
+    public void FacebookSignIn()
+    {
+        onFBSignIn();
+        FBSignIn();
+        //userSessionManager.Instance.OnInitialize(mAuthType, "");
+        //GlobalAnimator.Instance.FadeInLoader();
+
     }
 
     public void OnResetErrors()
@@ -284,3 +412,4 @@ public class AuthController : MonoBehaviour, PageController
     }
 
 }
+

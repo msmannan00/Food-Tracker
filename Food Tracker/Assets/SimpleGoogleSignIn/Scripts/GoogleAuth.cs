@@ -306,6 +306,7 @@ namespace Assets.SimpleGoogleSignIn.Scripts
 
             const string error = "User cancelled.";
 
+            GlobalAnimator.Instance.FadeOutLoader();
             _callbackT?.Invoke(false, error, null);
             _callbackU?.Invoke(false, error, null);
         }
@@ -530,11 +531,11 @@ namespace Assets.SimpleGoogleSignIn.Scripts
 
         private void RevokeAccessToken(string accessToken)
         {
-            //var request = UnityWebRequest.PostWwwForm($"{RevocationEndpoint}?token={accessToken}", "");
+            var request = UnityWebRequest.PostWwwForm($"{RevocationEndpoint}?token={accessToken}", "");
 
-            //Log($"Revoking access token: {request.url}");
+            Log($"Revoking access token: {request.url}");
 
-            //request.SendWebRequest().completed += _ => Log(request.error ?? "Access token revoked!");
+            request.SendWebRequest().completed += _ => Log(request.error ?? "Access token revoked!");
         }
 
         private void Log(string message)

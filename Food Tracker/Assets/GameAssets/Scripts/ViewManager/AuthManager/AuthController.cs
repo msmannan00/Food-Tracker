@@ -72,14 +72,17 @@ public class AuthController : MonoBehaviour, PageController
             GoogleAuth.SignIn(OnSignIn, caching: true);
             userSessionManager.Instance.OnInitialize(mAuthType, "");
             print("Saved Gmail LogedIn -" + GoogleAuth.SavedAuth);
+            onSignIn();
         }
 
         else
         {
+            GlobalAnimator.Instance.FadeInLoader();
             GoogleAuth.SignIn(OnSignIn, caching: true);
             print("Else Now Fresh SignIn");
         }
-        GlobalAnimator.Instance.FadeInLoader();
+        
+
     }
 
     public void SignOut()
@@ -100,11 +103,14 @@ public class AuthController : MonoBehaviour, PageController
         {
             GlobalAnimator.Instance.FadeOutLoader();
             print("loged in");
-
+            onSignIn();
         }
+
+       
         mAuthType = success ? $"{userInfo.name}!" : error;
         userSessionManager.Instance.OnInitialize(mAuthType, "");
         print(mAuthType);
+
     }
 
     private void OnGetAccessToken(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.TokenResponse tokenResponse)
@@ -113,7 +119,7 @@ public class AuthController : MonoBehaviour, PageController
 
         if (!success) return;
 
-        var jwt = new Assets.SimpleFacebookSignIn.Scripts.JWT(tokenResponse.IdToken);
+        var jwt = new Assets.SimpleGoogleSignIn.Scripts.JWT(tokenResponse.IdToken);
 
         Debug.Log($"JSON Web Token (JWT) Payload: {jwt.Payload}");
 
@@ -140,6 +146,7 @@ public class AuthController : MonoBehaviour, PageController
         if (!mFirsTimePlanInitialized)
         {
             print("1stTime Gmail log in");
+            GlobalAnimator.Instance.FadeOutLoader();
             Dictionary<string, object> mData = new Dictionary<string, object>
             {
                 { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
@@ -150,7 +157,7 @@ public class AuthController : MonoBehaviour, PageController
         else
         {
 
-            GlobalAnimator.Instance.FadeOutLoader();
+            //GlobalAnimator.Instance.FadeOutLoader();
             Dictionary<string, object> mData = new Dictionary<string, object> { };
             StateManager.Instance.OpenStaticScreen("dashboard", gameObject, "dashboardScreen", mData);
             print("2nd time log in");
@@ -186,7 +193,7 @@ public class AuthController : MonoBehaviour, PageController
         if (success)
         {
             GlobalAnimator.Instance.FadeOutLoader();
-
+            onFBSignIn();
             mAuthType = success ? $"{userInfo.name}!" : error;
             userSessionManager.Instance.OnInitialize(mAuthType, "");
             print(mAuthType);
@@ -226,6 +233,7 @@ public class AuthController : MonoBehaviour, PageController
         if (!mFBFirsTimePlanInitialized)
         {
             print("1stTime log in");
+            GlobalAnimator.Instance.FadeOutLoader();
             Dictionary<string, object> mData = new Dictionary<string, object>
             {
                 { AuthKey.sAuthType, AuthConstant.sAuthTypeSignup}
@@ -236,7 +244,7 @@ public class AuthController : MonoBehaviour, PageController
         else
         {
 
-            GlobalAnimator.Instance.FadeInLoader();
+            //GlobalAnimator.Instance.FadeInLoader();
             Dictionary<string, object> mData = new Dictionary<string, object> { };
             StateManager.Instance.OpenStaticScreen("dashboard", gameObject, "dashboardScreen", mData);
             print("2nd time log in");
@@ -368,20 +376,13 @@ public class AuthController : MonoBehaviour, PageController
 
     public void OnSignGmail()
     {
-        onSignIn();
         GmailSignIn();
-        GlobalAnimator.Instance.FadeOutLoader();
-
-
+      
     }
 
     public void FacebookSignIn()
     {
-        onFBSignIn();
         FBSignIn();
-        //userSessionManager.Instance.OnInitialize(mAuthType, "");
-        //GlobalAnimator.Instance.FadeInLoader();
-
     }
 
     public void OnResetErrors()

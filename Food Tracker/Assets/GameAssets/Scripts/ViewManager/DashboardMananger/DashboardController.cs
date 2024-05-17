@@ -64,7 +64,7 @@ public class DashboardController : MonoBehaviour, PageController
         }
         else
         {
-            gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width / 2.7f, gridLayoutGroup.cellSize.y);
+            gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width / 2.2f, gridLayoutGroup.cellSize.y);
         }
     }
 

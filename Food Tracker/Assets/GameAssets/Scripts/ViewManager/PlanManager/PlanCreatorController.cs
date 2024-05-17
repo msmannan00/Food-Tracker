@@ -20,6 +20,7 @@ public class PlanCreatorController : MonoBehaviour, PageController
     public GameObject[] aDateRangeList;
     public GameObject[] aDateRangeListTriggers;
     public GameObject aBackNavigation;
+    public GameObject aBackNavigationEmpty;
     public GridLayoutGroup gridLayoutGroup;
 
     public void onInit(Dictionary<string, object> data)
@@ -145,6 +146,7 @@ public class PlanCreatorController : MonoBehaviour, PageController
         if (!isPlanInitialized)
         {
             aBackNavigation.SetActive(false);
+            aBackNavigationEmpty.SetActive(true);
         }
         mCurrentDate = DateTime.Now;
         onUpdateDates(3);
@@ -153,6 +155,7 @@ public class PlanCreatorController : MonoBehaviour, PageController
 
     public void onStartPlan()
     {
+        PreferenceManager.Instance.SetBool("FirstTimePlanInitialized_" + userSessionManager.Instance.mProfileUsername, true);
         this.gameObject.SetActive(false);
         userSessionManager.Instance.RemovePlanModel();
         userSessionManager.Instance.createPlan(mContinuePlan, aDateRangeStart.text, aDateRangeEnd.text);
@@ -173,6 +176,11 @@ public class PlanCreatorController : MonoBehaviour, PageController
     public void onGoBack()
     {
         StateManager.Instance.HandleBackAction(gameObject);
+    }
+
+    public void onOpenSideBar()
+    {
+        StateManager.Instance.openSidebar("sidebar", gameObject, "sidebarScreen");
     }
 
     void Update()

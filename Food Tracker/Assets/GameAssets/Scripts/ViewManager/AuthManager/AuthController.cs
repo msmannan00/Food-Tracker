@@ -98,17 +98,15 @@ public class AuthController : MonoBehaviour, PageController
 
     private void OnSignIn(bool success, string error, Assets.SimpleGoogleSignIn.Scripts.UserInfo userInfo)
     {
-        //Output.text = success ? $"Hello, {userInfo.name}!" : error;
         if (success)
         {
             GlobalAnimator.Instance.FadeOutLoader();
-            print("loged in");
+            mAuthType = success ? $"{userInfo.name}" : error;
+            userSessionManager.Instance.OnInitialize(mAuthType, "");
             onSignIn();
         }
 
        
-        mAuthType = success ? $"{userInfo.name}!" : error;
-        userSessionManager.Instance.OnInitialize(mAuthType, "");
         print(mAuthType);
 
     }

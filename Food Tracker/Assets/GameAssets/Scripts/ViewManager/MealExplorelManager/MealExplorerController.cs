@@ -110,6 +110,11 @@ public class MealExplorerController : MonoBehaviour, PageController
         gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width / 2.1f, gridLayoutGroup.cellSize.y);
     }
 
+        public void onOpenSideBar()
+    {
+        StateManager.Instance.openSidebar("sidebar", gameObject, "sidebarScreen");
+    }
+
     public void onGoBack()
     {
         StateManager.Instance.HandleBackAction(gameObject);

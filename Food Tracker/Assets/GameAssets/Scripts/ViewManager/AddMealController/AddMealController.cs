@@ -46,7 +46,8 @@ public class AddMealController : MonoBehaviour, PageController
         {
             GameObject.Destroy(child.gameObject);
         }
-        int index = 0; 
+        int index = 0;
+        aServingText.SetText("category not selected !");
         Dictionary<string, MealCategory> mCategories = DataManager.Instance.GetCategories();
         foreach (var category in mCategories)
         {
@@ -136,6 +137,11 @@ public class AddMealController : MonoBehaviour, PageController
     void Start()
     {
         
+    }
+
+    public void onOpenSideBar()
+    {
+        StateManager.Instance.openSidebar("sidebar", gameObject, "sidebarScreen");
     }
 
     void Update()

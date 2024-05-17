@@ -100,6 +100,11 @@ public class MealDetailController : MonoBehaviour, PageController
         StateManager.Instance.HandleBackAction(gameObject);
     }
 
+    public void onOpenSideBar()
+    {
+        StateManager.Instance.openSidebar("sidebar", gameObject, "sidebarScreen");
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

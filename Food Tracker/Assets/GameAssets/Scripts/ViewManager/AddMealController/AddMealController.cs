@@ -42,6 +42,7 @@ public class AddMealController : MonoBehaviour, PageController
 
     public void initFoodCategories()
     {
+        aScrollViewContent.SetActive(false);
         foreach (Transform child in aScrollViewContent.transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -70,6 +71,9 @@ public class AddMealController : MonoBehaviour, PageController
                                 categoryController.initCategory(dish.Key, dish.Value, subCategory.EachServing, imagePath, mDayState, mDate);
                             }
                         }
+                        aScrollViewContent.SetActive(false);
+                        aScrollViewContent.SetActive(true);
+
                     }
                 }
             }
@@ -130,7 +134,7 @@ public class AddMealController : MonoBehaviour, PageController
 
     void UpdateCellSize()
     {
-        gridLayoutFilterGroup.cellSize = new Vector2(gameObject.GetComponent<RectTransform>().rect.width / 2.2f, gridLayoutFilterGroup.cellSize.y);
+        gridLayoutFilterGroup.cellSize = new Vector2(gameObject.GetComponent<RectTransform>().rect.width / 2.22f, gridLayoutFilterGroup.cellSize.y);
         gridLayoutGroup.cellSize = new Vector2(gameObject.GetComponent<RectTransform>().rect.width / 2.2f, gridLayoutGroup.cellSize.y);
     }
 

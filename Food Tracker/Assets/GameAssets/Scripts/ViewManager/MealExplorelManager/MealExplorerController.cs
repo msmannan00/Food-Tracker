@@ -40,6 +40,7 @@ public class MealExplorerController : MonoBehaviour, PageController
         {
             GameObject.Destroy(child.gameObject);
         }
+        aScrollViewContent.SetActive(false);
 
         int index = 0;
         foreach (var categoryItem in mSubCategory)
@@ -59,6 +60,8 @@ public class MealExplorerController : MonoBehaviour, PageController
                         categoryController.InitCategory(mDishItem.Key, description, mDishItem.Value, categoryItem.EachServing, imagePath, gameObject);
                         aServingText.SetText(categoryItem.EachServing.Carb + "g carbs, " + categoryItem.EachServing.Protein + "g proteins, " + categoryItem.EachServing.Fat + "g fats, " + categoryItem.EachServing.KiloCal + " kcal");
                     }
+                    aScrollViewContent.SetActive(false);
+                    aScrollViewContent.SetActive(true);
                 }
             }
         }

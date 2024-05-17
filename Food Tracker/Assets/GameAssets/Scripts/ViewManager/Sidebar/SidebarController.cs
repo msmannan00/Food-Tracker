@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SidebarController : MonoBehaviour, PageController
 {
@@ -18,20 +19,8 @@ public class SidebarController : MonoBehaviour, PageController
     }
     public void onLogout()
     {
-        GameObject targetObject = GameObject.Find("dashboardScreen(Clone)");
-        if (targetObject != null)
-        {
-            GameObject.Destroy(targetObject);
-        }
-
-        onGoBack();
-
-        gameObject.transform.parent.SetSiblingIndex(1);
-        Dictionary<string, object> mData = new Dictionary<string, object>
-        {
-          { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
-        };
-        StateManager.Instance.OpenStaticScreen("auth", gameObject, "authScreen", mData, true);
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
     public void onRemoveAccount()
     {
@@ -55,4 +44,12 @@ public class SidebarController : MonoBehaviour, PageController
     {
         Application.OpenURL("https://www.termsfeed.com/live/fd617121-60c1-4047-9f9c-63268dd05bc2");
     }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StateManager.Instance.HandleBackAction(gameObject);
+        }
+    }
+
 }

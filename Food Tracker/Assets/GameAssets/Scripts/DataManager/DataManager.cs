@@ -39,6 +39,11 @@ public class DataManager : GenericSingletonClass<DataManager>
         }
     }
 
+    public bool IsMealLoaded()
+    {
+        return mealData != null;
+    }
+
     public void OnServerInitialized()
     {
         ShowUIBlocker();

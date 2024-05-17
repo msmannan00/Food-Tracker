@@ -39,6 +39,16 @@ public class AuthController : MonoBehaviour, PageController
 
     public void Start()
     {
+        if (DataManager.Instance.IsMealLoaded())
+        {
+            GameObject uiBlocker = GameObject.Find("UIBlocker"); 
+            if (uiBlocker != null)
+            {
+                uiBlocker.SetActive(false);
+            }
+        }
+
+
         aUsername.text = "";
         GoogleAuth = new GoogleAuth();
         GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);

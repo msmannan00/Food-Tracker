@@ -152,7 +152,11 @@ public class AddMealController : MonoBehaviour, PageController
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StateManager.Instance.HandleBackAction(gameObject);
+            GameObject sidebarScreen = GameObject.Find("sidebarScreen(Clone)");
+            if (sidebarScreen == null)
+            {
+                StateManager.Instance.HandleBackAction(gameObject);
+            }
         }
     }
 }

@@ -262,8 +262,7 @@ public class DailyMealController : MonoBehaviour, PageController
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameObject sidebarScreen = GameObject.Find("sidebarScreen(Clone)");
-            if (sidebarScreen != null)
+            if (!userSessionManager.Instance.mSidebar)
             {
                 StateManager.Instance.HandleBackAction(gameObject);
             }

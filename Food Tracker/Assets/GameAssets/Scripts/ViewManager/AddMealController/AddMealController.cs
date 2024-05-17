@@ -155,7 +155,10 @@ public class AddMealController : MonoBehaviour, PageController
             GameObject sidebarScreen = GameObject.Find("sidebarScreen(Clone)");
             if (sidebarScreen == null)
             {
-                StateManager.Instance.HandleBackAction(gameObject);
+                if (!userSessionManager.Instance.mSidebar)
+                {
+                    StateManager.Instance.HandleBackAction(gameObject);
+                }
             }
         }
     }

@@ -10,9 +10,11 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
     public string mProfileID;
     public userStatsModel mUserStatsModel;
     public PlanModel mPlanModel = new PlanModel();
+    public bool mSidebar = false;
 
     public void OnInitialize(string pProfileUsername, string pProfileID)
     {
+        mSidebar = false;
         this.mProfileUsername = pProfileUsername;
         this.mProfileID = pProfileID;
         this.mUserStatsModel = new userStatsModel();

@@ -104,7 +104,10 @@ public class MealExplorerController : MonoBehaviour, PageController
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StateManager.Instance.HandleBackAction(gameObject);
+            if (!userSessionManager.Instance.mSidebar)
+            {
+                StateManager.Instance.HandleBackAction(gameObject);
+            }
         }
     }
 

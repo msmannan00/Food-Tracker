@@ -48,7 +48,7 @@ public class AuthController : MonoBehaviour, PageController
             }
         }
 
-
+        userSessionManager.Instance.mSidebar = false;
         aUsername.text = "";
         GoogleAuth = new GoogleAuth();
         GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);

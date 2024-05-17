@@ -187,8 +187,7 @@ public class PlanCreatorController : MonoBehaviour, PageController
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            bool isPlanInitialized = (bool)PreferenceManager.Instance.GetBool("FirstTimePlanInitialized_"+ userSessionManager.Instance.mProfileUsername, false);
-            if (isPlanInitialized)
+            if (!userSessionManager.Instance.mSidebar)
             {
                 StateManager.Instance.HandleBackAction(gameObject);
             }

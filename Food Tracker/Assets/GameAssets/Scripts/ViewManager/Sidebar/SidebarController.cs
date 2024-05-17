@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class SidebarController : MonoBehaviour, PageController
     public void onGoBack()
     {
         StateManager.Instance.HandleSidebarBackAction(gameObject);
+        StartCoroutine(DelaySidebarToggle());
     }
     public void onLogout()
     {
@@ -44,12 +46,23 @@ public class SidebarController : MonoBehaviour, PageController
     {
         Application.OpenURL("https://www.termsfeed.com/live/fd617121-60c1-4047-9f9c-63268dd05bc2");
     }
+
+    void Start()
+    {
+        userSessionManager.Instance.mSidebar = true;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StateManager.Instance.HandleBackAction(gameObject);
+            onGoBack();
         }
     }
 
+    IEnumerator DelaySidebarToggle()
+    {
+        yield return new WaitForSeconds(0.5f);
+        userSessionManager.Instance.mSidebar = false;
+    }
 }

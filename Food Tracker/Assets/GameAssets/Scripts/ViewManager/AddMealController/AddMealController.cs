@@ -130,8 +130,8 @@ public class AddMealController : MonoBehaviour, PageController
 
     void UpdateCellSize()
     {
-        gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width / 2.1f, gridLayoutGroup.cellSize.y);
-        gridLayoutFilterGroup.cellSize = new Vector2(gridLayoutFilterGroup.GetComponent<RectTransform>().rect.width / 2.1f, gridLayoutFilterGroup.cellSize.y);
+        gridLayoutFilterGroup.cellSize = new Vector2(gameObject.GetComponent<RectTransform>().rect.width / 2.2f, gridLayoutFilterGroup.cellSize.y);
+        gridLayoutGroup.cellSize = new Vector2(gameObject.GetComponent<RectTransform>().rect.width / 2.2f, gridLayoutGroup.cellSize.y);
     }
 
     void Start()

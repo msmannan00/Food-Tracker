@@ -58,8 +58,16 @@ public class DashboardController : MonoBehaviour, PageController
 
     void UpdateCellSize()
     {
-        gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width/2.1f, gridLayoutGroup.cellSize.y);
+        if (Screen.width < 1300)
+        {
+            gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width / 2.1f, gridLayoutGroup.cellSize.y);
+        }
+        else
+        {
+            gridLayoutGroup.cellSize = new Vector2(gridLayoutGroup.GetComponent<RectTransform>().rect.width / 2.7f, gridLayoutGroup.cellSize.y);
+        }
     }
+
 
     void Update()
     {

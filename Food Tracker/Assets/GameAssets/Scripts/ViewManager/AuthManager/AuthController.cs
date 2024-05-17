@@ -39,7 +39,7 @@ public class AuthController : MonoBehaviour, PageController
 
     public void Start()
     {
-
+        aUsername.text = "";
         GoogleAuth = new GoogleAuth();
         GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);
         FacebookAuth = new FacebookAuth();

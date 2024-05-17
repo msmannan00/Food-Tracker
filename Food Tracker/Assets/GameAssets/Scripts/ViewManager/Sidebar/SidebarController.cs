@@ -64,5 +64,6 @@ public class SidebarController : MonoBehaviour, PageController
     {
         yield return new WaitForSeconds(0.5f);
         userSessionManager.Instance.mSidebar = false;
+        GameObject.Destroy(gameObject);
     }
 }

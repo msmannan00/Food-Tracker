@@ -164,7 +164,6 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
                 .Join(overlayBlocker.GetComponent<Image>().DOFade(0, 0.4f).SetEase(Ease.OutQuad))
                 .OnComplete(() =>
                 {
-                    GameObject.Destroy(currentPage);
                     GameObject.Destroy(overlayBlocker);
                 });
         }
@@ -173,7 +172,6 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
             currentPage.transform.DOMoveX(-Screen.width, 0.4f).SetEase(Ease.OutQuad)
                 .OnComplete(() =>
                 {
-                    GameObject.Destroy(currentPage);
                 });
         }
     }

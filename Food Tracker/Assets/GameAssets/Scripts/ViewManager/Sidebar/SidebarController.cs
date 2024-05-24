@@ -11,7 +11,6 @@ public class SidebarController : MonoBehaviour, PageController
 
     public void onInit(Dictionary<string, object> data)
     {
-        aUsername.SetText(userSessionManager.Instance.name);
     }
 
     public void onGoBack()
@@ -21,6 +20,8 @@ public class SidebarController : MonoBehaviour, PageController
     }
     public void onLogout()
     {
+        PreferenceManager.Instance.SetString("login_username", "");
+
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
@@ -50,6 +51,7 @@ public class SidebarController : MonoBehaviour, PageController
     void Start()
     {
         userSessionManager.Instance.mSidebar = true;
+        aUsername.SetText(userSessionManager.Instance.mProfileUsername);
     }
 
     void Update()

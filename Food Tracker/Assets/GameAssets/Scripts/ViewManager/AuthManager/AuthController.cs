@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using Assets.SimpleGoogleSignIn.Scripts;
 using Assets.SimpleFacebookSignIn.Scripts;
 using System.Collections;
+using static UnityEngine.Networking.UnityWebRequest;
 
 public class AuthController : MonoBehaviour, PageController
 {
@@ -53,9 +54,34 @@ public class AuthController : MonoBehaviour, PageController
         GoogleAuth = new GoogleAuth();
         GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);
         FacebookAuth = new FacebookAuth();
-        //StartCoroutine(CallSavedlogins());
+        StartCoroutine(WaitAndVerifyFirstLogin());
     }
 
+    private IEnumerator WaitAndVerifyFirstLogin()
+    {
+        GameObject uiBlocker = GameObject.Find("UIBlocker");
+
+        while (!DataManager.Instance.IsMealLoaded())
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        onVerifyFirstLogin();
+    }
+
+    public void onVerifyFirstLogin()
+    {
+        string mUsername = PreferenceManager.Instance.GetString("login_username", "");
+        if (mUsername.Length > 2)
+        {
+            if (mUsername.Contains("@"))
+            {
+                mUsername = HelperMethods.Instance.ExtractUsernameFromEmail(mUsername);
+            }
+            userSessionManager.Instance.OnInitialize(mUsername, mUsername);
+            onSignIn();
+        }
+    }
 
     IEnumerator CallSavedlogins()
     {

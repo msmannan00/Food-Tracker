@@ -32,8 +32,7 @@ public class addMealCategoryController : MonoBehaviour
         mTitle = pTitle;
 
         aName.text = pTitle;
-        aDescriptionTop.text = pServing.KiloCal + " kcals - " + pServing.Carb + "g carbs";
-        aDescriptionBottom.text = pServing.Protein + "g protiens - " + pServing.Fat + "g fats";
+        aDescriptionTop.text = pDish.Measure + " Cups";
 
         try
         {

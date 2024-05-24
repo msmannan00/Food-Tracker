@@ -20,6 +20,7 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
         this.mUserStatsModel = new userStatsModel();
         LoadPlanModel();
 
+        PreferenceManager.Instance.SetString("login_username", pProfileUsername);
         bool mContinueWeeklyPlan = PreferenceManager.Instance.GetBool("ContinuePlan", false);
         string mStartingDate = PreferenceManager.Instance.GetString("DateRangeStart", DateTime.Now.ToString());
         string mEndingDate = PreferenceManager.Instance.GetString("DateRangeEnd", DateTime.Now.ToString());
@@ -30,6 +31,7 @@ public class userSessionManager : GenericSingletonClass<userSessionManager>
     {
         this.mProfileUsername = null;
         this.mProfileID = null;
+
     }
 
     public void createPlan(bool pContinuePlan, string pDateRangeStartText, string pDateRangeEndText)

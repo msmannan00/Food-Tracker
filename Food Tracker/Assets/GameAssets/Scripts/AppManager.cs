@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,12 +8,11 @@ public class AppManager : MonoBehaviour
     {
         /*Initiating app pages*/
         #if UNITY_ANDROID && !UNITY_EDITOR
-           Screen.fullScreen = false;
-           AndroidUtility.ShowStatusBar(new Color32(9, 126, 57, 255));
+                    Screen.fullScreen = false;
+                    AndroidUtility.ShowStatusBar(new Color32(9, 126, 57, 255));
         #endif
 
         Application.targetFrameRate = 60;
-        //PlayerPrefs.DeleteAll();
         if (!PreferenceManager.Instance.GetBool("WelcomeScreensShown_v3"))
         {
             StateManager.Instance.OpenStaticScreen("welcome", null, "welcomeScreen", null);
@@ -27,6 +27,6 @@ public class AppManager : MonoBehaviour
         }
         DataManager.Instance.OnServerInitialized();
 
-        /*Initiating loading of meal data*/
     }
+
 }

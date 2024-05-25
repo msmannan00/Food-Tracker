@@ -84,7 +84,7 @@ public class DataManager : GenericSingletonClass<DataManager>
     {
         if (uiBlocker != null)
         {
-            uiBlockerCanvasGroup.DOFade(0, 0.5f).OnComplete(() =>
+            uiBlockerCanvasGroup.DOFade(0, 0.5f).SetDelay(0.5f).OnComplete(() =>
             {
                 uiBlocker.SetActive(false);
             });

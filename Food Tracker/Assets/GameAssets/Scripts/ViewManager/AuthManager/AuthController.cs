@@ -3,12 +3,10 @@ using TMPro;
 using System;
 using PlayFab;
 using System.Collections.Generic;
-using PlayFab.Internal;
 using UnityEngine.UI;
 using Assets.SimpleGoogleSignIn.Scripts;
 using Assets.SimpleFacebookSignIn.Scripts;
 using System.Collections;
-using static UnityEngine.Networking.UnityWebRequest;
 
 public class AuthController : MonoBehaviour, PageController
 {
@@ -40,6 +38,7 @@ public class AuthController : MonoBehaviour, PageController
 
     public void Start()
     {
+        StartCoroutine(prelaodAssets());
         if (DataManager.Instance.IsMealLoaded())
         {
             GameObject uiBlocker = GameObject.Find("UIBlocker"); 
@@ -56,11 +55,33 @@ public class AuthController : MonoBehaviour, PageController
         FacebookAuth = new FacebookAuth();
         StartCoroutine(WaitAndVerifyFirstLogin());
     }
+    
+    IEnumerator prelaodAssets()
+    {
+        UnityEngine.Object[] prefabs = Resources.LoadAll("Prefabs", typeof(GameObject));
+        List<GameObject> instantiatedObjects = new List<GameObject>();
+
+        foreach (UnityEngine.Object prefab in prefabs)
+        {
+            if (!prefab.name.Contains("auth") && prefab.name.Contains("screen"))
+            {
+                prefab.name = "cached";
+                GameObject instantiatedPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform.parent.parent.parent) as GameObject;
+                instantiatedObjects.Add(instantiatedPrefab);
+                instantiatedPrefab.transform.SetAsFirstSibling();
+            }
+            yield return null;
+        }
+
+        foreach (GameObject obj in instantiatedObjects)
+        {
+            Destroy(obj);
+        }
+
+    }
 
     private IEnumerator WaitAndVerifyFirstLogin()
     {
-        GameObject uiBlocker = GameObject.Find("UIBlocker");
-
         while (!DataManager.Instance.IsMealLoaded())
         {
             yield return new WaitForSeconds(0.2f);

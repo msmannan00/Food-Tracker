@@ -105,6 +105,7 @@ public class GlobalAnimator : GenericSingletonClass<GlobalAnimator>
         targetPage.transform.SetAsLastSibling();
 
         DOTween.Sequence()
+            .SetDelay(0.2f)
             .OnStart(() =>
             {
                 currentCanvas.interactable = false;

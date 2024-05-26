@@ -42,6 +42,14 @@ public class DailyMealCategoryItemController : MonoBehaviour
         mOnReloadData.Invoke();
     }
 
+    public void onRemoveMeal()
+    {
+        userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle.text] = null;
+        userSessionManager.Instance.SavePlanModel();
+        mOnReloadData.Invoke();
+        GameObject.Destroy(this);
+    }
+
     void initMeal()
     {
         if (userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle.text] == null)

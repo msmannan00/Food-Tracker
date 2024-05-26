@@ -141,8 +141,27 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 2.6
-  preloadedAssets: []
+  bundleVersion: 2.8
+  preloadedAssets:
+  - {fileID: 7302680034623667263, guid: 91a38a1bddcdb7442934f2aa529f2827, type: 3}
+  - {fileID: 3382561533277821743, guid: b6465612507ace2408d0a3b7f4187be0, type: 3}
+  - {fileID: 5074589826567012003, guid: 4f7cb616f31e34e4ebb3275a817402a2, type: 3}
+  - {fileID: 8018231847748347923, guid: 56dc2c634b6c0dc47addf306b589196d, type: 3}
+  - {fileID: 6909326255732943061, guid: 7a4650e9166858e458cea09098d64fd8, type: 3}
+  - {fileID: 7643485545017931803, guid: 88e97020cb129f0419e642ae9c28ca3e, type: 3}
+  - {fileID: 3082914855245815080, guid: 4f56d2669b0fa414ebc80db52ffb6d9a, type: 3}
+  - {fileID: 3812662509413224988, guid: c0dd215baf172e74fb95d299dd6ce782, type: 3}
+  - {fileID: 7302680034623667263, guid: 99b03c25e390e524989620165fb4b380, type: 3}
+  - {fileID: 4047415553968130909, guid: b52a988720429f9418a8893dc4a716e6, type: 3}
+  - {fileID: 2066512770444741350, guid: 2c7768c4edc49524b8687cbfdf04f99c, type: 3}
+  - {fileID: 2969821404841748202, guid: ad40e4fcc264a3447b0b2d760de6210b, type: 3}
+  - {fileID: 3382561533277821743, guid: 810fcf68de7fc91498ef5c2fc8ee55b2, type: 3}
+  - {fileID: 4772591172017397751, guid: 0a18721ebab75e04fa4a4c0546ec9ea5, type: 3}
+  - {fileID: 5327927208909768090, guid: af869097d62514d499a609e1850bb935, type: 3}
+  - {fileID: 2766433780473944706, guid: 7e48790cd66db144096b809ca23e6530, type: 3}
+  - {fileID: 2766433780473944706, guid: e24a492801eb6f14ba8fc76fdcf5ea39, type: 3}
+  - {fileID: 5693779475380808524, guid: e7c4d2d1cd328c346aa3541d377c91d6, type: 3}
+  - {fileID: 3081405355176550580, guid: 0a33bd75588ec1f47a397bf0435861f5, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -170,7 +189,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 26
+  AndroidBundleVersionCode: 28
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 33
   AndroidPreferredInstallLocation: 1

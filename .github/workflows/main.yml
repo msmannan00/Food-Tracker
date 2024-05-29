@@ -16,7 +16,8 @@ jobs:
       - name: Set up Unity License
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          
+        run: |
+          run: echo "## Unity License is set"          
 
       - name: Cache Unity version (adjust version as needed)
         uses: actions/cache@v3

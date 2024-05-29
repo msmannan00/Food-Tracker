@@ -1,33 +1,123 @@
-name: Build Unity APK
+name: Build and Release Go&Design for Android
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Create Dev Build? (true/false)'
+        required: true
+        default: 'false'
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  UCD_API_KEY: ${{ secrets.CDN_API_KEY }}
+  GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+  GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
 
 jobs:
-  build:
+  buildWithLinux:
+    name: Build for Android on version 2020.3.0f1
     runs-on: ubuntu-latest
-
+    env:
+      UCD_TOOL_PATH: ${{ format('{0}/tools/ucd-cli-linux', github.workspace) }}
+      ADDRESSABLES_CONTENT_BUILD_PATH: ${{ format('{0}/ServerData/Android', github.workspace) }}
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Set up Unity
-      uses: game-ci/unity-builder@v2
-      with:
-        unityVersion: 2020.3.17f1
-        modules: android
-        license: ${{ secrets.UNITY_LICENSE }}
-
-    - name: Build Unity Project
-      run: |
-        mkdir Builds
-        unity-build -quit -batchmode -projectPath YourUnityProjectName -buildTarget Android -executeMethod BuildScript.PerformBuild -logFile Builds/build.log
-        ls -lR Builds
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v2
-      with:
-        name: YourUnityProjectName-APK
-        path: Builds/*.apk
+      # Checkout
+      - name: Checkout Repository
+        uses: actions/checkout@v2.3.4
+        with:
+          lfs: true    
+      - name: Cache Library
+        uses: actions/cache@v2.1.3
+        with:
+          path: Library
+          key: Library-Android
+          restore-keys: Library-
+      - name: Free Disk Space
+        run: |
+          df -h
+          sudo swapoff -a
+          sudo rm -rf /swapfile /usr/share/dotnet /usr/local/share/boost $AGENT_TOOLSDIRECTORY /usr/local/lib/android /opt/ghc
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Build Unity Project
+        uses: game-ci/unity-builder@v2
+        with:
+          unityVersion: 2020.3.0f1
+          targetPlatform: Android
+          androidAppBundle: true
+          androidKeyStoreName: ${{ secrets.ANDROID_KEYSTORE_NAME }}
+          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+          buildMethod: Ampersand.Editor.BuildGoAndDesign.Build # Addressable content build is triggered by the build method
+          versioning: Semantic
+          customParameters: -devBuild ${{ github.event.inputs.build_type }} -branch ${{ steps.extract_branch.outputs.branch }}
+      # Output (player)
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-Android
+          path: build/Android
+      # Output (addressable content state)
+      - name: Upload Addressable Content State data file
+        uses: actions/upload-artifact@v2
+        with:
+          name: addressables_content_state_Android
+          path: Assets/AddressableAssetsData/Android
+      - name: Import GPG Key used by the UCD CLI tool
+        run: |
+          echo -n "$GPG_PRIVATE_KEY" | base64 --decode | gpg --import
+          echo -e "5\ny\n" | gpg --no-tty --command-fd 0 --edit-key "$GPG_KEY_ID" trust quit
+      - name: Set the bucket ID's name
+        run: |
+          branch="${{ steps.extract_branch.outputs.branch }}"
+          echo "UCD_BUCKET_ID_NAME=${branch^^}_ANDROID_BUCKET_ID" >> $GITHUB_ENV
+      - name: Upload bundles to UCD & Create content release
+        run: |
+          echo "${{ env.UCD_BUCKET_ID_NAME }}"
+          pass init "$GPG_KEY_ID"
+          chmod +x $UCD_TOOL_PATH
+          $UCD_TOOL_PATH auth login $UCD_API_KEY
+          $UCD_TOOL_PATH config set bucket "${{ secrets[env.UCD_BUCKET_ID_NAME] }}"
+          $UCD_TOOL_PATH entries sync "$ADDRESSABLES_CONTENT_BUILD_PATH"
+          curl --user :$UCD_API_KEY -X POST "https://content-api.cloud.unity3d.com/api/v1/buckets/"${{ secrets[env.UCD_BUCKET_ID_NAME] }}"/releases/" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"notes\":\"automatically published from GitHub Actions\"}"
+  releaseToGooglePlay:
+    name: Release to the Google Play Store
+    runs-on: ubuntu-latest
+    needs: buildWithLinux
+    env:
+      GOOGLE_PLAY_KEY_FILE: ${{ secrets.GOOGLE_PLAY_KEY_FILE }}
+      GOOGLE_PLAY_KEY_FILE_PATH: ${{ format('{0}/fastlane/google-fastlane.json', github.workspace) }}
+      ANDROID_BUILD_FILE_PATH: ${{ format('{0}/build/Android/Android.aab', github.workspace) }}
+      ANDROID_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Download Android Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-Android
+          path: build/Android
+      - name: Add Authentication
+        run: echo "$GOOGLE_PLAY_KEY_FILE" > $GOOGLE_PLAY_KEY_FILE_PATH
+      - name: Setup Ruby & Install Fastlane
+        uses: ruby/setup-ruby@v1.66.0
+        with:
+          ruby-version: 2.7
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Upload to Google Play Internal
+        uses: maierj/fastlane-action@v2.0.0
+        with:
+          lane: 'android internal'
+      - name: Cleanup to avoid storage limit
+        if: always()
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: build-Android

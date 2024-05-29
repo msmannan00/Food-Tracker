@@ -1,4 +1,4 @@
-name: Build Unity Project
+name: Build Unity Project (APK)
 
 on:
   push:
@@ -22,16 +22,11 @@ jobs:
           
 
       - name: Install Unity
-        uses: sean-l/unity-setup-action@v1
+        uses: sean-l/unity-setup-action@v1  # Or alternative caching approach
         with:
-          unity-version: '2023.2.0f1'
+          unity-version: '2023.2.0f1'  # Update with your desired version
 
-      - name: Load project
-        uses: gitpodhq/unity-actions@v1
-        with:
-          project: path/to/your/project.unityproj
-
-      - name: Build Project (replace with your build command)
+      - name: Build APK (replace with your build arguments)
         run: |
-          unity -batchmode -quit -projectPath path/to/your/project.unityproj -buildTarget StandaloneWindows64 -exportPath Builds/Windows
-          # Replace with your specific build target and output path
+          unity -batchmode -quit -projectPath path/to/your/project.unityproj -buildTarget Android -exportPath Builds/Android
+          # You might need to configure additional arguments like keystore details

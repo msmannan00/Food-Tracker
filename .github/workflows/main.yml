@@ -29,15 +29,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-unity-
 
+    - name: Set up Unity
+      uses: game-ci/unity-setup@v2
+      with:
+        unityVersion: 2022.3.20f1
+        targetPlatform: Android
+
     - name: Activate Unity License
-      run: |
-        echo "UNITY_EMAIL=msmannan00@gmail.com" > unity.env
-        echo "UNITY_PASSWORD=Imammehdi@00" >> unity.env
-        game-ci/unity-activate@v2 --env-file unity.env
-      env:
-        UNITY_EMAIL: msmannan00@gmail.com
-        UNITY_PASSWORD: Imammehdi@00
       uses: game-ci/unity-activate@v2
+      with:
+        email: msmannan00@gmail.com
+        password: Imammehdi@00
 
     - name: Build Android
       uses: game-ci/unity-builder@v2
@@ -45,9 +47,6 @@ jobs:
         unityVersion: 2022.3.20f1
         targetPlatform: Android
         projectPath: .
-      env:
-        UNITY_EMAIL: msmannan00@gmail.com
-        UNITY_PASSWORD: Imammehdi@00
 
     - name: Upload APK
       uses: actions/upload-artifact@v3

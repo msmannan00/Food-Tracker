@@ -21,10 +21,21 @@ jobs:
           echo $UNITY_LICENSE >> $GITHUB_ENV
           
 
-      - name: Install Unity
-        uses: sean-l/unity-setup-action@v1  # Or alternative caching approach
+      - name: Cache Unity version (adjust version as needed)
+        uses: actions/cache@v3
         with:
-          unity-version: '2023.2.0f1'  # Update with your desired version
+          path: /opt/Unity/2023.2.0f1  # Update with desired version
+          key: ${{ runner.os }}-unity-${{ hashFiles('**/UnitySetup.exe') }}
+          restore-keys: |
+            ${{ runner.os }}-unity-
+
+      - name: Install Unity (if cache miss)
+        run: |
+          if [ ! -f /opt/Unity/2023.2.0f1/Editor/Unity.exe ]; then
+            # Download and install Unity here (replace with download URL)
+            wget https://download.unity.com/download_unity/YOUR_UNITY_VERSION_URL
+            unzip YOUR_UNITY_VERSION.zip
+          fi
 
       - name: Build APK (replace with your build arguments)
         run: |

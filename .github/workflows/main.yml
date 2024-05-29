@@ -40,8 +40,6 @@ jobs:
     - name: Request manual activation file 🔑
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
-
         - uses: game-ci/unity-activate@v2
           id: getManualLicenseFile
           with:

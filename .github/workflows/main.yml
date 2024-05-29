@@ -68,11 +68,6 @@ jobs:
           unityPassword: ${{ secrets.UNITY_PASSWORD }}
           licenseFile: ${{ secrets.UNITY_LICENSE }}
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Manual Activation File
-          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
-
   testRunnerInEditMode:
     name: Test in editmode 📝
     runs-on: ubuntu-latest

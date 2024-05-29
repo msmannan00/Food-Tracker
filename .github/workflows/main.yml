@@ -8,28 +8,21 @@ on:
 
 jobs:
   build:
-    name: Build Unity Project
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Setup Unity
-      uses: game-ci/unity-request-activation-file@v2
-      id: getManualLicenseFile
-
-    - name: Decode Unity License
-      run: |
-        echo ${{ secrets.UNITY_LICENSE }} | base64 --decode > Unity_v20xx.ulf
-
     - name: Activate Unity License
       uses: game-ci/unity-activate@v2
       with:
-        unityVersion: '2020.3.25f1'
-        licenseFile: Unity_v20xx.ulf
+        unityVersion: '2020.3.25f1'  # Specify your Unity version
+        unityEmail: ${{ secrets.UNITY_EMAIL }}
+        unityPassword: ${{ secrets.UNITY_PASSWORD }}
+        unityLicense: ${{ secrets.UNITY_LICENSE }}
 
-    - name: Build Project
-      run: |
-        echo "Building Unity Project"
-        unity -batchmode -nographics -silent-crashes -logFile -projectPath "$(pwd)" -buildWindows64Player "$(pwd)/Build/game.exe" -quit
+    - name: Build Unity Project
+      uses: game-ci/unity-builder@v2
+      with:
+        unityVersion: '2020.3.25f1'  # Ensure this matches the activation step
+        targetPlatform: StandaloneWindows64  # Specify your target platform

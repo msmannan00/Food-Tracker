@@ -7,17 +7,25 @@ on:
     branches: [ main ]
 
 jobs:
-    activation:
-        name: Request manual activation file 🔑
-        runs-on: ubuntu-latest
-        steps:
-            # Request manual activation file
-            - name: Request manual activation file
-              id: getManualLicenseFile
-              uses: game-ci/unity-request-activation-file@v2
-            # Upload artifact (Unity_v20XX.X.XXXX.alf)
-            - name: Expose as artifact
-              uses: actions/upload-artifact@v2
-              with:
-                  name: ${{ steps.getManualLicenseFile.outputs.filePath }}
-                  path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+  build:
+    name: Build Unity Project
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Unity Editor
+      uses: game-ci/unity-builder@v4
+      env:
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        UNITY_LICENSE: ${{ secrets.UNITY_SERIAL }}
+      with:
+        unityVersion: '2020.3.25f1'
+        targetPlatform: StandaloneWindows64
+
+    - name: Build Project
+      run: |
+        echo "Building Unity Project"
+        unity -batchmode -nographics -silent-crashes -logFile -projectPath "$(pwd)" -buildWindows64Player "$(pwd)/Build/game.exe" -quit

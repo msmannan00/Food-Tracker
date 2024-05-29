@@ -8,34 +8,20 @@ on:
 
 jobs:
   build:
+    name: Build Unity Project
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Set up Unity License
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        run: |
-          run: echo "## Unity License is set"          
+    - name: Setup Unity Editor
+      uses: game-ci/unity-builder@v2
+      with:
+        unityVersion: '2020.3.25f1' # Specify your Unity version here
+        targetPlatform: StandaloneWindows64 # Specify your target platform here
 
-      - name: Cache Unity version (adjust version as needed)
-        uses: actions/cache@v3
-        with:
-          path: /opt/Unity/2023.2.0f1  # Update with desired version
-          key: ${{ runner.os }}-unity-${{ hashFiles('**/UnitySetup.exe') }}
-          restore-keys: |
-            ${{ runner.os }}-unity-
-
-      - name: Install Unity (if cache miss)
-        run: |
-          if [ ! -f /opt/Unity/2023.2.0f1/Editor/Unity.exe ]; then
-            # Download and install Unity here (replace with download URL)
-            wget https://download.unity.com/download_unity/YOUR_UNITY_VERSION_URL
-            unzip YOUR_UNITY_VERSION.zip
-          fi
-
-      - name: Build APK (replace with your build arguments)
-        run: |
-          unity -batchmode -quit -projectPath path/to/your/project.unityproj -buildTarget Android -exportPath Builds/Android
-          # You might need to configure additional arguments like keystore details
+    - name: Build Project
+      run: |
+        echo "Building Unity Project"
+        unity -batchmode -nographics -silent-crashes -logFile -projectPath "$(pwd)" -buildWindows64Player "$(pwd)/Build/game.exe" -quit

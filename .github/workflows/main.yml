@@ -69,7 +69,7 @@ jobs:
           licenseFile: ${{ secrets.UNITY_LICENSE }}
 
 
-  builder:
+  testRunnerInEditModexxxxx:
     name: Build Android
     uses: game-ci/unity-builder@v2
     with:

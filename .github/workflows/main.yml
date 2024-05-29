@@ -30,7 +30,7 @@ jobs:
           ${{ runner.os }}-unity-
 
     - name: Activate Unity License
-      uses: game-ci/unity-activate@v3
+      uses: game-ci/unity-activate@v2
       with:
         unityEmail: msmannan00@gmail.com
         unityPassword: Imammehdi@00

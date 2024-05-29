@@ -56,13 +56,22 @@ jobs:
           path: build
 
   requestManualActivationFile:
-      name: Activate Unity License
-      id: activate_license
-      uses: game-ci/unity-activate@v2
-      with:
-        unityEmail: ${{ secrets.UNITY_EMAIL }}
-        unityPassword: ${{ secrets.UNITY_PASSWORD }}
-        licenseFile: ${{ secrets.UNITY_LICENSE }}
+    name: Request manual activation file 🔑
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: game-ci/unity-activate@v4
+        id: getManualLicenseFile
+        with:
+          unityEmail: ${{ secrets.UNITY_EMAIL }}
+          unityPassword: ${{ secrets.UNITY_PASSWORD }}
+          licenseFile: ${{ secrets.UNITY_LICENSE }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Manual Activation File
+          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
 
   testRunnerInEditMode:
     name: Test in editmode 📝

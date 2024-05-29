@@ -1,10 +1,7 @@
-name: Unity Build with Pre-existing License
+name: Build Unity APK
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
@@ -13,59 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Set up .NET Core SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.x'
+    - name: Set up Unity
+      uses: game-ci/setup-unity@v1
+      with:
+        unityVersion: 2020.3.17f1
+        modules: android
+        license: ${{ secrets.UNITY_LICENSE }}
 
-      - name: Cache Unity Packages
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.local/share/unity3d/Unity
-            ~/.cache/unity3d
-          key: ${{ runner.os }}-unity-${{ hashFiles('**/Packages/manifest.json') }}
-          restore-keys: |
-            ${{ runner.os }}-unity-
+    - name: Build Unity Project
+      run: |
+        mkdir Builds
+        unity-build -quit -batchmode -projectPath YourUnityProjectName -buildTarget Android -executeMethod BuildScript.PerformBuild -logFile Builds/build.log
+        ls -lR Builds
 
-      - name: Create Unity License Directory
-        run: mkdir -p $HOME/.local/share/unity3d/Unity
-
-      - name: Activate Unity License
-        run: echo "${{ secrets.UNITY_LICENSE_CONTENT }}" | tr -d '\r' > $HOME/.local/share/unity3d/Unity/Unity_lic.ulf
-
-      - name: Verify Unity License
-        run: |
-          echo "Checking Unity License file..."
-          ls -l $HOME/.local/share/unity3d/Unity/
-          cat $HOME/.local/share/unity3d/Unity/Unity_lic.ulf
-          if [ ! -s $HOME/.local/share/unity3d/Unity/Unity_lic.ulf ]; then
-            echo "Unity License File not found or is empty!"
-            exit 1
-          fi
-
-      - name: Build Unity Project
-        uses: game-ci/unity-builder@v2
-        with:
-          projectPath: .
-          unityVersion: 2021.1.0f1
-          targetPlatform: StandaloneWindows64
-
-      - name: Deactivate Unity License
-        if: always()
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-          UNITY_LICENSE=`cat $HOME/.local/share/unity3d/Unity/Unity_lic.ulf | jq -R -s '.'`
-          curl -X POST -H "Content-Type: application/json" \
-            -d "{\"license\":\"$UNITY_LICENSE\"}" \
-            https://license.unity3d.com/revoke-license
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Build
-          path: build/StandaloneWindows64
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: YourUnityProjectName-APK
+        path: Builds/*.apk

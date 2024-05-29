@@ -8,21 +8,28 @@ on:
 
 jobs:
   build:
+    name: Build Unity Project
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Setup Unity Editor
+      uses: game-ci/unity-builder@v2
+      with:
+        unityVersion: '2020.3.25f1'
+        targetPlatform: StandaloneWindows64
+
     - name: Activate Unity License
       uses: game-ci/unity-activate@v2
       with:
-        unityVersion: '2020.3.25f1'  # Specify your Unity version
-        unityEmail: ${{ secrets.UNITY_EMAIL }}
-        unityPassword: ${{ secrets.UNITY_PASSWORD }}
-        unityLicense: ${{ secrets.UNITY_LICENSE }}
+        unityVersion: '2020.3.25f1'
+        license: ${{ secrets.UNITY_LICENSE }}
 
-    - name: Build Unity Project
-      uses: game-ci/unity-builder@v2
-      with:
-        unityVersion: '2020.3.25f1'  # Ensure this matches the activation step
-        targetPlatform: StandaloneWindows64  # Specify your target platform
+    - name: Build Project
+      run: |
+        echo "Building Unity Project"
+        unity -batchmode -nographics -silent-crashes -logFile -projectPath "$(pwd)" -buildWindows64Player "$(pwd)/Build/game.exe" -quit
+
+K

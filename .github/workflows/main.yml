@@ -68,6 +68,8 @@ jobs:
           unityPassword: ${{ secrets.UNITY_PASSWORD }}
           licenseFile: ${{ secrets.UNITY_LICENSE }}
 
+
+  builder:
     name: Build Android
     uses: game-ci/unity-builder@v2
     with:

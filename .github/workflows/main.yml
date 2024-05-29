@@ -36,18 +36,18 @@ jobs:
       - name: Restore Library cache
         uses: actions/cache@v2
         with:
-          path: test-projects/test-project/Library
+          path: /Library
           key: Library-test-project-WebGL
 
       - name: Run tests
         uses: game-ci/unity-test-runner@v2
         with:
-          projectPath: test-projects/test-project
+          projectPath: .
 
       - name: Build project
         uses: game-ci/unity-builder@v2
         with:
-          projectPath: test-projects/test-project
+          projectPath: .
           targetPlatform: WebGL
 
       - uses: actions/upload-artifact@v2
@@ -61,7 +61,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: game-ci/unity-activate@v4
+      - uses: game-ci/unity-activate@v2
         id: getManualLicenseFile
         with:
           unityEmail: ${{ secrets.UNITY_EMAIL }}
@@ -99,7 +99,7 @@ jobs:
       - name: Restore Library cache
         uses: actions/cache@v2
         with:
-          path: test-projects/test-project/Library
+          path: /Library
           key: Library-test-project
           restore-keys: |
             Library-test-
@@ -107,7 +107,7 @@ jobs:
       - uses: game-ci/unity-test-runner@v2
         id: testRunner
         with:
-          projectPath: test-projects/test-project
+          projectPath: .
           testMode: editmode
 
       - uses: actions/upload-artifact@v2
@@ -141,7 +141,7 @@ jobs:
       - name: Restore Library cache
         uses: actions/cache@v2
         with:
-          path: test-projects/test-project/Library
+          path: /Library
           key: Library-test-project-${{ matrix.targetPlatform }}
           restore-keys: |
             Library-test-project-
@@ -150,7 +150,7 @@ jobs:
       - uses: game-ci/unity-test-runner@v2
         id: testRunner
         with:
-          projectPath: test-projects/test-project
+          projectPath: .
           testMode: playmode
 
       - uses: actions/upload-artifact@v2
@@ -190,7 +190,7 @@ jobs:
       - name: Restore Library cache
         uses: actions/cache@v2
         with:
-          path: test-projects/test-project/Library
+          path: /Library
           key: Library-test-project-${{ matrix.targetPlatform }}
           restore-keys: |
             Library-test-project-
@@ -199,7 +199,7 @@ jobs:
       - uses: game-ci/unity-test-runner@v2.0-alpha-5
         id: testRunner
         with:
-          projectPath: test-projects/test-project
+          projectPath: .
           testMode: ${{ matrix.testMode }}
           checkName: ${{ matrix.testMode }} test results
           githubToken: ${{ secrets.GITHUB_TOKEN }}
@@ -216,7 +216,7 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - test-projects/test-project
+          - .
         targetPlatform:
           - WebGL
     steps:

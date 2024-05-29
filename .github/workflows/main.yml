@@ -40,7 +40,7 @@ jobs:
           key: Library-test-project-WebGL
 
       - name: Build project
-        uses: game-ci/unity-builder@v3
+        uses: game-ci/unity-builder@v4
         with:
           projectPath: .
           targetPlatform: WebGL
@@ -63,7 +63,7 @@ jobs:
           unityPassword: ${{ secrets.UNITY_PASSWORD }}
           licenseFile: ${{ secrets.UNITY_LICENSE }}
 
-      - uses: game-ci/unity-builder@v3
+      - uses: game-ci/unity-builder@v4
         with:
           projectPath: ${{ matrix.projectPath }}
           targetPlatform: ${{ matrix.targetPlatform }}
@@ -108,7 +108,7 @@ jobs:
             Library-${{ matrix.projectPath }}-buildAndTest-
             Library-${{ matrix.projectPath }}-
 
-      - uses: game-ci/unity-builder@v3
+      - uses: game-ci/unity-builder@v4
         with:
           projectPath: ${{ matrix.projectPath }}
           targetPlatform: ${{ matrix.targetPlatform }}

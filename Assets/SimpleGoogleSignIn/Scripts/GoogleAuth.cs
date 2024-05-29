@@ -531,11 +531,6 @@ namespace Assets.SimpleGoogleSignIn.Scripts
 
         private void RevokeAccessToken(string accessToken)
         {
-            var request = UnityWebRequest.PostWwwForm($"{RevocationEndpoint}?token={accessToken}", "");
-
-            Log($"Revoking access token: {request.url}");
-
-            request.SendWebRequest().completed += _ => Log(request.error ?? "Access token revoked!");
         }
 
         private void Log(string message)

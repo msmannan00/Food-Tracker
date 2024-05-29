@@ -83,6 +83,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Pull Docker Image
+        run: docker pull unityci/editor:ubuntu-2022.3.20f1-webgl-1
+        
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 

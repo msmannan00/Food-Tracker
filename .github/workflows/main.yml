@@ -41,7 +41,7 @@ jobs:
       - name: Build project
         uses: game-ci/unity-builder@v2
         with:
-          projectPath: /test-project
+          projectPath: .
           targetPlatform: WebGL
 
       # Output

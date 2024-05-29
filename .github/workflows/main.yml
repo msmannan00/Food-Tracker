@@ -1,46 +1,37 @@
-name: Android CI
+name: Unity Build
 
-on:
-  push:
-    branches:
-      - main
+on: [push]  # Triggers the workflow on push events to any branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build Unity Project
+    runs-on: ubuntu-latest  # Specifies the runner environment
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-
-    - name: Cache Unity packages
+    - name: Cache Unity Libraries
       uses: actions/cache@v2
       with:
-        path: |
-          ~/.cache/unity3d
-          ~/Library/Unity
-        key: ${{ runner.os }}-unity-${{ hashFiles('**/Packages/manifest.json') }}
+        path: Library
+        key: ${{ runner.os }}-library-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}
         restore-keys: |
-          ${{ runner.os }}-unity-
+          ${{ runner.os }}-library-
 
-    - name: Build Android
+    - name: Setup Unity
+      uses: game-ci/unity-request-activation-file@v2  # This action is part of the Game CI community
+      with:
+        unityVersion: '2020.3.0f1'  # Specify your Unity version here
+
+    - name: Build Project
       uses: game-ci/unity-builder@v2
       with:
-        projectPath: .
-        targetPlatform: Android
-      env:
-        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        unityVersion: '2020.3.0f1'
+        targetPlatform: StandaloneWindows64  # Define your build platform
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        name: apk
-        path: build/Android/*.apk
+        name: Build
+        path: build/windows  # Adjust path according to your build output

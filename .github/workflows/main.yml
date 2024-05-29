@@ -1,37 +1,54 @@
-name: Unity Build
+name: Android CI
 
-on: [push]  # Triggers the workflow on push events to any branch
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
-    name: Build Unity Project
-    runs-on: ubuntu-latest  # Specifies the runner environment
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE
+    - name: Check out code
+      uses: actions/checkout@v3
 
-    - name: Cache Unity Libraries
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Cache Unity packages
       uses: actions/cache@v2
       with:
-        path: Library
-        key: ${{ runner.os }}-library-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}
+        path: |
+          ~/.cache/unity3d
+          ~/Library/Unity
+        key: ${{ runner.os }}-unity-${{ hashFiles('**/Packages/manifest.json') }}
         restore-keys: |
-          ${{ runner.os }}-library-
+          ${{ runner.os }}-unity-
 
-    - name: Setup Unity
-      uses: game-ci/unity-request-activation-file@v2  # This action is part of the Game CI community
+    - name: Set up Unity
+      uses: game-ci/unity-setup@v2
       with:
-        unityVersion: '2020.3.0f1'  # Specify your Unity version here
+        unityVersion: 2022.3.20f1
+        targetPlatform: Android
 
-    - name: Build Project
+    - name: Activate Unity License
+      run: |
+        echo "UNITY_EMAIL=msmannan00@gmail.com" > unity.env
+        echo "UNITY_PASSWORD=Imammehdi@00" >> unity.env
+        game-ci/unity-activate@v2 --env-file unity.env
+
+    - name: Build Android
       uses: game-ci/unity-builder@v2
       with:
-        unityVersion: '2020.3.0f1'
-        targetPlatform: StandaloneWindows64  # Define your build platform
+        projectPath: .
+        targetPlatform: Android
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
       with:
-        name: Build
-        path: build/windows  # Adjust path according to your build output
+        name: apk
+        path: build/Android/*.apk

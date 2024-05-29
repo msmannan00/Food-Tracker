@@ -31,15 +31,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-unity-
 
+      - name: Create Unity License Directory
+        run: mkdir -p $HOME/.local/share/unity3d/Unity
+
       - name: Activate Unity License
-        run: |
-          mkdir -p $HOME/.local/share/unity3d/Unity
-          echo "${{ secrets.UNITY_LICENSE_CONTENT }}" > $HOME/.local/share/unity3d/Unity/Unity_lic.ulf
+        run: echo "${{ secrets.UNITY_LICENSE_CONTENT }}" | tr -d '\r' > $HOME/.local/share/unity3d/Unity/Unity_lic.ulf
 
       - name: Verify Unity License
         run: |
-          if [ ! -f $HOME/.local/share/unity3d/Unity/Unity_lic.ulf ]; then
-            echo "Unity License File not found!"
+          echo "Checking Unity License file..."
+          ls -l $HOME/.local/share/unity3d/Unity/
+          cat $HOME/.local/share/unity3d/Unity/Unity_lic.ulf
+          if [ ! -s $HOME/.local/share/unity3d/Unity/Unity_lic.ulf ]; then
+            echo "Unity License File not found or is empty!"
             exit 1
           fi
 

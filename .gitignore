@@ -27,6 +27,7 @@ ehthumbs.db
 # =============== #
 .vs/
 .vscode/
+exports/*
 .idea/
 *.swp
 *.swo

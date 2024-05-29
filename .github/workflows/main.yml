@@ -16,9 +16,6 @@ jobs:
       - name: Set up Unity License
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        run: |
-          echo "## Unity License" >> $GITHUB_ENV
-          echo $UNITY_LICENSE >> $GITHUB_ENV
           
 
       - name: Cache Unity version (adjust version as needed)

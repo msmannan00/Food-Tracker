@@ -41,7 +41,7 @@ jobs:
 
       - name: Build project
         uses: game-ci/unity-builder@v4
-        
+
         with:
           projectPath: .
           targetPlatform: WebGL
@@ -87,6 +87,12 @@ jobs:
         targetPlatform:
           - WebGL
     steps:
+      - name: Echo Unity Secrets
+        run: |
+          echo "Unity Email: ${{ secrets.UNITY_EMAIL }}"
+          echo "Unity Password: ${{ secrets.UNITY_PASSWORD }}"
+          echo "License File: ${{ secrets.UNITY_LICENSE }}"
+          
       - name: Checkout code
         uses: actions/checkout@v2
 

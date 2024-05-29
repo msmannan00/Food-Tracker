@@ -250,8 +250,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 2800000, guid: 7680b4e1263b76544a15004ac7b6fe38, type: 3}
-  AndroidKeystoreName: C:/Users/Morgan Freeman/Documents/healt_app_v3.keystore
+  androidSplashScreen: {fileID: 0}
+  AndroidKeystoreName: C:/Users/Morgan Freeman/Documents/healthapp_v3.0.keystore
   AndroidKeyaliasName: imammehdi@00
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -744,7 +744,7 @@ PlayerSettings:
   monoEnv: 
   splashScreenBackgroundSourceLandscape: {fileID: 0}
   splashScreenBackgroundSourcePortrait: {fileID: 0}
-  blurSplashScreenBackground: 1
+  blurSplashScreenBackground: 0
   spritePackerPolicy: 
   webGLMemorySize: 32
   webGLExceptionSupport: 1

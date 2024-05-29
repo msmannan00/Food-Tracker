@@ -108,11 +108,6 @@ jobs:
             Library-${{ matrix.projectPath }}-buildAndTest-
             Library-${{ matrix.projectPath }}-
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Test results (all modes)
-          path: ${{ steps.testRunner.outputs.artifactsPath }}
-
       - uses: game-ci/unity-builder@v2
         with:
           projectPath: ${{ matrix.projectPath }}

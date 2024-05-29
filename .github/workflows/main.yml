@@ -33,8 +33,7 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: "2021.3.16f1"
-          scenes: 
-            - 'Assets/GameAssets/Scenes/root.unity'
+          buildScenes: 'Assets/GameAssets/Scenes/root.unity'
 
       - uses: actions/upload-artifact@v3
         with:

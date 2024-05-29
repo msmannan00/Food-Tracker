@@ -34,7 +34,14 @@ jobs:
       - name: Activate Unity License
         run: |
           mkdir -p $HOME/.local/share/unity3d/Unity
-          echo "${{ secrets.UNITY_LICENSE }}" > $HOME/.local/share/unity3d/Unity/Unity_lic.ulf
+          echo "${{ secrets.UNITY_LICENSE_CONTENT }}" > $HOME/.local/share/unity3d/Unity/Unity_lic.ulf
+
+      - name: Verify Unity License
+        run: |
+          if [ ! -f $HOME/.local/share/unity3d/Unity/Unity_lic.ulf ]; then
+            echo "Unity License File not found!"
+            exit 1
+          fi
 
       - name: Build Unity Project
         uses: game-ci/unity-builder@v2

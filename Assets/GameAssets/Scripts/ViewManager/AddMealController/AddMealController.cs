@@ -52,11 +52,11 @@ public class AddMealController : MonoBehaviour, PageController
         Dictionary<string, MealCategory> mCategories = DataManager.Instance.GetCategories();
         foreach (var category in mCategories)
         {
-            if (sCategoryDropdown.options[sCategoryDropdown.value].text.Equals(category.Key))
+            if (sCategoryDropdown.options[sCategoryDropdown.value].text.Equals(category.Key) || mSearchText.Length>0)
             {
                 foreach (var subCategory in category.Value.SubCategories)
                 {
-                    if (subCategory.Title.Equals(sDropdown.options[sDropdown.value].text))
+                    if (subCategory.Title.Equals(sDropdown.options[sDropdown.value].text) || mSearchText.Length > 0)
                     {
                         aServingText.SetText(subCategory.EachServing.Carb + "g carbs, " + subCategory.EachServing.Protein + "g proteins, " + subCategory.EachServing.Fat + "g fats, " + subCategory.EachServing.KiloCal + " kcal");
                         foreach (var dish in subCategory.Dishes)

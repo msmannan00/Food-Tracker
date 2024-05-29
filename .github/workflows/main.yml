@@ -41,13 +41,13 @@ jobs:
 
       - name: Build project
         uses: game-ci/unity-builder@v4
-          unityEmail: ${{ secrets.UNITY_EMAIL }}
-          unityPassword: ${{ secrets.UNITY_PASSWORD }}
-          licenseFile: ${{ secrets.UNITY_LICENSE }}
         
         with:
           projectPath: .
           targetPlatform: WebGL
+          unityEmail: ${{ secrets.UNITY_EMAIL }}
+          unityPassword: ${{ secrets.UNITY_PASSWORD }}
+          licenseFile: ${{ secrets.UNITY_LICENSE }}
 
       - uses: actions/upload-artifact@v2
         with:

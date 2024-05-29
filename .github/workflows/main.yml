@@ -35,12 +35,11 @@ jobs:
         unityEmail: msmannan00@gmail.com
         unityPassword: Imammehdi@00
 
-    - name: Build Android
-      uses: game-ci/unity-builder@v3
+    - name: Build Project
+      uses: game-ci/unity-builder@v2
       with:
         unityVersion: 2022.3.20f1
-        targetPlatform: Android
-        projectPath: .
+        targetPlatform: StandaloneWindows64
 
     - name: Upload APK
       uses: actions/upload-artifact@v3

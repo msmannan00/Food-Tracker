@@ -125,7 +125,7 @@ public class DailyMealController : MonoBehaviour, PageController
                 dateText.color = new Color32(0x32, 0x31, 0x36, 0xFF);
             }
 
-            if (!isSelectable || !isTodayOrLater)
+            if (!isSelectable)
             {
                 aDateRangeListTriggers[i].GetComponent<Image>().raycastTarget = false;
                 background.color = new Color(background.color.r, background.color.g, background.color.b, 0.3f);

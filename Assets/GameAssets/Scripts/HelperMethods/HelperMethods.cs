@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class HelperMethods : GenericSingletonClass<HelperMethods>
 {
@@ -108,18 +109,34 @@ public class HelperMethods : GenericSingletonClass<HelperMethods>
 
     public IEnumerator LoadImageFromURL(string imageUrl, Image aImage, GameObject loader)
     {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(imageUrl);
-        yield return request.SendWebRequest();
+        string fileName = GetValidFileName(imageUrl);
+        string localCachePath = Path.Combine(Application.persistentDataPath, fileName);
 
-        if (request.result == UnityWebRequest.Result.Success)
+        if (File.Exists(localCachePath))
         {
-            Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            byte[] imageData = File.ReadAllBytes(localCachePath);
+            Texture2D texture = new Texture2D(2, 2);
+            texture.LoadImage(imageData);
             aImage.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             loader.SetActive(false);
         }
         else
         {
-            this.LoadImageFromResources("UIAssets/mealExplorer/Categories/default", aImage);
+            UnityWebRequest request = UnityWebRequestTexture.GetTexture(imageUrl);
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+                aImage.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                byte[] bytes = texture.EncodeToPNG();
+                File.WriteAllBytes(localCachePath, bytes);
+                loader.SetActive(false);
+            }
+            else
+            {
+                LoadImageFromResources("UIAssets/mealExplorer/Categories/default", aImage);
+            }
         }
     }
 
@@ -137,6 +154,13 @@ public class HelperMethods : GenericSingletonClass<HelperMethods>
         }
     }
 
+    private string GetValidFileName(string path)
+    {
+        string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(Path.GetInvalidFileNameChars()));
+        string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+
+        return System.Text.RegularExpressions.Regex.Replace(path, invalidRegStr, "_");
+    }
     public void CreateAndOpenEmail(string recipientEmail, string subject, string body)
     {
         subject = EscapeURL(subject);

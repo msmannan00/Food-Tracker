@@ -17,6 +17,20 @@ public class MealExplorerCategoryController : MonoBehaviour, IPointerClickHandle
     string mTitle;
     ServingInfo mEachServing;
     MealItem mDishes;
+    string mImagePath;
+
+    void Start()
+    {
+        if (mImagePath.StartsWith("http://") || mImagePath.StartsWith("https://"))
+        {
+            StartCoroutine(HelperMethods.Instance.LoadImageFromURL(mImagePath, aImage, loader));
+        }
+        else
+        {
+            HelperMethods.Instance.LoadImageFromResources("UIAssets/mealExplorer/Categories/" + mImagePath, aImage);
+            loader.SetActive(false);
+        }
+    }
 
     public void InitCategory(string pTitle, string description, MealItem pDish, ServingInfo pServing, string pImagePath, GameObject pParent)
     {
@@ -25,17 +39,8 @@ public class MealExplorerCategoryController : MonoBehaviour, IPointerClickHandle
         mTitle = pTitle;
         mEachServing = pServing;
         mDishes = pDish;
+        mImagePath = pImagePath;
         mParent = pParent;
-
-        if (pImagePath.StartsWith("http://") || pImagePath.StartsWith("https://"))
-        {
-            StartCoroutine(HelperMethods.Instance.LoadImageFromURL(pImagePath, aImage, loader));
-        }
-        else
-        {
-            HelperMethods.Instance.LoadImageFromResources("UIAssets/mealExplorer/Categories/" + pImagePath, aImage);
-            loader.SetActive(false);
-        }
     }
 
 

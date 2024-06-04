@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Playables;
 
 public class addMealCategoryController : MonoBehaviour
 {
@@ -23,23 +24,20 @@ public class addMealCategoryController : MonoBehaviour
     int mDayState;
     ServingInfo mServing;
     double aMealServingCount = 0.5f;
+    MealItem mDish;
+    string mImagePath;
 
-    public void initCategory(string pTitle, MealItem pDish, ServingInfo pServing, string pImagePath, int pDayState, DateTime pDate)
+    void Start()
     {
-        mServing = pServing;
-        mDayState = pDayState;
-        mDate = pDate;
-        mTitle = pTitle;
-
-        aName.text = pTitle;
-        aDescriptionTop.text = pDish.Measure + " Cups";
+        aName.text = mTitle;
+        aDescriptionTop.text = mDish.Measure + " Cups";
 
         try
         {
-            if (userSessionManager.Instance.mPlanModel.Meals[mDate]!=null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState] != null && userSessionManager.Instance.mPlanModel.Meals[mDate] != null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle] != null)
+            if (userSessionManager.Instance.mPlanModel.Meals[mDate] != null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState] != null && userSessionManager.Instance.mPlanModel.Meals[mDate] != null && userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle] != null)
             {
-                aCounter.text = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount.ToString();
-                aMealServingCount = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[pTitle].ServingAmount;
+                aCounter.text = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle].ServingAmount.ToString();
+                aMealServingCount = userSessionManager.Instance.mPlanModel.Meals[mDate][mDayState].Details[mTitle].ServingAmount;
             }
             else
             {
@@ -47,22 +45,33 @@ public class addMealCategoryController : MonoBehaviour
                 aMealServingCount = 0.5f;
             }
         }
-        catch (Exception xe) {
+        catch (Exception xe)
+        {
             int e = 0;
             e++;
         }
 
-        if (pImagePath.StartsWith("http://") || pImagePath.StartsWith("https://"))
+        if (mImagePath.StartsWith("http://") || mImagePath.StartsWith("https://"))
         {
-            StartCoroutine(HelperMethods.Instance.LoadImageFromURL(pImagePath, aImage, loader));
+            StartCoroutine(HelperMethods.Instance.LoadImageFromURL(mImagePath, aImage, loader));
         }
         else
         {
-            HelperMethods.Instance.LoadImageFromResources("UIAssets/mealExplorer/Categories/" + pImagePath, aImage);
+            HelperMethods.Instance.LoadImageFromResources("UIAssets/mealExplorer/Categories/" + mImagePath, aImage);
             loader.SetActive(false);
         }
         initMealDetail();
         userSessionManager.Instance.mPlanModel.initKey(mDate, mDayState, mTitle);
+    }
+
+    public void initCategory(string pTitle, MealItem pDish, ServingInfo pServing, string pImagePath, int pDayState, DateTime pDate)
+    {
+        mServing = pServing;
+        mDayState = pDayState;
+        mDate = pDate;
+        mTitle = pTitle;
+        mImagePath = pImagePath;
+        mDish = pDish;
     }
 
     void initMealDetail()

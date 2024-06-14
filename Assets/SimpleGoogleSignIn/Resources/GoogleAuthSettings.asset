@@ -27,4 +27,4 @@ MonoBehaviour:
   - email
   - profile
   ManualCancellation: 0
-  UseSafariViewController: 1
+  UseSafariViewController: 0

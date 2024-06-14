@@ -17,4 +17,4 @@ MonoBehaviour:
   CustomUriScheme: simple.oauth
   AccessScopes:
   - openid
-  UseSafariViewController: 1
+  UseSafariViewController: 0

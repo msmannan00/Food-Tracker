@@ -23,6 +23,7 @@ public class AuthController : MonoBehaviour, PageController
     public TMP_InputField aUsername;
     public TMP_InputField aPassword;
     public TextMeshProUGUI aTriggerButton;
+    public GameObject loader;
 
     private string mAuthType;
 
@@ -38,24 +39,37 @@ public class AuthController : MonoBehaviour, PageController
 
     public void Start()
     {
-        StartCoroutine(prelaodAssets());
-        if (DataManager.Instance.IsMealLoaded())
-        {
-            GameObject uiBlocker = GameObject.Find("UIBlocker"); 
-            if (uiBlocker != null)
+        #if UNITY_IOS
+            loader.SetActive(true);
+            PlayfabManager.Instance.OnSaveuser("ios", "ios");
+            userSessionManager.Instance.OnInitialize("ios", "ios");
+            StartCoroutine(WaitAndVerifyFirstLogin());
+            if (DataManager.Instance.IsMealLoaded())
             {
+                GameObject uiBlocker = GameObject.Find("UIBlocker");
                 uiBlocker.SetActive(false);
+                onSignIn();
             }
-        }
+        #else
+            StartCoroutine(prelaodAssets());
+            if (DataManager.Instance.IsMealLoaded())
+            {
+                GameObject uiBlocker = GameObject.Find("UIBlocker"); 
+                if (uiBlocker != null)
+                {
+                    uiBlocker.SetActive(false);
+                }
+            }
 
-        userSessionManager.Instance.mSidebar = false;
-        aUsername.text = "";
-        GoogleAuth = new GoogleAuth();
-        GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);
-        FacebookAuth = new FacebookAuth();
-        StartCoroutine(WaitAndVerifyFirstLogin());
+            userSessionManager.Instance.mSidebar = false;
+            aUsername.text = "";
+            GoogleAuth = new GoogleAuth();
+            GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);
+            FacebookAuth = new FacebookAuth();
+            StartCoroutine(WaitAndVerifyFirstLogin());
+        #endif
     }
-    
+
     IEnumerator prelaodAssets()
     {
         UnityEngine.Object[] prefabs = Resources.LoadAll("Prefabs", typeof(GameObject));
@@ -145,7 +159,6 @@ public class AuthController : MonoBehaviour, PageController
     public void SignOut()
     {
         GoogleAuth.SignOut(revokeAccessToken: true);
-        // Output.text = "Not signed in";
     }
 
     public void GetAccessToken()
@@ -212,7 +225,6 @@ public class AuthController : MonoBehaviour, PageController
         else
         {
 
-            //GlobalAnimator.Instance.FadeOutLoader();
             Dictionary<string, object> mData = new Dictionary<string, object> { };
             StateManager.Instance.OpenStaticScreen("dashboard", gameObject, "dashboardScreen", mData);
             print("2nd time log in");
@@ -228,18 +240,18 @@ public class AuthController : MonoBehaviour, PageController
 
     public void FBSignIn()
     {
-        FacebookAuth.FBSignIn(FBOnSignIn, caching: true);
+        FacebookAuth.SignIn(FBOnSignIn, caching: true);
     }
 
     public void FBSignOut()
     {
-        FacebookAuth.FBSignOut(revokeAccessToken: true);
+        FacebookAuth.SignOut(revokeAccessToken: true);
         //Output.text = "Not signed in";
     }
 
     public void FBGetAccessToken()
     {
-        FacebookAuth.FBGetAccessToken(FBOnGetAccessToken);
+        FacebookAuth.GetAccessToken(FBOnGetAccessToken);
     }
 
     private void FBOnSignIn(bool success, string error, Assets.SimpleFacebookSignIn.Scripts.UserInfo userInfo)
@@ -325,7 +337,6 @@ public class AuthController : MonoBehaviour, PageController
             aPageToggleText1.text = "Already have an acount?";
             aPageToggleText2.text = "Log In";
         }
-
     }
 
     public void OnPrivacyPolicy()

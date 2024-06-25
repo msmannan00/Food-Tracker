@@ -1,3 +1,4 @@
+using PlayFab.AuthenticationModels;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class WelcomeController : MonoBehaviour, PageController
 {
     private int mPageNumber = 0;
     public GameObject mPage;
+    public GameObject login;
     public GameObject mFood;
     public TMP_Text mTitle;
     public TMP_Text mDescription;
@@ -22,6 +24,10 @@ public class WelcomeController : MonoBehaviour, PageController
 
     public void onInit(Dictionary<string, object> pData)
     {
+        #if UNITY_IOS
+            login.SetActive(false);
+        #endif
+
         if (pData != null)
         {
             mPageNumber = (int)pData[WelcomeKeys.sPageNumber];
@@ -40,12 +46,23 @@ public class WelcomeController : MonoBehaviour, PageController
     {
         if (mPageNumber == 2)
         {
-            PreferenceManager.Instance.SetBool("WelcomeScreensShown_v3", true);
-            Dictionary<string, object> mData = new Dictionary<string, object>
-            {
-                { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
-            };
-            StateManager.Instance.OpenStaticScreen("auth", gameObject, "authScreen", mData);
+            #if UNITY_IOS
+                Dictionary<string, object> mDataAuth = new Dictionary<string, object>
+                {
+                  { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
+                };
+                StateManager.Instance.OpenStaticScreen("auth", null, "authScreen", mDataAuth);
+                PreferenceManager.Instance.SetBool("WelcomeScreensShown_v3", true);
+                GameObject.Destroy(gameObject);
+                DataManager.Instance.OnServerInitialized();
+            #else
+                PreferenceManager.Instance.SetBool("WelcomeScreensShown_v3", true);
+                Dictionary<string, object> mData = new Dictionary<string, object>
+                  {
+                    { AuthKey.sAuthType, AuthConstant.sAuthTypeLogin}
+                  };
+                StateManager.Instance.OpenStaticScreen("auth", gameObject, "authScreen", mData);
+            #endif
         }
         else
         {

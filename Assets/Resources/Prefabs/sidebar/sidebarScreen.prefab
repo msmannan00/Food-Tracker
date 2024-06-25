@@ -1502,6 +1502,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aUsername: {fileID: 2966030827762065431}
+  logout: {fileID: 6200447447590210135}
+  removeAccount: {fileID: 2177743892512598571}
 --- !u!225 &3873588424287353919
 CanvasGroup:
   m_ObjectHideFlags: 0

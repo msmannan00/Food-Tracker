@@ -19,18 +19,18 @@ namespace Assets.SimpleFacebookSignIn
 
         public void SignIn()
         {
-            FacebookAuth.FBSignIn(OnSignIn, caching: true);
+            FacebookAuth.SignIn(OnSignIn, caching: true);
         }
 
         public void SignOut()
         {
-            FacebookAuth.FBSignOut(revokeAccessToken: true);
+            FacebookAuth.SignOut(revokeAccessToken: true);
             Output.text = "Not signed in";
         }
 
         public void GetAccessToken()
         {
-            FacebookAuth.FBGetAccessToken(OnGetAccessToken);
+            FacebookAuth.GetAccessToken(OnGetAccessToken);
         }
 
         private void OnSignIn(bool success, string error, UserInfo userInfo)

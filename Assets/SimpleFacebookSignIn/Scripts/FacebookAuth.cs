@@ -32,7 +32,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             if (_settings == null) throw new NullReferenceException(nameof(_settings));
 
             SavedAuth = SavedAuth.GetInstance(_settings.ClientId);
-            Application.deepLinkActivated += FBOnDeepLinkActivated;
+            Application.deepLinkActivated += OnDeepLinkActivated;
 
             #if UNITY_IOS && !UNITY_EDITOR
 
@@ -50,7 +50,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
 
         ~FacebookAuth()
         {
-            Application.deepLinkActivated -= FBOnDeepLinkActivated;
+            Application.deepLinkActivated -= OnDeepLinkActivated;
 
             #if UNITY_IOS && !UNITY_EDITOR
 
@@ -60,16 +60,16 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             #endif
         }
 
-        public void FBSignIn(Action<bool, string, UserInfo> callback, bool caching = true)
+        public void SignIn(Action<bool, string, UserInfo> callback, bool caching = true)
         {
             _callbackU = callback;
             _callbackT = null;
 
-            FBInitialize();
+            Initialize();
 
             if (SavedAuth == null)
             {
-                FBAuth();
+                Auth();
             }
             else if (caching && SavedAuth.UserInfo != null)
             {
@@ -77,20 +77,20 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             }
             else
             {
-                FBUseSavedToken();
+                UseSavedToken();
             }
         }
 
-        public void FBGetAccessToken(Action<bool, string, TokenResponse> callback)
+        public void GetAccessToken(Action<bool, string, TokenResponse> callback)
         {
             _callbackU = null;
             _callbackT = callback;
 
-            FBInitialize();
+            Initialize();
 
             if (SavedAuth == null || SavedAuth.TokenResponse.Expired)
             {
-                FBAuth();
+                Auth();
             }
             else
             {
@@ -98,7 +98,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             }
         }
 
-        public void FBSignOut(bool revokeAccessToken = false)
+        public void SignOut(bool revokeAccessToken = false)
         {
             TokenResponse = null;
 
@@ -109,7 +109,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             }
         }
 
-        private void FBInitialize()
+        private void Initialize()
         {
             #if UNITY_EDITOR
 
@@ -135,7 +135,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             }
         }
 
-        private void FBAuth()
+        private void Auth()
         {
             _state = Guid.NewGuid().ToString("N");
             _codeVerifier = $"{Guid.NewGuid():N}{Guid.NewGuid():N}";
@@ -146,7 +146,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
 
             #else
 
-            ApplicationFocusHook.Create(FBUserCancelledHook);
+            ApplicationFocusHook.Create(UserCancelledHook);
 
             #endif
 
@@ -163,7 +163,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
                 {
                     if (success)
                     {
-                        FBAuthorizationRequest(authorizationRequest);
+                        AuthorizationRequest(authorizationRequest);
                     }
                     else
                     {
@@ -191,20 +191,20 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             }
             else
             {
-                FBAuthorizationRequest(authorizationRequest);
+                AuthorizationRequest(authorizationRequest);
                 
                 switch (_implementation)
                 {
                     case Implementation.LoopbackFlow:
-                        LoopbackFlow.Initialize(_redirectUri, FBOnDeepLinkActivated);
+                        LoopbackFlow.Initialize(_redirectUri, OnDeepLinkActivated);
                         break;
                 }
             }
         }
 
-        private void FBAuthorizationRequest(string url)
+        private void AuthorizationRequest(string url)
         {
-            FBLog($"Authorization: {url}");
+            Log($"Authorization: {url}");
 
             #if UNITY_IOS && !UNITY_EDITOR
 
@@ -224,7 +224,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             #endif
         }
 
-        private void FBDidCompleteInitialLoad(bool loaded)
+        private void DidCompleteInitialLoad(bool loaded)
         {
             if (loaded) return;
 
@@ -234,7 +234,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             _callbackU?.Invoke(false, error, null);
         }
 
-        private async void FBUserCancelledHook()
+        private async void UserCancelledHook()
         {
             var time = Time.time;
 
@@ -253,17 +253,17 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             _callbackU?.Invoke(false, error, null);
         }
 
-        private void FBUseSavedToken()
+        private void UseSavedToken()
         {
             if (SavedAuth == null || SavedAuth.ClientId != _settings.ClientId || SavedAuth.TokenResponse.Expired)
             {
-                FBSignOut();
-                FBSignIn(_callbackU);
+                SignOut();
+                SignIn(_callbackU);
             }
             else if (!SavedAuth.TokenResponse.Expired)
             {
-                FBLog("Using saved access token...");
-                FBRequestUserInfo(SavedAuth.TokenResponse.AccessToken, (success, _, userInfo) =>
+                Log("Using saved access token...");
+                RequestUserInfo(SavedAuth.TokenResponse.AccessToken, (success, _, userInfo) =>
                 {
                     if (success)
                     {
@@ -271,22 +271,22 @@ namespace Assets.SimpleFacebookSignIn.Scripts
                     }
                     else
                     {
-                        FBSignOut();
-                        FBSignIn(_callbackU);
+                        SignOut();
+                        SignIn(_callbackU);
                     }
                 });
             }
         }
 
-        private void FBOnDeepLinkActivated(string deepLink)
+        private void OnDeepLinkActivated(string deepLink)
         {
-            FBLog($"Deep link activated: {deepLink}");
+            Log($"Deep link activated: {deepLink}");
 
             deepLink = deepLink.Replace(":///", ":/"); // Some browsers may add extra slashes.
 
             if (_redirectUri == null || !deepLink.StartsWith(_redirectUri) || _codeVerifier == null)
             {
-                FBLog("Unexpected deep link.");
+                Log("Unexpected deep link.");
                 return;
             }
 
@@ -317,15 +317,15 @@ namespace Assets.SimpleFacebookSignIn.Scripts
 
             if (state == _state)
             {
-                FBPerformCodeExchange(code);
+                PerformCodeExchange(code);
             }
             else
             {
-                FBLog("Unexpected response.");
+                Log("Unexpected response.");
             }
         }
 
-        private void FBPerformCodeExchange(string code)
+        private void PerformCodeExchange(string code)
         {
             var redirectUri = _implementation == Implementation.AuthorizationMiddleware ? AuthorizationMiddleware.Endpoint + "/redirect" : _redirectUri;
             var exchangeRequest = $"{TokenEndpoint}?client_id={_settings.ClientId}&redirect_uri={Uri.EscapeDataString(redirectUri)}&code_verifier={_codeVerifier}&code={code}";
@@ -333,13 +333,13 @@ namespace Assets.SimpleFacebookSignIn.Scripts
 
             _codeVerifier = null;
 
-            FBLog($"Exchanging code for access token: {request.url}");
+            Log($"Exchanging code for access token: {request.url}");
 
             request.SendWebRequest().completed += _ =>
             {
                 if (request.error == null)
                 {
-                    FBLog($"TokenExchangeResponse={request.downloadHandler.text}");
+                    Log($"TokenExchangeResponse={request.downloadHandler.text}");
 
                     TokenResponse = TokenResponse.Parse(request.downloadHandler.text);
                     SavedAuth = new SavedAuth(_settings.ClientId, TokenResponse);
@@ -352,7 +352,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
 
                     if (_callbackU != null)
                     {
-                        FBRequestUserInfo(TokenResponse.AccessToken, _callbackU);
+                        RequestUserInfo(TokenResponse.AccessToken, _callbackU);
                     }
                 }
                 else
@@ -366,18 +366,18 @@ namespace Assets.SimpleFacebookSignIn.Scripts
         /// <summary>
         /// You can move this function to your backend for more security.
         /// </summary>
-        public void FBRequestUserInfo(string accessToken, Action<bool, string, UserInfo> callback)
+        public void RequestUserInfo(string accessToken, Action<bool, string, UserInfo> callback)
         {
             var request = UnityWebRequest.Get(UserInfoEndpoint);
 
-            FBLog($"Requesting user info: {request.url}");
+            Log($"Requesting user info: {request.url}");
 
             request.SetRequestHeader("Authorization", $"Bearer {accessToken}");
             request.SendWebRequest().completed += _ =>
             {
                 if (request.error == null)
                 {
-                    FBLog($"UserInfo={request.downloadHandler.text}");
+                    Log($"UserInfo={request.downloadHandler.text}");
                     SavedAuth.UserInfo = JsonUtility.FromJson<UserInfo>(request.downloadHandler.text);
                     SavedAuth.Save();
                     callback(true, null, SavedAuth.UserInfo);
@@ -389,7 +389,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             };
         }
 
-        private void FBLog(string message)
+        private void Log(string message)
         {
             if (DebugLog)
             {

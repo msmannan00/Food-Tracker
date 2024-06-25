@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class SidebarController : MonoBehaviour, PageController
 {
     public TMP_Text aUsername;
+    public GameObject logout;
+    public GameObject removeAccount;
+
 
     public void onInit(Dictionary<string, object> data)
     {
@@ -50,8 +53,15 @@ public class SidebarController : MonoBehaviour, PageController
 
     void Start()
     {
-        userSessionManager.Instance.mSidebar = true;
-        aUsername.SetText(userSessionManager.Instance.mProfileUsername);
+        #if UNITY_IOS
+                userSessionManager.Instance.mSidebar = false;
+                aUsername.SetText("Welcome");
+                logout.SetActive(false);
+                removeAccount.SetActive(false);
+        #else
+                userSessionManager.Instance.mSidebar = true;
+                aUsername.SetText(userSessionManager.Instance.mProfileUsername);
+        #endif
     }
 
     void Update()

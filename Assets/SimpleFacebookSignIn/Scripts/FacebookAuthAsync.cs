@@ -13,7 +13,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
             var completed = false;
             string accessToken = null, error = null;
 
-            FBGetAccessToken((success, e, tokenResponse) =>
+            GetAccessToken((success, e, tokenResponse) =>
             {
                 if (success)
                 {
@@ -34,7 +34,7 @@ namespace Assets.SimpleFacebookSignIn.Scripts
 
             if (accessToken == null) throw new Exception(error);
 
-            FBLog($"accessToken={accessToken}");
+            Log($"accessToken={accessToken}");
 
             return accessToken;
         }

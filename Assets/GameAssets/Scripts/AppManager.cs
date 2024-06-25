@@ -6,10 +6,14 @@ public class AppManager : MonoBehaviour
 {
     private void Start()
     {
-        /*Initiating app pages*/
+        #if UNITY_IOS
+            PlayfabManager.Instance.OnSaveuser("ios", "ios");
+            userSessionManager.Instance.OnInitialize("ios", "ios");
+        #endif
+
         #if UNITY_ANDROID && !UNITY_EDITOR
-                    Screen.fullScreen = false;
-                    AndroidUtility.ShowStatusBar(new Color32(9, 126, 57, 255));
+            Screen.fullScreen = false;
+            AndroidUtility.ShowStatusBar(new Color32(9, 126, 57, 255));
         #endif
 
         Application.targetFrameRate = 60;

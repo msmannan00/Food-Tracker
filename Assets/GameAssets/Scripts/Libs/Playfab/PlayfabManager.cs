@@ -30,22 +30,9 @@ public class PlayfabManager : GenericSingletonClass<PlayfabManager>
         PlayerPrefs.Save();
     }
 
-
-
     public void OnServerInitialized()
     {
-#if !UNITY_IOS
-        //PlayGamesClientConfiguration mConfig = new PlayGamesClientConfiguration.Builder()
-        //.AddOauthScope("profile")
-        //.RequestServerAuthCode(false)
-        //.Build();
 
-        //PlayGamesPlatform.InitializeInstance(mConfig);
-        //PlayGamesPlatform.DebugLogEnabled = false;
-        //PlayGamesPlatform.Activate();
-
-#else
-#endif
     }
 
     public void OnTryLogin(string pEmail, string pPassword, Action<string, string> pCallbackSuccess, Action<PlayFabError> pCallbackFailure)

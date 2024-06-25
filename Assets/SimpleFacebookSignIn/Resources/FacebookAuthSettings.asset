@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5a360bd75ce264aa54f175a1b8fb25, type: 3}
   m_Name: FacebookAuthSettings
   m_EditorClassIdentifier: 
-  Id: Food Tracker
+  Id: Food App
   ClientId: 963667015394307
   CustomUriScheme: simple.oauth
   AccessScopes:
   - openid
-  UseSafariViewController: 0
+  UseSafariViewController: 1

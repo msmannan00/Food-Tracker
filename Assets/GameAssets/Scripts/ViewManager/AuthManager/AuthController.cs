@@ -40,7 +40,6 @@ public class AuthController : MonoBehaviour, PageController
     public void Start()
     {
         #if UNITY_IOS
-            loader.SetActive(true);
             PlayfabManager.Instance.OnSaveuser("ios", "ios");
             userSessionManager.Instance.OnInitialize("ios", "ios");
             StartCoroutine(WaitAndVerifyFirstLogin());
@@ -49,7 +48,11 @@ public class AuthController : MonoBehaviour, PageController
                 GameObject uiBlocker = GameObject.Find("UIBlocker");
                 uiBlocker.SetActive(false);
                 onSignIn();
-            }
+        }
+        else
+        {
+            loader.SetActive(true);
+        }
         #else
             StartCoroutine(prelaodAssets());
             if (DataManager.Instance.IsMealLoaded())
@@ -67,7 +70,7 @@ public class AuthController : MonoBehaviour, PageController
             GoogleAuth.TryResume(OnSignIn, OnGetAccessToken);
             FacebookAuth = new FacebookAuth();
             StartCoroutine(WaitAndVerifyFirstLogin());
-        #endif
+#endif
     }
 
     IEnumerator prelaodAssets()

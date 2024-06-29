@@ -11,7 +11,7 @@ public class DashboardController : MonoBehaviour, PageController
 
     public void onInit(Dictionary<string, object> data)
     {
-        aUserWelcome.text = "Welcome! " + userSessionManager.Instance.mProfileUsername;
+        aUserWelcome.text = "Welcome";
         initFoodCategories();
         UpdateCellSize();
     }
